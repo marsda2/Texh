@@ -15,7 +15,7 @@ const Footer = () => {
                         <p className="text-gray-dark text-xl max-w-md mb-10 font-body font-light">
                             Creamos obras maestras digitales. Contáctanos para discutir el inicio de tu ecosistema omnicanal.
                         </p>
-                        <a href="mailto:hello@texh.agency" className="btn btn-primary radius-extreme px-8 py-4 group inline-flex items-center gap-4 text-chartreuse bg-obsidian text-lg shadow-xl shadow-obsidian/10">
+                        <a href="mailto:hello@texhco.com" className="btn btn-primary radius-extreme px-8 py-4 group inline-flex items-center gap-4 text-chartreuse bg-obsidian text-lg shadow-xl shadow-obsidian/10">
                             Aceptar Propuesta <ArrowRight size={24} className="transition-transform group-hover:translate-x-2" />
                         </a>
                     </div>
@@ -27,7 +27,7 @@ const Footer = () => {
                                 <span className="p-3 rounded-full border border-gray-light bg-neutral group-hover:bg-obsidian group-hover:text-chartreuse transition-colors">
                                     <Mail size={20} />
                                 </span>
-                                hello@texh.com
+                                hello@texhco.com
                             </li>
                             <li className="flex items-center gap-4 hover:text-obsidian transition-colors cursor-pointer group">
                                 <span className="p-3 rounded-full border border-gray-light bg-neutral group-hover:bg-obsidian group-hover:text-chartreuse transition-colors">
@@ -41,12 +41,12 @@ const Footer = () => {
                     <div className="col-span-1 lg:col-span-3">
                         <h4 className="text-sm font-heading font-bold tracking-widest text-obsidian uppercase mb-8">Socials</h4>
                         <div className="flex gap-4">
-                            <a href="#" className="w-14 h-14 rounded-full border border-gray-light flex items-center justify-center hover:bg-obsidian hover:text-chartreuse transition-colors text-obsidian">
+                            <a href="https://www.instagram.com/texh.co?igsh=dTl6cjhqMThmMHI2" target="_blank" rel="noopener noreferrer" className="w-14 h-14 rounded-full border border-gray-light flex items-center justify-center hover:bg-obsidian hover:text-chartreuse transition-colors text-obsidian">
                                 <Instagram size={24} />
                             </a>
-                            <a href="#" className="w-14 h-14 rounded-full border border-gray-light flex items-center justify-center hover:bg-obsidian hover:text-chartreuse transition-colors text-obsidian">
+                            <button onClick={() => alert('¡Próximamente! / Coming soon')} className="w-14 h-14 rounded-full border border-gray-light flex items-center justify-center hover:bg-obsidian hover:text-chartreuse transition-colors text-obsidian">
                                 <Linkedin size={24} />
-                            </a>
+                            </button>
                         </div>
                     </div>
                 </div>
