@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{TITLE}} — Texh LLC</title>
+  {{INLINE_CSS}}
+</head>
+<body>
+
+  <!-- Corporate Header -->
+  <header class="texh-header">
+    <div class="texh-header-logo">
+      <img src="{{LOGO_PATH}}" alt="Texh LLC" />
+      <div>
+        <div class="texh-header-brand">TEXH</div>
+        <div class="texh-header-tagline">Engineering your Digital Future</div>
+      </div>
+    </div>
+    <div class="texh-header-meta">
+      {{HEADER_META}}
+    </div>
+  </header>
+
+  <!-- Document Category Badge -->
+  {{META_BADGE}}
+
+  <!-- Main Content (Rendered Markdown) -->
+  <main class="texh-content">
+    {{CONTENT}}
+  </main>
+
+</body>
+</html>

@@ -1,0 +1,14 @@
+{
+  "name": "texh-pdf-generator",
+  "version": "1.0.0",
+  "description": "Converts TEXH LLC markdown proposals into branded corporate PDFs",
+  "main": "generate-pdf.js",
+  "scripts": {
+    "generate": "node generate-pdf.js"
+  },
+  "dependencies": {
+    "gray-matter": "^4.0.3",
+    "markdown-it": "^14.1.0",
+    "puppeteer": "^24.6.1"
+  }
+}

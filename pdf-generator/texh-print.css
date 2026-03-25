@@ -1,0 +1,375 @@
+/* ================================================================
+   TEXH LLC — Corporate Print Stylesheet
+   Adapted from the TEXH web design system for PDF output.
+   Typography: Outfit (Google Fonts)
+   Accents: Purple/Blue/Cyan gradient palette
+   ================================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+/* --- Page Setup --- */
+@page {
+  size: A4;
+  margin: 30mm 20mm 30mm 20mm;
+}
+
+/* --- Root Variables (Print-Adapted) --- */
+:root {
+  --accent-purple: #7c3aed;
+  --accent-blue: #3b82f6;
+  --accent-cyan: #06b6d4;
+  --gradient-accent: linear-gradient(135deg, #7c3aed, #3b82f6, #06b6d4);
+
+  --text-main: #1a1a2e;
+  --text-heading: #0f0f23;
+  --text-muted: #64748b;
+  --text-light: #94a3b8;
+
+  --bg-page: #ffffff;
+  --bg-subtle: #f8fafc;
+  --bg-code: #f1f5f9;
+
+  --border-light: #e2e8f0;
+  --border-accent: rgba(124, 58, 237, 0.25);
+
+  --table-header-bg: #0f0f23;
+  --table-header-text: #ffffff;
+  --table-stripe: #f8fafc;
+  --table-border: #e2e8f0;
+}
+
+/* --- Base --- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 11pt;
+}
+
+body {
+  font-family: 'Outfit', -apple-system, 'Segoe UI', sans-serif;
+  color: var(--text-main);
+  background: var(--bg-page);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* --- Corporate Header --- */
+.texh-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 16px;
+  margin-bottom: 32px;
+  border-bottom: 3px solid transparent;
+  border-image: linear-gradient(135deg, #7c3aed, #3b82f6, #06b6d4) 1;
+}
+
+.texh-header-logo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.texh-header-logo img {
+  height: 42px;
+  width: auto;
+}
+
+.texh-header-brand {
+  font-size: 1.6rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  background: linear-gradient(135deg, #7c3aed, #3b82f6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.texh-header-tagline {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.texh-header-meta {
+  text-align: right;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.texh-header-meta strong {
+  color: var(--text-heading);
+}
+
+/* --- Document Meta Badge --- */
+.texh-meta-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.08), rgba(59, 130, 246, 0.08));
+  border: 1px solid var(--border-accent);
+  border-radius: 8px;
+  font-size: 0.78rem;
+  color: var(--accent-purple);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+
+/* --- Typography --- */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-heading);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+  page-break-after: avoid;
+}
+
+h1 {
+  font-size: 2rem;
+  margin-bottom: 8px;
+  background: linear-gradient(135deg, #0f0f23 60%, #7c3aed 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+h2 {
+  font-size: 1.35rem;
+  margin-top: 36px;
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid transparent;
+  border-image: linear-gradient(90deg, #7c3aed 0%, #3b82f6 50%, transparent 100%) 1;
+}
+
+h3 {
+  font-size: 1.1rem;
+  margin-top: 24px;
+  margin-bottom: 12px;
+  color: var(--accent-purple);
+}
+
+h4 {
+  font-size: 0.95rem;
+  margin-top: 18px;
+  margin-bottom: 8px;
+  color: var(--text-main);
+  font-weight: 600;
+}
+
+p {
+  margin-bottom: 12px;
+  orphans: 3;
+  widows: 3;
+}
+
+strong {
+  font-weight: 700;
+  color: var(--text-heading);
+}
+
+em {
+  font-style: italic;
+  color: var(--text-muted);
+}
+
+a {
+  color: var(--accent-blue);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+/* --- Horizontal Rule --- */
+hr {
+  border: none;
+  height: 2px;
+  background: linear-gradient(90deg, var(--border-light) 0%, transparent 100%);
+  margin: 28px 0;
+}
+
+/* --- Lists --- */
+ul, ol {
+  margin-bottom: 14px;
+  padding-left: 24px;
+}
+
+li {
+  margin-bottom: 6px;
+  line-height: 1.6;
+}
+
+li::marker {
+  color: var(--accent-purple);
+}
+
+ul ul, ol ol, ul ol, ol ul {
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+
+/* --- Tables --- */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 0.88rem;
+  page-break-inside: avoid;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+thead {
+  background: var(--table-header-bg);
+}
+
+thead th {
+  color: var(--table-header-text);
+  font-weight: 600;
+  text-align: left;
+  padding: 12px 16px;
+  font-size: 0.82rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  border-bottom: 3px solid transparent;
+  border-image: linear-gradient(135deg, #7c3aed, #3b82f6, #06b6d4) 1;
+}
+
+tbody tr {
+  border-bottom: 1px solid var(--table-border);
+}
+
+tbody tr:nth-child(even) {
+  background: var(--table-stripe);
+}
+
+tbody td {
+  padding: 10px 16px;
+  vertical-align: top;
+}
+
+tbody td:last-child {
+  font-weight: 600;
+}
+
+/* --- Blockquotes --- */
+blockquote {
+  margin: 20px 0;
+  padding: 16px 20px;
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.04), rgba(59, 130, 246, 0.04));
+  border-left: 4px solid;
+  border-image: linear-gradient(180deg, #7c3aed, #3b82f6) 1;
+  border-radius: 0 8px 8px 0;
+  font-style: italic;
+  color: var(--text-main);
+  page-break-inside: avoid;
+}
+
+blockquote p {
+  margin-bottom: 0;
+}
+
+/* --- Code --- */
+code {
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 0.85em;
+  background: var(--bg-code);
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: var(--accent-purple);
+}
+
+pre {
+  background: var(--bg-code);
+  padding: 16px 20px;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: 16px 0;
+  border: 1px solid var(--border-light);
+  page-break-inside: avoid;
+}
+
+pre code {
+  background: none;
+  padding: 0;
+  color: var(--text-main);
+}
+
+/* --- Status Emojis (Semantic Colors) --- */
+/* These will be rendered as-is from the markdown */
+
+/* --- Corporate Footer --- */
+.texh-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20mm;
+  font-size: 0.7rem;
+  color: var(--text-light);
+  border-top: 1px solid var(--border-light);
+  background: var(--bg-page);
+}
+
+.texh-footer-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.texh-footer-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #7c3aed, #3b82f6);
+}
+
+.texh-footer-right {
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+/* --- Content Wrapper --- */
+.texh-content {
+  padding-bottom: 24px;
+}
+
+/* --- Print-Specific --- */
+@media print {
+  body {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .texh-footer {
+    position: fixed;
+    bottom: 0;
+  }
+
+  h2, h3 {
+    page-break-after: avoid;
+  }
+
+  table, blockquote, pre {
+    page-break-inside: avoid;
+  }
+
+  p {
+    orphans: 3;
+    widows: 3;
+  }
+}
