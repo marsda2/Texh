@@ -1,7 +1,7 @@
 "use client";
 
 import { Mic } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -9,6 +9,14 @@ const MOCK_WORDS = [
   "Necesito", "un", "ecosistema", "digital", "que", "escale", 
   "con", "alta", "frecuencia", "de", "pagos", "y", "usuarios", 
   "concurrentes", "para", "mi", "nueva", "startup", "tecnológica."
+];
+
+const FALLBACK_MESSAGES = [
+  "Capturando audio...",
+  "Escuchando tu idea...",
+  "Procesando voz...",
+  "Analizando detalles...",
+  "Recopilando información..."
 ];
 
 interface AIVoiceInputProps {
@@ -29,62 +37,74 @@ export function AIVoiceInput({
   demoMode = false,
   demoInterval = 3000,
   className,
-  placeholderText = "Click to speak your needs...",
-  recordingText = "Listening to your vision..."
+  placeholderText = "Pulsa para contar tu idea...",
+  recordingText = "Escuchando tu visión..."
 }: AIVoiceInputProps) {
   const [submitted, setSubmitted] = useState(false);
   const [time, setTime] = useState(0);
   const [isClient, setIsClient] = useState(false);
   const [isDemo, setIsDemo] = useState(demoMode);
   const [detectedWords, setDetectedWords] = useState<string[]>([]);
-
-  useEffect(() => {
-    if (submitted) {
-      let index = 0;
-      setDetectedWords([]);
-      const wordInterval = setInterval(() => {
-        if (index < MOCK_WORDS.length) {
-          setDetectedWords(prev => {
-            const newWords = [...prev, MOCK_WORDS[index]];
-            if (newWords.length > 5) return newWords.slice(newWords.length - 5);
-            return newWords;
-          });
-          index++;
-        } else {
-          clearInterval(wordInterval);
-        }
-      }, 500);
-      return () => clearInterval(wordInterval);
-    } else {
-      setDetectedWords([]);
-    }
-  }, [submitted]);
+  
+  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+  const audioChunksRef = useRef<Blob[]>([]);
+  const recognitionRef = useRef<any>(null);
+  const timeRef = useRef(0);
 
   useEffect(() => {
     setIsClient(true);
+    // Inicializar SpeechRecognition si está disponible en el navegador (Chrome/Safari)
+    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    if (SpeechRecognition) {
+      recognitionRef.current = new SpeechRecognition();
+      recognitionRef.current.continuous = true;
+      recognitionRef.current.interimResults = true;
+      recognitionRef.current.lang = "es-ES";
+      
+      recognitionRef.current.onresult = (event: any) => {
+        let currentTranscript = "";
+        for (let i = event.resultIndex; i < event.results.length; ++i) {
+          currentTranscript += event.results[i][0].transcript;
+        }
+        if (currentTranscript.trim()) {
+          const words = currentTranscript.trim().split(" ");
+          setDetectedWords(words.slice(Math.max(words.length - 5, 0)));
+        }
+      };
+    }
   }, []);
 
+  // Timer & Límite de 5 minutos
   useEffect(() => {
     let intervalId: NodeJS.Timeout;
 
     if (submitted) {
-      onStart?.();
       intervalId = setInterval(() => {
-        setTime((t) => t + 1);
+        setTime((t) => {
+          const newTime = t + 1;
+          timeRef.current = newTime;
+          
+          if (!isDemo && newTime >= 300) { // 5 minutos = 300 segundos
+            // Forzar parada tras 5 mins
+            if (mediaRecorderRef.current && mediaRecorderRef.current.state === "recording") {
+               mediaRecorderRef.current.stop();
+            }
+            return 300;
+          }
+          return newTime;
+        });
       }, 1000);
     } else {
-      if (time > 0) {
-          onStop?.(time);
-      }
       setTime(0);
+      timeRef.current = 0;
     }
 
     return () => clearInterval(intervalId);
-  }, [submitted, time, onStart, onStop]);
+  }, [submitted, isDemo]);
 
+  // Animación Demo
   useEffect(() => {
     if (!isDemo) return;
-
     let timeoutId: NodeJS.Timeout;
     const runAnimation = () => {
       setSubmitted(true);
@@ -101,26 +121,118 @@ export function AIVoiceInput({
     };
   }, [isDemo, demoInterval]);
 
-  const formatTime = (seconds: number) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
+  // Palabras mock durante Demo
+  useEffect(() => {
+    if (isDemo && submitted) {
+      let index = 0;
+      setDetectedWords([]);
+      const wordInterval = setInterval(() => {
+        if (index < MOCK_WORDS.length) {
+          setDetectedWords(prev => {
+            const newWords = [...prev, MOCK_WORDS[index]];
+            return newWords.length > 5 ? newWords.slice(newWords.length - 5) : newWords;
+          });
+          index++;
+        } else {
+          clearInterval(wordInterval);
+        }
+      }, 500);
+      return () => clearInterval(wordInterval);
+    } else if (isDemo && !submitted) {
+      setDetectedWords([]);
+    }
+  }, [submitted, isDemo]);
+
+  // Palabras fallback si no hay Web Speech API en un navegador
+  useEffect(() => {
+    if (!isDemo && submitted && !recognitionRef.current) {
+        let msgIndex = 0;
+        setDetectedWords([FALLBACK_MESSAGES[0]]);
+        const fallbackInterval = setInterval(() => {
+            msgIndex = (msgIndex + 1) % FALLBACK_MESSAGES.length;
+            setDetectedWords([FALLBACK_MESSAGES[msgIndex]]);
+        }, 3000);
+        return () => clearInterval(fallbackInterval);
+    }
+    if (!isDemo && !submitted) {
+        setDetectedWords([]);
+    }
+  }, [submitted, isDemo]);
+
+  const startRecording = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      const mediaRecorder = new MediaRecorder(stream);
+      mediaRecorderRef.current = mediaRecorder;
+      audioChunksRef.current = [];
+      
+      mediaRecorder.ondataavailable = (event) => {
+        if (event.data.size > 0) audioChunksRef.current.push(event.data);
+      };
+
+      mediaRecorder.onstop = () => {
+        const audioBlob = new Blob(audioChunksRef.current, { type: "audio/webm" });
+        alert(`¡Audio capturado (${formatTime(timeRef.current)})!\nEl blob está listo para subirse a Supabase.`);
+        console.log("Audio blob listo para Supabase:", audioBlob);
+        
+        audioChunksRef.current = [];
+        stream.getTracks().forEach(track => track.stop());
+        setSubmitted(false);
+        onStop?.(timeRef.current);
+        
+        if (recognitionRef.current) {
+             try { recognitionRef.current.stop(); } catch(e){}
+        }
+      };
+      
+      mediaRecorder.start();
+      setSubmitted(true);
+      onStart?.();
+      
+      if (recognitionRef.current) {
+         setDetectedWords([]);
+         try { recognitionRef.current.start(); } catch(e){}
+      }
+      
+    } catch (err) {
+      console.error("Error al acceder al micrófono:", err);
+      alert("Por favor, permite el acceso al micrófono de tu navegador para poder grabar tu idea.");
+    }
+  };
+
+  const stopRecording = () => {
+    if (mediaRecorderRef.current && mediaRecorderRef.current.state === "recording") {
+      mediaRecorderRef.current.stop();
+    } else {
+      setSubmitted(false);
+    }
   };
 
   const handleClick = () => {
     if (isDemo) {
       setIsDemo(false);
       setSubmitted(false);
-    } else {
-      setSubmitted((prev) => !prev);
+      setTimeout(startRecording, 100);
+      return;
     }
+    
+    if (submitted) {
+      stopRecording();
+    } else {
+      startRecording();
+    }
+  };
+
+  const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
   };
 
   return (
     <div className={cn("w-full py-12 overflow-hidden", className)}>
       <div className="relative max-w-4xl w-full mx-auto flex items-center justify-center flex-col gap-2">
         
-        {/* Simulated Text Stream */}
         <div className="absolute top-1/2 -translate-y-1/2 right-4 md:right-12 lg:right-32 w-28 md:w-48 h-32 flex flex-col justify-end pointer-events-none" style={{ maskImage: "linear-gradient(to bottom, transparent, black 40%, black 100%)", WebkitMaskImage: "linear-gradient(to bottom, transparent, black 40%, black 100%)" }}>
           <AnimatePresence mode="popLayout">
             {detectedWords.map((w, i) => (
@@ -194,3 +306,4 @@ export function AIVoiceInput({
     </div>
   );
 }
+
