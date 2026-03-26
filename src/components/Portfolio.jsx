@@ -8,20 +8,12 @@ const Portfolio = () => {
 
     const projects = [
         {
-            title: "Varoncare",
-            category: "E-commerce & Health",
-            imageUrl: "https://images.unsplash.com/photo-1542451542907-6cf80ff362d6?q=80&w=2600&auto=format&fit=crop",
-            videoUrl: "https://player.cloudinary.com/embed/?cloud_name=dtajpvp8x&public_id=Grabacio%CC%81n_de_pantalla_2026-03-24_a_las_6.58.25_p._m._pqkbcv&profile=cld-looping&player[controls]=false",
-            link: "https://www.varoncare.com/",
+            title: "Isabel Ávila",
+            category: "Creative Portfolio",
+            imageUrl: "https://images.unsplash.com/photo-1515377905703-c4788e51af15?q=80&w=2670&auto=format&fit=crop",
+            videoUrl: "https://player.cloudinary.com/embed/?cloud_name=dtajpvp8x&public_id=Grabacio%CC%81n_de_pantalla_2026-03-24_a_las_6.56.48_p._m._hehczs&profile=cld-looping&player[controls]=false",
+            link: "https://mariaisabelavila.com/",
             description: translatedProjects[0].description,
-        },
-        {
-            title: "Striki",
-            category: "Interactive UX",
-            imageUrl: "https://images.unsplash.com/photo-1618761714954-0b8cd0026356?q=80&w=2070&auto=format&fit=crop",
-            videoUrl: "https://player.cloudinary.com/embed/?cloud_name=dtajpvp8x&public_id=Grabacio%CC%81n_de_pantalla_2026-03-24_a_las_6.59.03_p._m._sdoyna&profile=cld-looping&player[controls]=false",
-            link: "https://striki.netlify.app/#/onboarding",
-            description: translatedProjects[1].description,
         },
         {
             title: "Melodica",
@@ -29,14 +21,22 @@ const Portfolio = () => {
             imageUrl: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=2674&auto=format&fit=crop",
             videoUrl: "https://player.cloudinary.com/embed/?cloud_name=dtajpvp8x&public_id=Grabacio%CC%81n_de_pantalla_2026-03-24_a_las_6.57.49_p._m._frpiit&profile=cld-looping&player[controls]=false",
             link: "https://www.melodica.app/en",
+            description: translatedProjects[1].description,
+        },
+        {
+            title: "Striki",
+            category: "Interactive UX",
+            imageUrl: "https://images.unsplash.com/photo-1618761714954-0b8cd0026356?q=80&w=2070&auto=format&fit=crop",
+            videoUrl: "https://player.cloudinary.com/embed/?cloud_name=dtajpvp8x&public_id=Grabacio%CC%81n_de_pantalla_2026-03-24_a_las_6.59.03_p._m._sdoyna&profile=cld-looping&player[controls]=false",
+            link: "https://striki.netlify.app/#/onboarding",
             description: translatedProjects[2].description,
         },
         {
-            title: "Isabel Ávila",
-            category: "Creative Portfolio",
-            imageUrl: "https://images.unsplash.com/photo-1515377905703-c4788e51af15?q=80&w=2670&auto=format&fit=crop",
-            videoUrl: "https://player.cloudinary.com/embed/?cloud_name=dtajpvp8x&public_id=Grabacio%CC%81n_de_pantalla_2026-03-24_a_las_6.56.48_p._m._hehczs&profile=cld-looping&player[controls]=false",
-            link: "https://mariaisabelavila.com/",
+            title: "Varoncare",
+            category: "E-commerce & Health",
+            imageUrl: "https://images.unsplash.com/photo-1542451542907-6cf80ff362d6?q=80&w=2600&auto=format&fit=crop",
+            videoUrl: "https://player.cloudinary.com/embed/?cloud_name=dtajpvp8x&public_id=Grabacio%CC%81n_de_pantalla_2026-03-24_a_las_6.58.25_p._m._pqkbcv&profile=cld-looping&player[controls]=false",
+            link: "https://www.varoncare.com/",
             description: translatedProjects[3].description,
         }
     ];

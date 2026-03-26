@@ -102,10 +102,10 @@ const translations = {
       }
     ],
     projects: [
-      { description: "Tienda online y plataforma integral de salud diseñada para hombres." },
-      { description: "Sistema paso a paso interactivo diseñado para retener clientes." },
+      { description: "Web y portafolio visual dinámico para una maquilladora profesional." },
       { description: "Plataforma de venta de canciones personalizadas creadas con inteligencia artificial." },
-      { description: "Web y portafolio visual dinámico para una maquilladora profesional." }
+      { description: "Sistema paso a paso interactivo diseñado para retener clientes." },
+      { description: "Tienda online y plataforma integral de salud diseñada para hombres." }
     ]
   },
   en: {
@@ -209,10 +209,10 @@ const translations = {
       }
     ],
     projects: [
-      { description: "Online store and comprehensive health platform designed for men." },
-      { description: "Interactive step-by-step system designed for customer retention." },
+      { description: "Dynamic visual portfolio and website for a professional makeup artist." },
       { description: "E-commerce platform for personalized songs created with artificial intelligence." },
-      { description: "Dynamic visual portfolio and website for a professional makeup artist." }
+      { description: "Interactive step-by-step system designed for customer retention." },
+      { description: "Online store and comprehensive health platform designed for men." }
     ]
   }
 };
