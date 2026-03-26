@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react
 import Home from './pages/Home';
 import AboutPage from './pages/AboutPage';
 import Footer from './components/Footer';
+import { LanguageProvider, useLanguage } from './lib/i18n';
 
 // Scroll to top helper
 const ScrollToTop = () => {
@@ -41,6 +42,7 @@ function AppContent() {
     const [scrolled, setScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const location = useLocation();
+    const { language, setLanguage, t } = useLanguage();
 
     useEffect(() => {
         const handleScroll = () => {
@@ -64,21 +66,28 @@ function AppContent() {
                         <span className="logo-sub">CO.</span>
                     </Link>
 
-                    <div className="nav-links">
-                        <Link to="/" className={`nav-link ${location.pathname === '/' ? 'active' : ''}`}>Home</Link>
-                        <Link to="/about" className={`nav-link ${location.pathname === '/about' ? 'active' : ''}`}>The Team</Link>
+                    <div className="nav-links flex items-center">
+                        <Link to="/" className={`nav-link ${location.pathname === '/' ? 'active' : ''}`}>{t('nav.home')}</Link>
+                        <Link to="/about" className={`nav-link ${location.pathname === '/about' ? 'active' : ''}`}>{t('nav.team')}</Link>
                         {isHome ? (
                             <>
-                                <a href="#services" className="nav-link">Services</a>
-                                <a href="#portfolio" className="nav-link">Portfolio</a>
+                                <a href="#services" className="nav-link">{t('nav.services')}</a>
+                                <a href="#portfolio" className="nav-link">{t('nav.portfolio')}</a>
                             </>
                         ) : (
                             <>
-                                <Link to="/#services" className="nav-link">Services</Link>
-                                <Link to="/#portfolio" className="nav-link">Portfolio</Link>
+                                <Link to="/#services" className="nav-link">{t('nav.services')}</Link>
+                                <Link to="/#portfolio" className="nav-link">{t('nav.portfolio')}</Link>
                             </>
                         )}
-                        <a href="#contact" className="nav-link contact-link">Contact</a>
+                        <a href="#contact" className="nav-link contact-link">{t('nav.contact')}</a>
+                        
+                        {/* Desktop Language Toggle */}
+                        <div className="flex items-center gap-2 ml-6 font-heading font-black text-sm tracking-widest">
+                            <button onClick={() => setLanguage('es')} className={`transition-all ${language === 'es' ? 'text-chartreuse opacity-100 scale-110 drop-shadow-md' : 'text-obsidian opacity-50 hover:opacity-100 hover:scale-105'}`}>ES</button>
+                            <span className="text-obsidian opacity-20">|</span>
+                            <button onClick={() => setLanguage('en')} className={`transition-all ${language === 'en' ? 'text-chartreuse opacity-100 scale-110 drop-shadow-md' : 'text-obsidian opacity-50 hover:opacity-100 hover:scale-105'}`}>EN</button>
+                        </div>
                     </div>
                     
                     <HamburgerButton isOpen={isMobileMenuOpen} setIsOpen={setIsMobileMenuOpen} />
@@ -91,20 +100,27 @@ function AppContent() {
                     }`}
                 >
                     <div className="flex flex-col items-center gap-8 text-3xl font-heading font-black">
-                        <Link to="/" onClick={() => setIsMobileMenuOpen(false)} className={`transition-colors ${location.pathname === '/' ? 'text-chartreuse' : 'text-obsidian hover:text-chartreuse'}`}>Home</Link>
-                        <Link to="/about" onClick={() => setIsMobileMenuOpen(false)} className={`transition-colors ${location.pathname === '/about' ? 'text-chartreuse' : 'text-obsidian hover:text-chartreuse'}`}>The Team</Link>
+                        <Link to="/" onClick={() => setIsMobileMenuOpen(false)} className={`transition-colors ${location.pathname === '/' ? 'text-chartreuse' : 'text-obsidian hover:text-chartreuse'}`}>{t('nav.home')}</Link>
+                        <Link to="/about" onClick={() => setIsMobileMenuOpen(false)} className={`transition-colors ${location.pathname === '/about' ? 'text-chartreuse' : 'text-obsidian hover:text-chartreuse'}`}>{t('nav.team')}</Link>
                         {isHome ? (
                             <>
-                                <a href="#services" onClick={() => setIsMobileMenuOpen(false)} className="text-obsidian hover:text-chartreuse transition-colors">Services</a>
-                                <a href="#portfolio" onClick={() => setIsMobileMenuOpen(false)} className="text-obsidian hover:text-chartreuse transition-colors">Portfolio</a>
+                                <a href="#services" onClick={() => setIsMobileMenuOpen(false)} className="text-obsidian hover:text-chartreuse transition-colors">{t('nav.services')}</a>
+                                <a href="#portfolio" onClick={() => setIsMobileMenuOpen(false)} className="text-obsidian hover:text-chartreuse transition-colors">{t('nav.portfolio')}</a>
                             </>
                         ) : (
                             <>
-                                <Link to="/#services" onClick={() => setIsMobileMenuOpen(false)} className="text-obsidian hover:text-chartreuse transition-colors">Services</Link>
-                                <Link to="/#portfolio" onClick={() => setIsMobileMenuOpen(false)} className="text-obsidian hover:text-chartreuse transition-colors">Portfolio</Link>
+                                <Link to="/#services" onClick={() => setIsMobileMenuOpen(false)} className="text-obsidian hover:text-chartreuse transition-colors">{t('nav.services')}</Link>
+                                <Link to="/#portfolio" onClick={() => setIsMobileMenuOpen(false)} className="text-obsidian hover:text-chartreuse transition-colors">{t('nav.portfolio')}</Link>
                             </>
                         )}
-                        <a href="#contact" onClick={() => setIsMobileMenuOpen(false)} className="text-white bg-obsidian px-8 py-3 rounded-full hover:text-chartreuse transition-colors mt-8">Contact</a>
+                        <a href="#contact" onClick={() => setIsMobileMenuOpen(false)} className="text-white bg-obsidian px-8 py-3 rounded-full hover:text-chartreuse transition-colors mt-4">{t('nav.contact')}</a>
+                        
+                        {/* Mobile Language Toggle */}
+                        <div className="flex items-center gap-4 mt-4 text-xl">
+                            <button onClick={() => { setLanguage('es'); setIsMobileMenuOpen(false); }} className={`transition-all ${language === 'es' ? 'text-chartreuse opacity-100 scale-110 drop-shadow-md' : 'text-obsidian opacity-50 hover:opacity-100'}`}>ES</button>
+                            <span className="text-obsidian opacity-20">|</span>
+                            <button onClick={() => { setLanguage('en'); setIsMobileMenuOpen(false); }} className={`transition-all ${language === 'en' ? 'text-chartreuse opacity-100 scale-110 drop-shadow-md' : 'text-obsidian opacity-50 hover:opacity-100'}`}>EN</button>
+                        </div>
                     </div>
                 </div>
             </header>
@@ -124,9 +140,11 @@ function AppContent() {
 
 function App() {
     return (
-        <Router>
-            <AppContent />
-        </Router>
+        <LanguageProvider>
+            <Router>
+                <AppContent />
+            </Router>
+        </LanguageProvider>
     );
 }
 

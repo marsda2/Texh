@@ -1,50 +1,53 @@
 import React from 'react';
 import { Smartphone, Code, Cpu, Megaphone } from 'lucide-react';
-
-const services = [
-    {
-        category: "Desarrollo y Tecnología",
-        items: [
-            {
-                icon: <Code size={28} className="text-obsidian" />,
-                title: "Diseño Web a Medida",
-                description: "Creamos páginas rápidas, seguras y diseñadas para que tus visitas se conviertan en clientes reales.",
-            },
-            {
-                icon: <Smartphone size={28} className="text-obsidian" />,
-                title: "Aplicaciones Móviles",
-                description: "Lleva tu negocio al bolsillo de tus clientes con una app fácil de usar y muy atractiva.",
-            },
-            {
-                icon: <Cpu size={28} className="text-chartreuse" />,
-                title: "Mantenimiento y Soporte",
-                description: "Nos ocupamos de que tu web nunca se caiga y esté siempre actualizada sin que tengas que preocuparte.",
-            }
-        ]
-    },
-    {
-        category: "Diseño y Redes Sociales",
-        items: [
-            {
-                icon: <Megaphone size={28} className="text-obsidian" />,
-                title: "Gestión de Redes Sociales",
-                description: "Creamos contenido atractivo para tus redes mientras tú te enfocas al 100% en tu negocio.",
-            }
-        ]
-    }
-];
+import { useLanguage } from '../lib/i18n';
 
 const Services = () => {
+    const { t } = useLanguage();
+
+    const services = [
+        {
+            category: t('services.category1'),
+            items: [
+                {
+                    icon: <Code size={28} className="text-obsidian" />,
+                    title: t('services.webDesign'),
+                    description: t('services.webDesignDesc'),
+                },
+                {
+                    icon: <Smartphone size={28} className="text-obsidian" />,
+                    title: t('services.apps'),
+                    description: t('services.appsDesc'),
+                },
+                {
+                    icon: <Cpu size={28} className="text-chartreuse" />,
+                    title: t('services.maintenance'),
+                    description: t('services.maintenanceDesc'),
+                }
+            ]
+        },
+        {
+            category: t('services.category2'),
+            items: [
+                {
+                    icon: <Megaphone size={28} className="text-obsidian" />,
+                    title: t('services.social'),
+                    description: t('services.socialDesc'),
+                }
+            ]
+        }
+    ];
+
     return (
         <section id="services" className="relative section-padding bg-white">
             <div className="container">
                 <div className="flex flex-col md:flex-row justify-between items-end mb-20 animate-fade-up">
                     <div className="max-w-3xl">
                         <h2 className="mb-6 leading-tight">
-                            Cómo te <span className="text-accent underline decoration-chartreuse decoration-8 underline-offset-8">Ayudamos</span>.
+                            {t('services.titleStart')} <span className="text-accent underline decoration-chartreuse decoration-8 underline-offset-8">{t('services.titleAccent')}</span>{t('services.titleEnd')}
                         </h2>
                         <p className="text-gray-dark text-xl font-light font-body">
-                            Nos convertimos en tu equipo tecnológico de confianza para que tu negocio crezca sin complicaciones.
+                            {t('services.desc')}
                         </p>
                     </div>
                 </div>

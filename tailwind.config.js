@@ -10,6 +10,12 @@ export default {
   theme: {
     extend: {
       colors: {
+        neutral: "#F0F0F0",
+        obsidian: "#212121",
+        chartreuse: "#C9FF1F",
+        "gray-dark": "#333333",
+        "gray-medium": "#757575",
+        "gray-light": "#E0E0E0",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

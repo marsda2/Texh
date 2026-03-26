@@ -1,0 +1,267 @@
+/* ==========================================
+   iPhone Mockup — Texh Co. Design System
+   ========================================== */
+
+.iphone-mockup {
+  position: relative;
+  margin: 0 auto;
+  border: 14px solid var(--color-obsidian);
+  background-color: var(--color-obsidian);
+  border-radius: 3rem;
+  height: 580px;
+  width: 290px;
+  box-shadow:
+    0 40px 80px -15px rgba(0, 0, 0, 0.6),
+    0 0 40px -10px rgba(201, 255, 31, 0.15),
+    inset 0 0 0 1px rgba(255, 255, 254, 0.12);
+  transition: all var(--transition-normal);
+}
+
+.iphone-mockup:hover {
+  box-shadow:
+    0 45px 90px -15px rgba(0, 0, 0, 0.7),
+    0 0 50px -10px rgba(201, 255, 31, 0.2),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.15);
+}
+
+/* Notch */
+.iphone-notch {
+  width: 110px;
+  height: 22px;
+  background-color: var(--color-obsidian);
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 0 0 1rem 1rem;
+  z-index: 20;
+}
+
+/* Side buttons */
+.iphone-btn {
+  position: absolute;
+  background-color: var(--color-gray-dark);
+}
+
+.iphone-btn-silence {
+  height: 28px;
+  width: 3px;
+  left: -17px;
+  top: 100px;
+  border-radius: 4px 0 0 4px;
+}
+
+.iphone-btn-vol-up {
+  height: 56px;
+  width: 3px;
+  left: -17px;
+  top: 145px;
+  border-radius: 4px 0 0 4px;
+}
+
+.iphone-btn-vol-down {
+  height: 56px;
+  width: 3px;
+  left: -17px;
+  top: 215px;
+  border-radius: 4px 0 0 4px;
+}
+
+.iphone-btn-power {
+  height: 80px;
+  width: 3px;
+  right: -17px;
+  top: 165px;
+  border-radius: 0 4px 4px 0;
+}
+
+/* Screen */
+.iphone-screen {
+  border-radius: 2.15rem;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.iphone-screen-content {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+  transform: scale(1.1);
+  pointer-events: none;
+}
+
+/* Chartreuse glow overlay on hover */
+.iphone-screen-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(201, 255, 31, 0.06) 0%,
+    transparent 70%
+  );
+  opacity: 1;
+  transition: opacity var(--transition-normal);
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* ==========================================
+   Success Case Card - Aligning with Dark Mockup
+   ========================================== */
+
+.success-case-card {
+  display: flex;
+  flex-direction: column;
+  background-color: #f0f0f0;
+  border-radius: 2rem;
+  padding: 3rem 2rem;
+  gap: 2.5rem;
+  max-width: 900px;
+  width: 100%;
+  box-shadow: 0 40px 80px -20px rgba(0, 0, 0, 0.5);
+  transition: transform var(--transition-normal);
+}
+
+.success-case-card:hover {
+  transform: translateY(-8px);
+}
+
+@media (min-width: 768px) {
+  .success-case-card {
+    flex-direction: row;
+    align-items: center;
+    padding: 3rem 4rem 3rem 0; /* No left padding as iPhone hangs out slightly or fills space */
+    gap: 4rem;
+  }
+}
+
+.success-case-media {
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .success-case-media {
+    width: 400px; /* Space for the iPhone */
+  }
+}
+
+.success-case-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  flex: 1;
+}
+
+.success-case-title {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 2.5rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #212121;
+  line-height: 1.1;
+  text-align: center;
+  margin: 0;
+}
+
+@media (min-width: 768px) {
+  .success-case-title {
+    text-align: left;
+    margin-bottom: 0.5rem;
+    font-size: 2.75rem;
+  }
+}
+
+.success-case-details {
+  background-color: var(--color-white);
+  border-radius: 1.5rem;
+  padding: 2.5rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.5rem;
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.2);
+}
+
+.success-case-category {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--color-chartreuse);
+  background-color: var(--color-obsidian);
+  padding: 0.5rem 1.25rem;
+  border-radius: var(--radius-extreme);
+  letter-spacing: 0.02em;
+}
+
+.success-case-description {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 1.15rem;
+  color: var(--color-gray-dark);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.success-case-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--color-obsidian);
+  border: 1.5px solid var(--color-obsidian);
+  padding: 0.75rem 2rem;
+  border-radius: var(--radius-extreme);
+  transition: all var(--transition-fast);
+  text-decoration: none;
+  margin-top: 0.5rem;
+}
+
+.success-case-link:hover {
+  background-color: var(--color-obsidian);
+  color: var(--color-white);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px -8px rgba(0, 0, 0, 0.3);
+}
+
+.success-case-link svg {
+  transition: transform var(--transition-fast);
+}
+
+.success-case-link:hover svg {
+  transform: translateX(4px) translateY(-4px);
+}
+
+/* ==========================================
+   Portfolio Grid for Success Cases
+   ========================================== */
+
+.success-cases-grid {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4rem;
+}
+
+@media (max-width: 767px) {
+  .iphone-mockup {
+    height: 500px;
+    width: 250px;
+  }
+
+  .success-case-card {
+    padding: 2.5rem 1.5rem;
+  }
+}

@@ -1,7 +1,9 @@
 import React from 'react';
 import { Users, Code2, Rocket } from 'lucide-react';
+import { useLanguage } from '../lib/i18n';
 
 const About = () => {
+    const { t } = useLanguage();
     return (
         <section id="about" className="relative section-padding overflow-hidden bg-neutral">
             <div className="container relative z-10">
@@ -12,17 +14,17 @@ const About = () => {
                         <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full mb-10 border border-obsidian bg-white">
                             <Users size={16} className="text-obsidian" />
                             <span className="font-heading font-semibold text-obsidian tracking-wider uppercase text-xs">
-                                Quiénes Somos
+                                {t('about.whoWeAre')}
                             </span>
                         </div>
 
                         <h2 className="mb-6 leading-tight">
-                            Impulsados por la <span className="text-accent underline decoration-chartreuse decoration-8 underline-offset-8">Excelencia</span>.<br />
-                            Liderados por Visión.
+                            {t('about.titleStart')} <span className="text-accent underline decoration-chartreuse decoration-8 underline-offset-8">{t('about.titleAccent')}</span><br />
+                            {t('about.titleEnd')}
                         </h2>
 
                         <p className="text-gray-dark text-xl font-light font-body leading-relaxed mb-12">
-                            En Texh Co., somos un colectivo de <strong className="text-obsidian font-semibold">desarrolladores y diseñadores full-stack</strong> con años de experiencia probada. Nos especializamos en crear e implementar ecosistemas omnicanal premium para <strong>empresas y fundadores visionarios</strong>.
+                            {t('about.desc1')}<strong className="text-obsidian font-semibold">{t('about.descBold1')}</strong>{t('about.desc2')}<strong>{t('about.descBold2')}</strong>{t('about.descEnd')}
                         </p>
 
                         <div className="p-8 radius-extreme border border-gray-light bg-white hover:border-obsidian transition-colors duration-500 group">
@@ -34,9 +36,9 @@ const About = () => {
                                 </div>
                                 <div className="text-center sm:text-left">
                                     <h4 className="text-2xl font-heading font-bold text-obsidian mb-1 tracking-tight">Xiunellys Huerta</h4>
-                                    <p className="text-chartreuse font-body font-semibold uppercase tracking-widest text-sm mb-3">Lead Project Manager</p>
+                                    <p className="text-chartreuse font-body font-semibold uppercase tracking-widest text-sm mb-3">{t('about.pmTitle')}</p>
                                     <p className="text-gray-dark font-body font-light text-sm leading-relaxed max-w-sm">
-                                        Nuestra misión es conectar tu visión de negocio con la infraestructura técnica exacta que demanda el futuro. Orquestamos la complejidad técnica para entregar productos impecables.
+                                        {t('about.pmDesc')}
                                     </p>
                                 </div>
                             </div>
@@ -49,16 +51,16 @@ const About = () => {
                             <div className="w-14 h-14 rounded-full border border-gray-light flex items-center justify-center mb-6 text-obsidian">
                                 <Code2 size={24} />
                             </div>
-                            <h3 className="text-xl font-body font-bold text-obsidian mb-3">Capacidad Full-Stack</h3>
-                            <p className="text-gray-dark font-body font-light text-sm leading-relaxed">Desde infraestructuras de backend escalables hasta interfaces frontend con reaccón instantánea.</p>
+                            <h3 className="text-xl font-body font-bold text-obsidian mb-3">{t('about.capability')}</h3>
+                            <p className="text-gray-dark font-body font-light text-sm leading-relaxed">{t('about.capabilityDesc')}</p>
                         </div>
 
                         <div className="p-10 radius-extreme border border-gray-light bg-white hover:-translate-y-2 transition-transform duration-500 sm:translate-y-8">
                             <div className="w-14 h-14 rounded-full border border-gray-light flex items-center justify-center mb-6 text-obsidian">
                                 <Rocket size={24} />
                             </div>
-                            <h3 className="text-xl font-body font-bold text-obsidian mb-3">Soluciones B2B & B2C</h3>
-                            <p className="text-gray-dark font-body font-light text-sm leading-relaxed">Ingeniería versátil capaz de soportar desde el lanzamiento ágil de MVPs hasta el requerimiento de infraestructuras corporativas.</p>
+                            <h3 className="text-xl font-body font-bold text-obsidian mb-3">{t('about.b2b')}</h3>
+                            <p className="text-gray-dark font-body font-light text-sm leading-relaxed">{t('about.b2bDesc')}</p>
                         </div>
                     </div>
 
