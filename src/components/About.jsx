@@ -1,5 +1,5 @@
 import React from 'react';
-import { Users, Code2, Rocket } from 'lucide-react';
+import { Users, Code2, Rocket, Mail } from 'lucide-react';
 import { useLanguage } from '../lib/i18n';
 
 const About = () => {
@@ -37,9 +37,12 @@ const About = () => {
                                 <div className="text-center sm:text-left">
                                     <h4 className="text-2xl font-heading font-bold text-obsidian mb-1 tracking-tight">Xiunellys Huerta</h4>
                                     <p className="text-chartreuse font-body font-semibold uppercase tracking-widest text-sm mb-3">{t('about.pmTitle')}</p>
-                                    <p className="text-gray-dark font-body font-light text-sm leading-relaxed max-w-sm">
+                                    <p className="text-gray-dark font-body font-light text-sm leading-relaxed max-w-sm mb-4">
                                         {t('about.pmDesc')}
                                     </p>
+                                    <a href="mailto:xiuny@texhco.com" className="inline-flex items-center gap-2 text-obsidian hover:text-chartreuse transition-colors font-body text-sm font-semibold underline decoration-transparent hover:decoration-chartreuse underline-offset-4">
+                                        <Mail size={16} /> xiuny@texhco.com
+                                    </a>
                                 </div>
                             </div>
                         </div>
