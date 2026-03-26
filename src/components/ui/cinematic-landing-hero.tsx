@@ -220,9 +220,9 @@ export function CinematicHero({
         <h1 className="text-track gsap-reveal text-3d-matte text-4xl md:text-6xl lg:text-7xl font-heading font-black tracking-tight mb-2">
           {tagline1}
         </h1>
-        <h1 className="text-days gsap-reveal text-silver-matte text-4xl md:text-6xl lg:text-7xl font-heading font-extrabold tracking-tighter">
+        <h2 className="text-days gsap-reveal text-silver-matte text-4xl md:text-6xl lg:text-7xl font-heading font-extrabold tracking-tighter">
           {tagline2}
-        </h1>
+        </h2>
       </div>
 
       <div className="w-full max-w-7xl flex items-center justify-center z-20" style={{ perspective: "1500px" }}>
