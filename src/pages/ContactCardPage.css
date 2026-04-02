@@ -1,0 +1,614 @@
+/* ============================================================
+   CONTACT CARD PAGE — Digital Business Card
+   Designed to match the physical Texh Co. card aesthetic.
+   ============================================================ */
+
+/* --- Page Layout --- */
+.vc-page {
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+    position: relative;
+    overflow: hidden;
+    background-color: #F0F0F0;
+}
+
+/* X-pattern background inspired by the physical card */
+.vc-bg-pattern {
+    position: absolute;
+    inset: 0;
+    opacity: 0.04;
+    background-image:
+        url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23212121' stroke-width='2'%3E%3Cline x1='16' y1='16' x2='64' y2='64'/%3E%3Cline x1='64' y1='16' x2='16' y2='64'/%3E%3Crect x='8' y='8' width='64' height='64' rx='8'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: 80px 80px;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* --- Close Button --- */
+.vc-close {
+    position: fixed;
+    top: 1.25rem;
+    right: 1.25rem;
+    z-index: 100;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1.5px solid #E0E0E0;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #212121;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.vc-close:hover {
+    background: #212121;
+    color: #C9FF1F;
+    border-color: #212121;
+    transform: rotate(90deg) scale(1.05);
+}
+
+/* --- Card Container --- */
+.vc-card {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 420px;
+    background: #FFFFFF;
+    border-radius: 2rem;
+    padding: 2.5rem 2rem 2rem;
+    box-shadow:
+        0 0 0 1px rgba(0, 0, 0, 0.04),
+        0 4px 16px rgba(0, 0, 0, 0.04),
+        0 24px 60px -12px rgba(0, 0, 0, 0.08);
+    opacity: 0;
+    transform: translateY(24px) scale(0.97);
+    transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.vc-card--in {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+/* --- Tagline --- */
+.vc-tagline {
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-weight: 900;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #757575;
+    text-align: center;
+    margin-bottom: 1.75rem;
+}
+
+/* --- Identity (Avatar + Name) --- */
+.vc-identity {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    margin-bottom: 1.75rem;
+}
+
+.vc-avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: #212121;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 4px 20px rgba(33, 33, 33, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.vc-avatar::after {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: 50%;
+    border: 2px solid #C9FF1F;
+    opacity: 0.4;
+}
+
+.vc-avatar span {
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    font-size: 1.35rem;
+    color: #C9FF1F;
+    letter-spacing: -0.03em;
+}
+
+.vc-name {
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-weight: 800;
+    font-size: 1.65rem;
+    letter-spacing: -0.04em;
+    line-height: 1.15;
+    color: #212121;
+    margin: 0;
+}
+
+.vc-name span {
+    color: #757575;
+    font-weight: 600;
+}
+
+.vc-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.825rem;
+    color: #757575;
+    font-weight: 500;
+    margin: 0.3rem 0 0;
+    letter-spacing: 0.01em;
+}
+
+/* --- Company Badge (unused for now, keeping minimal) --- */
+.vc-company-badge { display: none; }
+
+/* --- Separator --- */
+.vc-sep {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #E0E0E0 20%, #E0E0E0 80%, transparent);
+    margin-bottom: 1.5rem;
+}
+
+/* --- Request Info Button & Form --- */
+.vc-request-wrap {
+    margin-bottom: 1rem;
+    opacity: 0;
+    transform: translateX(-12px);
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.vc-request-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    padding: 0.85rem 1.25rem;
+    border-radius: 1rem;
+    border: 1.5px dashed #C9FF1F;
+    background: rgba(201, 255, 31, 0.06);
+    color: #212121;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.vc-request-btn:hover {
+    background: #C9FF1F;
+    border-color: #C9FF1F;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(201, 255, 31, 0.25);
+}
+
+.vc-request-btn:active {
+    transform: scale(0.98);
+}
+
+.vc-request-form {
+    position: relative;
+    padding: 1.25rem;
+    border-radius: 1rem;
+    background: #F8F9FA;
+    border: 1px solid #E0E0E0;
+    animation: formSlideIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes formSlideIn {
+    from { opacity: 0; transform: translateY(-8px) scale(0.97); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.vc-form-back {
+    position: absolute;
+    top: 0.85rem;
+    right: 0.85rem;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 1px solid #E0E0E0;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #757575;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.vc-form-back:hover {
+    background: #212121;
+    color: #C9FF1F;
+    border-color: #212121;
+}
+
+.vc-form-title {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: #212121;
+    margin: 0 0 0.25rem;
+}
+
+.vc-form-desc {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.78rem;
+    color: #757575;
+    margin: 0 0 1rem;
+    line-height: 1.4;
+}
+
+.vc-form {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.vc-form-input {
+    flex: 1;
+    padding: 0.7rem 1rem;
+    border-radius: 0.75rem;
+    border: 1.5px solid #E0E0E0;
+    background: #fff;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.9rem;
+    color: #212121;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.vc-form-input::placeholder {
+    color: #ADADAD;
+}
+
+.vc-form-input:focus {
+    border-color: #C9FF1F;
+    box-shadow: 0 0 0 3px rgba(201, 255, 31, 0.15);
+}
+
+.vc-form-submit {
+    width: 44px;
+    height: 44px;
+    border-radius: 0.75rem;
+    border: none;
+    background: #212121;
+    color: #C9FF1F;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.vc-form-submit:hover {
+    background: #333;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(33, 33, 33, 0.2);
+}
+
+.vc-form-submit:active {
+    transform: scale(0.95);
+}
+
+.vc-form-success {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 0;
+    color: #1a7a2e;
+    animation: formSlideIn 0.3s ease forwards;
+}
+
+.vc-form-success svg {
+    background: #e6f9ec;
+    border-radius: 50%;
+    padding: 0.4rem;
+    width: 40px;
+    height: 40px;
+}
+
+.vc-form-success p {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-align: center;
+    margin: 0;
+    color: #1a7a2e;
+}
+
+/* --- Fields --- */
+.vc-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    margin-bottom: 1.5rem;
+}
+
+.vc-field {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 0.75rem 0.85rem;
+    border-radius: 1rem;
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    opacity: 0;
+    transform: translateX(-12px);
+}
+
+.vc-field--in {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.vc-field:hover {
+    background: #F8F9FA;
+}
+
+.vc-field-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 0.75rem;
+    background: #F0F0F0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #212121;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+}
+
+.vc-field:hover .vc-field-icon {
+    background: #212121;
+    color: #C9FF1F;
+}
+
+.vc-field-body {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.vc-field-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: #ADADAD;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    line-height: 1;
+    margin-bottom: 0.2rem;
+}
+
+.vc-field-value {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #212121;
+    line-height: 1.3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.vc-link {
+    text-decoration: none;
+    color: #212121;
+    transition: color 0.2s;
+}
+
+.vc-link:hover {
+    color: #555;
+}
+
+.vc-field-sub {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.75rem;
+    color: #ADADAD;
+    font-weight: 400;
+    margin-top: 0.1rem;
+}
+
+/* --- Copy Button --- */
+.vcard-copy-btn {
+    width: 34px;
+    height: 34px;
+    border-radius: 0.6rem;
+    border: 1px solid #E8E8E8;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ADADAD;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: all 0.25s ease;
+    opacity: 0;
+}
+
+.vc-field:hover .vcard-copy-btn {
+    opacity: 1;
+}
+
+.vcard-copy-btn:hover {
+    background: #212121;
+    color: #C9FF1F;
+    border-color: #212121;
+}
+
+.vcard-copy-icon--done {
+    color: #C9FF1F;
+}
+
+/* Always show copy buttons on touch devices */
+@media (hover: none) {
+    .vcard-copy-btn {
+        opacity: 1;
+    }
+}
+
+/* --- Socials --- */
+.vc-socials {
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+}
+
+.vc-social {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1.5px solid #E0E0E0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #212121;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.vc-social:hover {
+    background: #212121;
+    color: #C9FF1F;
+    border-color: #212121;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(33, 33, 33, 0.15);
+}
+
+/* --- Save Button --- */
+.vc-save {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 1rem;
+    border-radius: 1.25rem;
+    border: none;
+    background: #212121;
+    color: #C9FF1F;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: -0.01em;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.vc-save::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(201, 255, 31, 0.08), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.vc-save:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(33, 33, 33, 0.25);
+}
+
+.vc-save:hover::before {
+    opacity: 1;
+}
+
+.vc-save:active {
+    transform: translateY(0) scale(0.98);
+}
+
+.vc-save--done {
+    background: #1a7a2e;
+    color: #ffffff;
+}
+
+/* --- Footer --- */
+.vc-footer {
+    margin-top: 2rem;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.75rem;
+    color: #ADADAD;
+    text-decoration: none;
+    letter-spacing: 0.02em;
+    transition: color 0.2s;
+    z-index: 1;
+}
+
+.vc-footer:hover {
+    color: #757575;
+}
+
+.vc-footer strong {
+    font-family: 'Inter', sans-serif;
+    font-weight: 800;
+    color: #757575;
+    letter-spacing: -0.03em;
+}
+
+.vc-footer strong span {
+    color: #C9FF1F;
+}
+
+/* --- Responsive --- */
+@media (max-width: 480px) {
+    .vc-page {
+        padding: 1.5rem 0.75rem;
+        justify-content: flex-start;
+        padding-top: 4rem;
+    }
+
+    .vc-card {
+        padding: 2rem 1.5rem 1.75rem;
+        border-radius: 1.5rem;
+    }
+
+    .vc-name {
+        font-size: 1.4rem;
+    }
+
+    .vc-avatar {
+        width: 56px;
+        height: 56px;
+    }
+
+    .vc-avatar span {
+        font-size: 1.15rem;
+    }
+
+    .vc-field {
+        padding: 0.6rem 0.65rem;
+    }
+
+    .vc-field-icon {
+        width: 34px;
+        height: 34px;
+    }
+
+    .vc-field-value {
+        font-size: 0.875rem;
+    }
+
+    .vcard-copy-btn {
+        opacity: 1;
+    }
+}

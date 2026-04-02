@@ -5,10 +5,12 @@ import { Carousel } from '../components/ui/Carousel';
 import Services from '../components/Services';
 import Portfolio from '../components/Portfolio';
 import { useLanguage } from '../lib/i18n';
+import { useScrollReveal } from '../lib/useScrollReveal';
 
-const ReviewCard = ({ item }) => {
+const ReviewCard = ({ item, index }) => {
     const { language } = useLanguage();
     const [isExpanded, setIsExpanded] = useState(false);
+    const cardRef = useScrollReveal({ threshold: 0.1 });
     
     const description = item.description || '';
     const words = description.split(/\s+/);
@@ -16,7 +18,11 @@ const ReviewCard = ({ item }) => {
     const displayText = !isLong || isExpanded ? description : words.slice(0, 20).join(' ') + '...';
 
     return (
-        <div className="bg-white rounded-[32px] p-8 md:p-10 shadow-2xl shadow-obsidian/5 border border-obsidian/10 flex flex-col items-center text-center hover:-translate-y-4 hover:shadow-chartreuse/20 transition-all duration-500 ease-out h-full">
+        <div
+            ref={cardRef}
+            className="srv-card-reveal bg-white rounded-[32px] p-8 md:p-10 shadow-2xl shadow-obsidian/5 border border-obsidian/10 flex flex-col items-center text-center hover:-translate-y-4 hover:shadow-chartreuse/20 transition-all duration-500 ease-out h-full"
+            style={{ transitionDelay: `${index * 120}ms` }}
+        >
             <div className="w-16 h-16 rounded-full bg-neutral flex items-center justify-center mb-6 text-2xl border border-obsidian/10 shadow-inner flex-shrink-0">
                 <span className="carousel-icon-container text-chartreuse">★</span>
             </div>
@@ -40,6 +46,10 @@ const ReviewCard = ({ item }) => {
 
 const Home = () => {
     const { t } = useLanguage();
+    const voiceHeaderRef = useScrollReveal();
+    const voiceMicRef = useScrollReveal({ className: 'mic-visible' });
+    const reviewsHeaderRef = useScrollReveal();
+
     return (
         <div className="flex flex-col min-h-screen">
             <CinematicHero 
@@ -53,13 +63,18 @@ const Home = () => {
             {/* AI Voice Input Section */}
             <section className="py-24 bg-white border-y border-gray-light flex flex-col items-center justify-center relative shadow-lg z-30">
                 <div className="container max-w-3xl text-center">
-                    <h2 className="text-4xl md:text-5xl font-heading font-black text-obsidian mb-6 tracking-tight">
-                        {t('ai.titleStart')} <span className="text-accent underline decoration-chartreuse decoration-4 md:decoration-8 underline-offset-4 md:underline-offset-8">{t('ai.titleIdea')}</span>{t('ai.titleEnd')}
-                    </h2>
-                    <p className="text-gray-dark text-lg md:text-xl font-body font-light mb-12">
-                        {t('ai.desc')}
-                    </p>
-                    <div className="p-8 md:p-12 radius-extreme bg-neutral border border-gray-light shadow-2xl flex flex-col items-center justify-center">
+                    <div ref={voiceHeaderRef} className="srv-reveal">
+                        <h2 className="text-4xl md:text-5xl font-heading font-black text-obsidian mb-6 tracking-tight">
+                            {t('ai.titleStart')} <span className="text-accent underline decoration-chartreuse decoration-4 md:decoration-8 underline-offset-4 md:underline-offset-8">{t('ai.titleIdea')}</span>{t('ai.titleEnd')}
+                        </h2>
+                        <p className="text-gray-dark text-lg md:text-xl font-body font-light mb-12">
+                            {t('ai.desc')}
+                        </p>
+                    </div>
+                    <div
+                        ref={voiceMicRef}
+                        className="mic-reveal p-8 md:p-12 radius-extreme bg-neutral border border-gray-light shadow-2xl flex flex-col items-center justify-center"
+                    >
                         <AIVoiceInput 
                             placeholderText={t('ai.inputPlaceholder')}
                             recordingText={t('ai.inputRecording')}
@@ -68,9 +83,9 @@ const Home = () => {
                 </div>
             </section>
 
-            {/* Showcase Carousel */}
+            {/* Showcase Carousel / Testimonials */}
             <section className="py-24 bg-neutral border-b border-gray-light overflow-hidden flex flex-col items-center justify-center">
-                <div className="container text-center mb-20 md:mb-24">
+                <div ref={reviewsHeaderRef} className="srv-reveal container text-center mb-20 md:mb-24">
                     <h2 className="text-3xl md:text-5xl font-heading font-black text-obsidian tracking-tight">
                         {t('reviews.titleStart')} <span className="text-accent">{t('reviews.titleAccent')}</span>
                     </h2>
@@ -88,10 +103,10 @@ const Home = () => {
                     />
                 </div>
 
-                {/* Desktop View: Multi-card Grid */}
+                {/* Desktop View: Multi-card Grid with staggered reveal */}
                 <div className="hidden md:grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-6xl mx-auto px-4 lg:px-8">
                     {t('carouselItems').map((item, idx) => (
-                        <ReviewCard key={idx} item={item} />
+                        <ReviewCard key={idx} item={item} index={idx} />
                     ))}
                 </div>
             </section>
@@ -103,3 +118,4 @@ const Home = () => {
 };
 
 export default Home;
+

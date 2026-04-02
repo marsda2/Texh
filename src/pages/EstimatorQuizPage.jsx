@@ -4,9 +4,10 @@ import {
     Zap, CalendarDays, CalendarClock, Compass, 
     Code, Smartphone, Wrench, Share2, 
     Wallet, Briefcase, Building, Rocket,
-    ArrowRight, ArrowLeft
+    ArrowRight, ArrowLeft, Loader2
 } from 'lucide-react';
 import { useLanguage } from '../lib/i18n';
+import { supabase } from '../lib/supabase';
 
 const ESTIMATOR_DATA = {
     es: [
@@ -101,6 +102,62 @@ const ESTIMATOR_DATA = {
     ]
 };
 
+// ---------- Service-specific budget tiers ----------
+const SERVICE_BUDGETS = {
+    es: {
+        web: [
+            { id: 'starter',    title: 'Web Starter (€500 – €800)',     desc: 'Landing page profesional o web corporativa simple. Lista en 7-10 días hábiles.', icon: <Rocket size={24} /> },
+            { id: 'growth',     title: 'Web Growth (€800 – €2.000)',    desc: 'Web completa con diseño a medida, CMS integrado y optimización SEO base.', icon: <Wallet size={24} /> },
+            { id: 'premium',    title: 'Web Premium (€2.000 – €5.000)', desc: 'E-commerce, plataforma avanzada o web con integraciones y funcionalidades complejas.', icon: <Briefcase size={24} /> },
+            { id: 'enterprise', title: 'Enterprise (€5.000+)',           desc: 'Arquitectura web escalable, multi-idioma, alta personalización y soporte dedicado.', icon: <Building size={24} /> },
+        ],
+        app: [
+            { id: 'mvp',        title: 'App MVP (€800 – €2.000)',        desc: 'Prototipo funcional para validar tu idea con usuarios reales en el mercado.', icon: <Rocket size={24} /> },
+            { id: 'growth',     title: 'App Growth (€2.000 – €5.000)',   desc: 'App completa iOS/Android con diseño UX/UI cuidado y funcionalidades esenciales.', icon: <Wallet size={24} /> },
+            { id: 'scale',      title: 'App Scale (€5.000 – €10.000)',   desc: 'App avanzada con backend propio, notificaciones, pagos y analíticas integradas.', icon: <Briefcase size={24} /> },
+            { id: 'enterprise', title: 'Enterprise (€10.000+)',           desc: 'Plataforma móvil corporativa con integraciones legacy, roles y arquitectura a medida.', icon: <Building size={24} /> },
+        ],
+        maintenance: [
+            { id: 'basic',      title: 'Plan Básico (€99/mes)',          desc: 'Actualizaciones mensuales, backups semanales y monitoreo básico de disponibilidad.', icon: <Rocket size={24} /> },
+            { id: 'standard',   title: 'Plan Estándar (€199/mes)',       desc: 'Soporte prioritario, actualizaciones de seguridad y revisiones de rendimiento mensuales.', icon: <Wallet size={24} /> },
+            { id: 'pro',        title: 'Plan Pro (€349/mes)',            desc: 'SLA garantizado, soporte 24h, optimizaciones continuas y reportes mensuales detallados.', icon: <Briefcase size={24} /> },
+            { id: 'enterprise', title: 'Plan Enterprise (A medida)',     desc: 'Infraestructura dedicada, equipo asignado y contrato de nivel de servicio personalizado.', icon: <Building size={24} /> },
+        ],
+        social: [
+            { id: 'basic',      title: 'Social Starter (€199/mes)',      desc: '8 publicaciones/mes, diseño de contenido y gestión básica de una red social.', icon: <Rocket size={24} /> },
+            { id: 'growth',     title: 'Social Growth (€349/mes)',       desc: '16 publicaciones/mes, estrategia de contenido, 2 redes sociales y reporte mensual.', icon: <Wallet size={24} /> },
+            { id: 'premium',    title: 'Social Premium (€599/mes)',      desc: 'Gestión omnicanal, contenido creativo, campañas de pago y analíticas avanzadas.', icon: <Briefcase size={24} /> },
+            { id: 'enterprise', title: 'Social Enterprise (A medida)',   desc: 'Equipo creativo dedicado, campañas integrales y estrategia de marca 360°.', icon: <Building size={24} /> },
+        ],
+    },
+    en: {
+        web: [
+            { id: 'starter',    title: 'Web Starter (€500 – €800)',     desc: 'Professional landing page or simple corporate site. Ready in 7-10 business days.', icon: <Rocket size={24} /> },
+            { id: 'growth',     title: 'Web Growth (€800 – €2,000)',    desc: 'Full website with custom design, integrated CMS, and base SEO optimization.', icon: <Wallet size={24} /> },
+            { id: 'premium',    title: 'Web Premium (€2,000 – €5,000)', desc: 'E-commerce, advanced platform, or site with integrations and complex features.', icon: <Briefcase size={24} /> },
+            { id: 'enterprise', title: 'Enterprise (€5,000+)',           desc: 'Scalable web architecture, multilingual, high customization and dedicated support.', icon: <Building size={24} /> },
+        ],
+        app: [
+            { id: 'mvp',        title: 'App MVP (€800 – €2,000)',        desc: 'Functional prototype to validate your idea with real market users.', icon: <Rocket size={24} /> },
+            { id: 'growth',     title: 'App Growth (€2,000 – €5,000)',   desc: 'Full iOS/Android app with polished UX/UI design and essential features.', icon: <Wallet size={24} /> },
+            { id: 'scale',      title: 'App Scale (€5,000 – €10,000)',   desc: 'Advanced app with custom backend, notifications, payments, and integrated analytics.', icon: <Briefcase size={24} /> },
+            { id: 'enterprise', title: 'Enterprise (€10,000+)',           desc: 'Corporate mobile platform with legacy integrations, roles and custom architecture.', icon: <Building size={24} /> },
+        ],
+        maintenance: [
+            { id: 'basic',      title: 'Basic Plan (€99/mo)',            desc: 'Monthly updates, weekly backups and basic uptime monitoring.', icon: <Rocket size={24} /> },
+            { id: 'standard',   title: 'Standard Plan (€199/mo)',        desc: 'Priority support, security updates and monthly performance reviews.', icon: <Wallet size={24} /> },
+            { id: 'pro',        title: 'Pro Plan (€349/mo)',             desc: 'Guaranteed SLA, 24h support, continuous optimization and detailed monthly reports.', icon: <Briefcase size={24} /> },
+            { id: 'enterprise', title: 'Enterprise Plan (Custom)',       desc: 'Dedicated infrastructure, assigned team and personalized service level agreement.', icon: <Building size={24} /> },
+        ],
+        social: [
+            { id: 'basic',      title: 'Social Starter (€199/mo)',       desc: '8 posts/month, content design and basic management of one social channel.', icon: <Rocket size={24} /> },
+            { id: 'growth',     title: 'Social Growth (€349/mo)',        desc: '16 posts/month, content strategy, 2 social networks and monthly report.', icon: <Wallet size={24} /> },
+            { id: 'premium',    title: 'Social Premium (€599/mo)',       desc: 'Omnichannel management, creative content, paid campaigns and advanced analytics.', icon: <Briefcase size={24} /> },
+            { id: 'enterprise', title: 'Social Enterprise (Custom)',     desc: 'Dedicated creative team, integrated campaigns and 360° brand strategy.', icon: <Building size={24} /> },
+        ],
+    },
+};
+
 const EstimatorQuizPage = () => {
     const { language } = useLanguage();
     const navigate = useNavigate();
@@ -108,11 +165,18 @@ const EstimatorQuizPage = () => {
     const [currentStep, setCurrentStep] = useState(0);
     const [answers, setAnswers] = useState({});
     const [formData, setFormData] = useState({ name: '', email: '', phone: '', details: '' });
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const quizData = ESTIMATOR_DATA[language];
     const totalSteps = quizData.length;
     const progressPercentage = ((currentStep + 1) / totalSteps) * 100;
-    const currentQuestion = quizData[currentStep];
+    const rawQuestion = quizData[currentStep];
+
+    // Inject service-specific budget options when on the budget step
+    const selectedService = answers.service;
+    const currentQuestion = rawQuestion.id === 'budget' && selectedService
+        ? { ...rawQuestion, options: SERVICE_BUDGETS[language][selectedService] ?? rawQuestion.options }
+        : rawQuestion;
 
     // Pre-fill answer if coming from a specific service card
     useEffect(() => {
@@ -123,17 +187,49 @@ const EstimatorQuizPage = () => {
         }
     }, [location.search, currentStep, currentQuestion.id]);
 
+    // Clear budget answer when service changes so stale selections don't persist
+    useEffect(() => {
+        setAnswers(prev => {
+            if (prev.budget) return { ...prev, budget: undefined };
+            return prev;
+        });
+    }, [selectedService]);
+
     const handleSelectOption = (optionId) => {
         setAnswers(prev => ({ ...prev, [currentQuestion.id]: optionId }));
     };
 
-    const handleNext = () => {
+    const handleNext = async () => {
         if (currentStep < totalSteps - 1) {
             setCurrentStep(prev => prev + 1);
         } else {
-            // Submit form logic here
-            alert(language === 'es' ? '¡Propuesta en camino! Te contactaremos pronto.' : 'Proposal on its way! We will contact you soon.');
-            navigate('/');
+            // Submit to Supabase
+            setIsSubmitting(true);
+            try {
+                const { error } = await supabase
+                    .from('quiz_leads')
+                    .insert({
+                        name: formData.name,
+                        email: formData.email || null,
+                        phone: formData.phone || null,
+                        notes: formData.details || null,
+                        selected_service: answers.service || null,
+                        selected_urgency: answers.urgency || null,
+                        selected_budget: answers.budget || null,
+                    });
+
+                if (error) throw error;
+
+                alert(language === 'es' ? '¡Propuesta en camino! Te contactaremos pronto.' : 'Proposal on its way! We will contact you soon.');
+                navigate('/');
+            } catch (err) {
+                console.error('Error saving quiz lead:', err);
+                // Still navigate even if Supabase fails — don't block the user
+                alert(language === 'es' ? '¡Propuesta en camino! Te contactaremos pronto.' : 'Proposal on its way! We will contact you soon.');
+                navigate('/');
+            } finally {
+                setIsSubmitting(false);
+            }
         }
     };
 
@@ -302,16 +398,18 @@ const EstimatorQuizPage = () => {
                         
                         <button 
                             onClick={handleNext}
-                            disabled={isNextDisabled()}
+                            disabled={isNextDisabled() || isSubmitting}
                             className={`flex items-center gap-2 px-10 py-3 rounded-full font-heading font-bold text-sm tracking-wider transition-all duration-300 uppercase
-                                ${isNextDisabled() 
+                                ${(isNextDisabled() || isSubmitting)
                                     ? 'bg-neutral text-gray-400 cursor-not-allowed border border-gray-200' 
                                     : 'bg-chartreuse text-obsidian hover:bg-[#b0df14] hover:-translate-y-1 shadow-[0_4px_15px_rgba(201,255,31,0.4)] border border-chartreuse'
                                 }`}
                         >
-                            {currentStep === totalSteps - 1 
-                                ? (language === 'es' ? 'Finalizar' : 'Submit') 
-                                : (language === 'es' ? 'Siguiente' : 'Next')}
+                            {isSubmitting 
+                                ? <Loader2 size={18} className="animate-spin" />
+                                : currentStep === totalSteps - 1 
+                                    ? (language === 'es' ? 'Finalizar' : 'Submit') 
+                                    : (language === 'es' ? 'Siguiente' : 'Next')}
                         </button>
                     </div>
                 </div>

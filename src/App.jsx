@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react
 import Home from './pages/Home';
 import AboutPage from './pages/AboutPage';
 import EstimatorQuizPage from './pages/EstimatorQuizPage';
+import ContactCardPage from './pages/ContactCardPage';
 import Footer from './components/Footer';
 import { LanguageProvider, useLanguage } from './lib/i18n';
 
@@ -144,7 +145,10 @@ function App() {
     return (
         <LanguageProvider>
             <Router>
-                <AppContent />
+                <Routes>
+                    <Route path="/contact/xiuny" element={<ContactCardPage />} />
+                    <Route path="/*" element={<AppContent />} />
+                </Routes>
             </Router>
         </LanguageProvider>
     );
