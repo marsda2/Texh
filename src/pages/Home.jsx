@@ -1,10 +1,42 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { CinematicHero } from '../components/ui/cinematic-landing-hero';
 import { AIVoiceInput } from '../components/ui/ai-voice-input';
 import { Carousel } from '../components/ui/Carousel';
 import Services from '../components/Services';
 import Portfolio from '../components/Portfolio';
 import { useLanguage } from '../lib/i18n';
+
+const ReviewCard = ({ item }) => {
+    const { language } = useLanguage();
+    const [isExpanded, setIsExpanded] = useState(false);
+    
+    const description = item.description || '';
+    const words = description.split(/\s+/);
+    const isLong = words.length > 20;
+    const displayText = !isLong || isExpanded ? description : words.slice(0, 20).join(' ') + '...';
+
+    return (
+        <div className="bg-white rounded-[32px] p-8 md:p-10 shadow-2xl shadow-obsidian/5 border border-obsidian/10 flex flex-col items-center text-center hover:-translate-y-4 hover:shadow-chartreuse/20 transition-all duration-500 ease-out h-full">
+            <div className="w-16 h-16 rounded-full bg-neutral flex items-center justify-center mb-6 text-2xl border border-obsidian/10 shadow-inner flex-shrink-0">
+                <span className="carousel-icon-container text-chartreuse">★</span>
+            </div>
+            <h3 className="text-2xl font-bold font-heading text-obsidian mb-4 tracking-tight">
+                {item.title}
+            </h3>
+            <p className="text-gray-dark font-body text-base leading-relaxed flex-grow">
+                {displayText}
+                {isLong && (
+                    <button 
+                        onClick={() => setIsExpanded(!isExpanded)}
+                        className="text-obsidian font-bold text-sm ml-2 hover:text-chartreuse hover:underline transition-colors bg-transparent border-none cursor-pointer inline-block"
+                    >
+                        {isExpanded ? (language === 'es' ? 'Leer menos' : 'Read less') : (language === 'es' ? 'Leer más' : 'Read more')}
+                    </button>
+                )}
+            </p>
+        </div>
+    );
+};
 
 const Home = () => {
     const { t } = useLanguage();
@@ -59,20 +91,7 @@ const Home = () => {
                 {/* Desktop View: Multi-card Grid */}
                 <div className="hidden md:grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-6xl mx-auto px-4 lg:px-8">
                     {t('carouselItems').map((item, idx) => (
-                        <div 
-                            key={idx} 
-                            className="bg-white rounded-[32px] p-8 md:p-10 shadow-2xl shadow-obsidian/5 border border-obsidian/10 flex flex-col items-center text-center hover:-translate-y-4 hover:shadow-chartreuse/20 transition-all duration-500 ease-out"
-                        >
-                            <div className="w-16 h-16 rounded-full bg-neutral flex items-center justify-center mb-6 text-2xl border border-obsidian/10 shadow-inner">
-                                <span className="carousel-icon-container text-chartreuse">★</span>
-                            </div>
-                            <h3 className="text-2xl font-bold font-heading text-obsidian mb-4 tracking-tight">
-                                {item.title}
-                            </h3>
-                            <p className="text-gray-dark font-body text-base leading-relaxed">
-                                {item.description}
-                            </p>
-                        </div>
+                        <ReviewCard key={idx} item={item} />
                     ))}
                 </div>
             </section>

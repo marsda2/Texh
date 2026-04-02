@@ -32,6 +32,18 @@ Nuestra comunicación debe ser un reflejo de nuestro enfoque dual: técnico pero
 - **Texto Principal:** Carbón Obsidiana (`#212121`). Sólido y profesional.
 - **Color de Acento (El "Shock"):** Chartreuse Eléctrico (`#C9FF1F`). Comunica innovación, energía y tecnología de vanguardia.
 
+**Reglas de Aplicación de Fondo y Contraste:**
+- **Fondos Blancos (`bg-white`):**
+  - **Uso:** Tarjetas (Cards), contenedores de inputs, barras superiores fijas. Funcionan como elemento elevado/activo.
+  - **Textos:** SIEMPRE usar Carbón Obsidiana (`text-obsidian`) o Grises oscuros (`text-gray-dark`).
+  - **Bordes/Contornos:** Gris claro (`border-gray-200`) e interacciones `hover/focus` en Obsidiana o Chartreuse de alta intensidad (shadows).
+  - **⚠️ REGLA DE ORO:** NUNCA usar texto Chartreuse sobre fondo blanco. El amarillo limón sobre blanco no tiene contraste y perjudica la legibilidad. Si el texto debe ser interactivo, usa Obsidiana, o en su defecto, usa el Chartreuse como fondo sólido de un botón/etiqueta con texto negro.
+- **Fondos Negros / Carbón Obsidiana (`bg-obsidian`):**
+  - **Uso:** Hero sections, footers o "llamados a la acción" (CTAs) de máximo impacto visual.
+  - **Textos:** Blanco claro o gris. Aquí **SÍ** se permite usar el texto en Chartreuse Eléctrico (`text-chartreuse`) para titulares o acentos fuertes, ya que el contraste es perfecto.
+- **Fondos Gris Neutro (`bg-[#F8F9FA]` / `bg-neutral`):**
+  - **Uso:** El "lienzo" base de la pantalla entera. Separa los fondos blancos y da profundidad.
+
 **Jerarquía Visual y Maquetación:**
 - **Espacio en Blanco (Aire):** Obligatorio para dar un aspecto premium, editorial y sofisticado (estilo revista). No se permite la saturación.
 - **Contraste Extremo:** Uso del Carbón Obsidiana y Chartreuse Eléctrico sobre el fondo Gris Neutro.

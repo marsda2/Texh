@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
 import Home from './pages/Home';
 import AboutPage from './pages/AboutPage';
+import EstimatorQuizPage from './pages/EstimatorQuizPage';
 import Footer from './components/Footer';
 import { LanguageProvider, useLanguage } from './lib/i18n';
 
@@ -130,6 +131,7 @@ function AppContent() {
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/about" element={<AboutPage />} />
+                    <Route path="/estimator" element={<EstimatorQuizPage />} />
                 </Routes>
             </main>
 

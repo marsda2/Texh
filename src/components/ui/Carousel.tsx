@@ -1,24 +1,25 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { motion, useMotionValue, useTransform } from 'motion/react';
 import { FiStar, FiMessageSquare, FiTrendingUp } from 'react-icons/fi';
+import { useLanguage } from '../../lib/i18n';
 import './Carousel.css';
 
 export const DEFAULT_ITEMS = [
   {
-    title: 'Ana López',
-    description: '"Desde que renovaron nuestra web, las reservas se han duplicado. ¡Un equipo increíble que entiende lo que necesitas!"',
+    title: 'Valeria Ríos',
+    description: '"Sinceramente, superaron nuestras expectativas. Desde el lanzamiento de la nueva web hemos notado un aumento constante en las reservas directas. Son muy resolutivos, captaron lo que queríamos transmitir desde la primera reunión y cumplieron con las fechas."',
     id: 1,
     icon: <FiStar className="carousel-icon" />
   },
   {
-    title: 'Carlos Méndez',
-    description: '"No sabíamos nada de tecnología, y nos explicaron todo paso a paso. Ahora tenemos una tienda online que vende sola."',
+    title: 'Darío Montenegro',
+    description: '"Teníamos muchas dudas sobre dar el salto digital porque no somos para nada técnicos. Tuvieron mucha paciencia para explicarnos todo el proceso y nos armaron una tienda muy fácil de gestionar. La verdad es que ahora la página es nuestro principal canal de ventas."',
     id: 2,
     icon: <FiMessageSquare className="carousel-icon" />
   },
   {
-    title: 'Laura Gómez',
-    description: '"El diseño es espectacular y nuestros clientes siempre nos felicitan. Fue la mejor inversión para nuestro negocio."',
+    title: 'Inés Salgado',
+    description: '"Buscábamos un cambio de imagen que se viera premium y moderno, y el resultado ha sido impecable. Ya van varios clientes que nos escriben para felicitarnos por lo bien que se ve la nueva página. Fue un gran acierto confiar en ellos, la web por fin refleja la calidad de nuestro trabajo."',
     id: 3,
     icon: <FiTrendingUp className="carousel-icon" />
   }
@@ -34,13 +35,23 @@ function CarouselItem({ item, index, itemWidth, round, trackItemOffset, x, trans
   const outputRange = [90, 0, -90];
   const rotateY = useTransform(x, range, outputRange, { clamp: false });
 
+  const [isExpanded, setIsExpanded] = useState(false);
+  const { language } = useLanguage();
+  const maxWords = 20;
+  
+  const description = item.description || '';
+  const words = description.split(/\s+/);
+  const isLong = words.length > maxWords;
+  const displayText = !isLong || isExpanded ? description : words.slice(0, maxWords).join(' ') + '...';
+
   return (
     <motion.div
       key={`${item?.id ?? index}-${index}`}
       className={`carousel-item ${round ? 'round' : ''}`}
       style={{
         width: itemWidth,
-        height: round ? itemWidth : '100%',
+        height: round ? itemWidth : 'auto',
+        minHeight: round ? 'auto' : '100%',
         rotateY: rotateY as any,
         ...(round && { borderRadius: '50%' })
       }}
@@ -49,9 +60,19 @@ function CarouselItem({ item, index, itemWidth, round, trackItemOffset, x, trans
       <div className={`carousel-item-header ${round ? 'round' : ''}`}>
         <span className="carousel-icon-container text-chartreuse">{item.icon}</span>
       </div>
-      <div className="carousel-item-content">
+      <div className="carousel-item-content flex flex-col flex-grow">
         <div className="carousel-item-title">{item.title}</div>
-        <p className="carousel-item-description">{item.description}</p>
+        <p className="carousel-item-description">
+          {displayText}
+          {isLong && (
+            <button 
+              onClick={(e) => { e.stopPropagation(); setIsExpanded(!isExpanded); }}
+              className="text-obsidian font-bold text-sm ml-2 hover:text-chartreuse hover:underline transition-colors bg-transparent border-none cursor-pointer"
+            >
+              {isExpanded ? (language === 'es' ? 'Leer menos' : 'Read less') : (language === 'es' ? 'Leer más' : 'Read more')}
+            </button>
+          )}
+        </p>
       </div>
     </motion.div>
   );

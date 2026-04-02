@@ -89,16 +89,16 @@ const translations = {
     },
     carouselItems: [
       {
-        title: "Ana López",
-        description: '"Desde que renovaron nuestra web, las reservas se han duplicado. ¡Un equipo increíble que entiende lo que necesitas!"',
+        title: "Valeria Ríos",
+        description: '"Sinceramente, superaron nuestras expectativas. Desde el lanzamiento de la nueva web hemos notado un aumento constante en las reservas directas. Son muy resolutivos, captaron lo que queríamos transmitir desde la primera reunión y cumplieron con las fechas."',
       },
       {
-        title: "Carlos Méndez",
-        description: '"No sabíamos nada de tecnología, y nos explicaron todo paso a paso. Ahora tenemos una tienda online que vende sola."',
+        title: "Darío Montenegro",
+        description: '"Teníamos muchas dudas sobre dar el salto digital porque no somos para nada técnicos. Tuvieron mucha paciencia para explicarnos todo el proceso y nos armaron una tienda muy fácil de gestionar. La verdad es que ahora la página es nuestro principal canal de ventas."',
       },
       {
-        title: "Laura Gómez",
-        description: '"El diseño es espectacular y nuestros clientes siempre nos felicitan. Fue la mejor inversión para nuestro negocio."',
+        title: "Inés Salgado",
+        description: '"Buscábamos un cambio de imagen que se viera premium y moderno, y el resultado ha sido impecable. Ya van varios clientes que nos escriben para felicitarnos por lo bien que se ve la nueva página. Fue un gran acierto confiar en ellos, la web por fin refleja la calidad de nuestro trabajo."',
       }
     ],
     projects: [
@@ -196,16 +196,16 @@ const translations = {
     },
     carouselItems: [
       {
-        title: "Ana López",
-        description: '"Since they revamped our website, bookings have doubled. An incredible team that truly understands what you need!"',
+        title: "Clara Thorne",
+        description: '"Honestly, they exceeded our expectations. Since launching the new site, we\'ve seen a steady increase in direct bookings. They are highly proactive, grasped exactly what we wanted to convey from the very first meeting, and delivered right on schedule."',
       },
       {
-        title: "Carlos Méndez",
-        description: '"We knew nothing about tech, and they explained everything step by step. Now we have an online store that sells on autopilot."',
+        title: "Julian Mercer",
+        description: '"We were pretty hesitant about making the digital leap because we aren\'t tech-savvy at all. They were incredibly patient in explaining the whole process and built us a store that\'s surprisingly easy to manage. To be honest, the website is now our main sales channel."',
       },
       {
-        title: "Laura Gómez",
-        description: '"The design is spectacular and our clients always compliment us. It was the best investment for our business."',
+        title: "Hazel Brooks",
+        description: '"We were looking for a rebrand that felt premium and modern, and the result is flawless. We\'ve actually had several clients reach out just to compliment the new website. Trusting them was absolutely the right call; the site finally reflects the true quality of our work."',
       }
     ],
     projects: [
