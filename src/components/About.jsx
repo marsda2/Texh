@@ -40,8 +40,8 @@ const About = () => {
                                     <p className="text-gray-dark font-body font-light text-sm leading-relaxed max-w-sm mb-4">
                                         {t('about.pmDesc')}
                                     </p>
-                                    <a href="mailto:xiuny@texhco.com" className="inline-flex items-center gap-2 text-obsidian hover:text-chartreuse transition-colors font-body text-sm font-semibold underline decoration-transparent hover:decoration-chartreuse underline-offset-4">
-                                        <Mail size={16} /> xiuny@texhco.com
+                                    <a href="mailto:xiunellys@texhco.com" className="inline-flex items-center gap-2 text-obsidian hover:text-chartreuse transition-colors font-body text-sm font-semibold underline decoration-transparent hover:decoration-chartreuse underline-offset-4">
+                                        <Mail size={16} /> xiunellys@texhco.com
                                     </a>
                                 </div>
                             </div>
