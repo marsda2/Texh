@@ -23,19 +23,16 @@ const HamburgerButton = ({ isOpen, setIsOpen }) => (
         aria-label="Toggle Menu"
     >
         <span
-            className={`h-[2px] bg-chartreuse rounded-full transition-all duration-300 ease-in-out transform origin-center ${
-                isOpen ? 'w-6 rotate-45 translate-y-[8px]' : 'w-5 self-end mr-3 group-hover:w-6'
-            }`}
+            className={`h-[2px] bg-chartreuse rounded-full transition-all duration-300 ease-in-out transform origin-center ${isOpen ? 'w-6 rotate-45 translate-y-[8px]' : 'w-5 self-end mr-3 group-hover:w-6'
+                }`}
         />
         <span
-            className={`h-[2px] bg-chartreuse rounded-full transition-all duration-300 ease-in-out origin-center ${
-                isOpen ? 'w-0 opacity-0' : 'w-6 opacity-100'
-            }`}
+            className={`h-[2px] bg-chartreuse rounded-full transition-all duration-300 ease-in-out origin-center ${isOpen ? 'w-0 opacity-0' : 'w-6 opacity-100'
+                }`}
         />
         <span
-            className={`h-[2px] bg-chartreuse rounded-full transition-all duration-300 ease-in-out transform origin-center ${
-                isOpen ? 'w-6 -rotate-45 -translate-y-[8px]' : 'w-4 self-start ml-3 group-hover:w-6'
-            }`}
+            className={`h-[2px] bg-chartreuse rounded-full transition-all duration-300 ease-in-out transform origin-center ${isOpen ? 'w-6 -rotate-45 -translate-y-[8px]' : 'w-4 self-start ml-3 group-hover:w-6'
+                }`}
         />
     </button>
 );
@@ -83,7 +80,7 @@ function AppContent() {
                             </>
                         )}
                         <a href="#contact" className="nav-link contact-link">{t('nav.contact')}</a>
-                        
+
                         {/* Desktop Language Toggle */}
                         <div className="flex items-center gap-2 ml-6 font-heading font-black text-sm tracking-widest">
                             <button onClick={() => setLanguage('es')} className={`transition-all ${language === 'es' ? 'text-chartreuse opacity-100 scale-110 drop-shadow-md' : 'text-obsidian opacity-50 hover:opacity-100 hover:scale-105'}`}>ES</button>
@@ -91,15 +88,14 @@ function AppContent() {
                             <button onClick={() => setLanguage('en')} className={`transition-all ${language === 'en' ? 'text-chartreuse opacity-100 scale-110 drop-shadow-md' : 'text-obsidian opacity-50 hover:opacity-100 hover:scale-105'}`}>EN</button>
                         </div>
                     </div>
-                    
+
                     <HamburgerButton isOpen={isMobileMenuOpen} setIsOpen={setIsMobileMenuOpen} />
                 </nav>
 
                 {/* Mobile Navigation Overlay */}
-                <div 
-                    className={`fixed inset-0 bg-neutral z-[-1] flex flex-col items-center justify-center transition-all duration-500 ease-in-out ${
-                        isMobileMenuOpen ? 'opacity-100 pointer-events-auto translate-y-0' : 'opacity-0 pointer-events-none -translate-y-8'
-                    }`}
+                <div
+                    className={`fixed inset-0 bg-neutral z-[-1] flex flex-col items-center justify-center transition-all duration-500 ease-in-out ${isMobileMenuOpen ? 'opacity-100 pointer-events-auto translate-y-0' : 'opacity-0 pointer-events-none -translate-y-8'
+                        }`}
                 >
                     <div className="flex flex-col items-center gap-8 text-3xl font-heading font-black">
                         <Link to="/" onClick={() => setIsMobileMenuOpen(false)} className={`transition-colors ${location.pathname === '/' ? 'text-chartreuse' : 'text-obsidian hover:text-chartreuse'}`}>{t('nav.home')}</Link>
@@ -116,7 +112,7 @@ function AppContent() {
                             </>
                         )}
                         <a href="#contact" onClick={() => setIsMobileMenuOpen(false)} className="text-white bg-obsidian px-8 py-3 rounded-full hover:text-chartreuse transition-colors mt-4">{t('nav.contact')}</a>
-                        
+
                         {/* Mobile Language Toggle */}
                         <div className="flex items-center gap-4 mt-4 text-xl">
                             <button onClick={() => { setLanguage('es'); setIsMobileMenuOpen(false); }} className={`transition-all ${language === 'es' ? 'text-chartreuse opacity-100 scale-110 drop-shadow-md' : 'text-obsidian opacity-50 hover:opacity-100'}`}>ES</button>
@@ -146,7 +142,7 @@ function App() {
         <LanguageProvider>
             <Router>
                 <Routes>
-                    <Route path="/contact/xiunellys" element={<ContactCardPage />} />
+                    <Route path="/contact/xiuny" element={<ContactCardPage />} />
                     <Route path="/*" element={<AppContent />} />
                 </Routes>
             </Router>

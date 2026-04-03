@@ -4,15 +4,15 @@ import { supabase } from '../lib/supabase';
 import './ContactCardPage.css';
 
 const CONTACT_INFO = {
-    displayName: 'Xiunellys',
-    fullName: 'Xiunellys',
+    displayName: 'Xiuny',
+    fullName: 'Xiuny',
     lastName: 'Huerta',
     initials: 'XH',
     title: 'Digital Advisor',
     company: 'Texh Co.',
     tagline: 'DIGITAL GROWTH ECOSYSTEMS',
-    email: 'xiunellys@texhco.com',
-    phone: '+34 600 000 000',
+    email: 'xiuny@texhco.com',
+    phone: '+1 332 200 1854',
     website: 'https://texhco.com',
     instagram: 'https://www.instagram.com/texh.co',
     linkedin: '#',
@@ -102,7 +102,7 @@ const ContactCardPage = () => {
                 .insert({
                     email: isEmail ? contactValue : null,
                     phone: !isEmail ? contactValue : null,
-                    card_owner: 'xiunellys',
+                    card_owner: 'xiuny',
                     source: 'contact_card',
                 });
             if (error) throw error;

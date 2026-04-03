@@ -52,7 +52,7 @@ Nuestra comunicación debe ser un reflejo de nuestro enfoque dual: técnico pero
 ## 5. Information Architecture & Content
 1. **Hero:** High-impact initial impression emphasizing "Tu Ecosistema Omnicanal Premium".
 2. **The Team (About - Separate Page):** 
-   - Managed by **Xiunellys Huerta** (Lead Project Manager).
+   - Managed by **Xiuny Huerta** (Lead Project Manager).
    - Focused on Full-Stack expertise and versatile B2B/B2C solution delivery.
    - Purpose: To establish human trust and showcase the brains behind the code.
 3. **Expertise (Services):** Detailed breakdown of technical capabilities.
