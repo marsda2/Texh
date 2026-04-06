@@ -1,21 +1,38 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { Mail, Phone, Globe, Copy, Check, Download, X, Linkedin, Instagram, Send, ArrowLeft, MessageCircle, Loader2 } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import './ContactCardPage.css';
 
-const CONTACT_INFO = {
-    displayName: 'Xiuny',
-    fullName: 'Xiuny',
-    lastName: 'Huerta',
-    initials: 'XH',
-    title: 'Digital Advisor',
-    company: 'Texh Co.',
-    tagline: 'DIGITAL GROWTH ECOSYSTEMS',
-    email: 'xiuny@texhco.com',
-    phone: '+1 332 200 1854',
-    website: 'https://texhco.com',
-    instagram: 'https://www.instagram.com/texh.co',
-    linkedin: '#',
+const USERS_DATA = {
+    xiuny: {
+        displayName: 'Xiuny',
+        fullName: 'Xiuny',
+        lastName: 'Huerta',
+        initials: 'XH',
+        title: 'Digital Advisor',
+        company: 'Texh Co.',
+        tagline: 'DIGITAL GROWTH ECOSYSTEMS',
+        email: 'xiuny@texhco.com',
+        phone: '+1 332 200 1854',
+        website: 'https://texhco.com',
+        instagram: 'https://www.instagram.com/texh.co',
+        linkedin: '#',
+    },
+    marcos: {
+        displayName: 'Marcos',
+        fullName: 'Marcos',
+        lastName: 'Troger',
+        initials: 'MT',
+        title: 'Fullstack Lead',
+        company: 'Texh Co.',
+        tagline: 'DIGITAL GROWTH ECOSYSTEMS',
+        email: 'marcos@texhco.com',
+        phone: '+1 332 200 1854',
+        website: 'https://texhco.com',
+        instagram: 'https://www.instagram.com/texh.co',
+        linkedin: '#',
+    }
 };
 
 // Generate vCard string
@@ -60,6 +77,9 @@ const CopyButton = ({ value, label }) => {
 };
 
 const ContactCardPage = () => {
+    const { username } = useParams();
+    const contactInfo = USERS_DATA[username?.toLowerCase()] || USERS_DATA.xiuny;
+
     const [mounted, setMounted] = useState(false);
     const [saving, setSaving] = useState(false);
     const [showForm, setShowForm] = useState(false);
@@ -74,11 +94,11 @@ const ContactCardPage = () => {
 
     const handleSave = () => {
         setSaving(true);
-        const blob = new Blob([generateVCard(CONTACT_INFO)], { type: 'text/vcard;charset=utf-8' });
+        const blob = new Blob([generateVCard(contactInfo)], { type: 'text/vcard;charset=utf-8' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = `${CONTACT_INFO.displayName}_${CONTACT_INFO.lastName}.vcf`;
+        a.download = `${contactInfo.displayName}_${contactInfo.lastName}.vcf`;
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
@@ -102,7 +122,7 @@ const ContactCardPage = () => {
                 .insert({
                     email: isEmail ? contactValue : null,
                     phone: !isEmail ? contactValue : null,
-                    card_owner: 'xiuny',
+                    card_owner: username || 'xiuny',
                     source: 'contact_card',
                 });
             if (error) throw error;
@@ -121,44 +141,36 @@ const ContactCardPage = () => {
     };
 
     const fields = [
-        { icon: Mail, label: 'Email', value: CONTACT_INFO.email, href: `mailto:${CONTACT_INFO.email}` },
-        { icon: Phone, label: 'Teléfono', value: CONTACT_INFO.phone, href: `tel:${CONTACT_INFO.phone.replace(/\s/g, '')}` },
-        { icon: Globe, label: 'Web', value: 'texhco.com', href: CONTACT_INFO.website },
+        { icon: Mail, label: 'Email', value: contactInfo.email, href: `mailto:${contactInfo.email}` },
+        { icon: Phone, label: 'Teléfono', value: contactInfo.phone, href: `tel:${contactInfo.phone.replace(/\s/g, '')}` },
+        { icon: Globe, label: 'Web', value: 'texhco.com', href: contactInfo.website },
     ];
 
     return (
         <div className="vc-page">
-            {/* X-pattern background (inspired by physical card) */}
             <div className="vc-bg-pattern" />
 
-            {/* Close */}
             <button onClick={handleClose} className="vc-close" aria-label="Cerrar">
                 <X size={22} strokeWidth={2.5} />
             </button>
 
-            {/* Main card */}
             <div className={`vc-card ${mounted ? 'vc-card--in' : ''}`}>
+                <p className="vc-tagline">{contactInfo.tagline}</p>
 
-                {/* Tagline */}
-                <p className="vc-tagline">{CONTACT_INFO.tagline}</p>
-
-                {/* Avatar + Name */}
                 <div className="vc-identity">
                     <div className="vc-avatar">
-                        <span>{CONTACT_INFO.initials}</span>
+                        <span>{contactInfo.initials}</span>
                     </div>
                     <div>
                         <h1 className="vc-name">
-                            {CONTACT_INFO.displayName} <span>{CONTACT_INFO.lastName}</span>
+                            {contactInfo.displayName} <span>{contactInfo.lastName}</span>
                         </h1>
-                        <p className="vc-title">{CONTACT_INFO.title} · {CONTACT_INFO.company}</p>
+                        <p className="vc-title">{contactInfo.title} · {contactInfo.company}</p>
                     </div>
                 </div>
 
-                {/* Separator */}
                 <div className="vc-sep" />
 
-                {/* Request Info Button */}
                 <div className={`vc-request-wrap ${mounted ? 'vc-field--in' : ''}`} style={{ transitionDelay: '200ms' }}>
                     {!showForm ? (
                         <button onClick={() => setShowForm(true)} className="vc-request-btn">
@@ -199,7 +211,6 @@ const ContactCardPage = () => {
                     )}
                 </div>
 
-                {/* Fields */}
                 <div className="vc-fields">
                     {fields.map((f, i) => {
                         const Icon = f.icon;
@@ -232,17 +243,15 @@ const ContactCardPage = () => {
                     })}
                 </div>
 
-                {/* Socials */}
                 <div className="vc-socials">
-                    <a href={CONTACT_INFO.instagram} target="_blank" rel="noopener noreferrer" className="vc-social" aria-label="Instagram">
+                    <a href={contactInfo.instagram} target="_blank" rel="noopener noreferrer" className="vc-social" aria-label="Instagram">
                         <Instagram size={20} />
                     </a>
-                    <a href={CONTACT_INFO.linkedin} target="_blank" rel="noopener noreferrer" className="vc-social" aria-label="LinkedIn">
+                    <a href={contactInfo.linkedin} target="_blank" rel="noopener noreferrer" className="vc-social" aria-label="LinkedIn">
                         <Linkedin size={20} />
                     </a>
                 </div>
 
-                {/* Save button */}
                 <button onClick={handleSave} className={`vc-save ${saving ? 'vc-save--done' : ''}`}>
                     {saving ? (
                         <><Check size={20} /> <span>¡Contacto Guardado!</span></>
@@ -252,7 +261,6 @@ const ContactCardPage = () => {
                 </button>
             </div>
 
-            {/* Footer */}
             <a href="https://texhco.com/" className="vc-footer">
                 Powered by <strong>TE<span>X</span>H CO.</strong>
             </a>

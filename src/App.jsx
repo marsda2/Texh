@@ -142,7 +142,7 @@ function App() {
         <LanguageProvider>
             <Router>
                 <Routes>
-                    <Route path="/contact/xiuny" element={<ContactCardPage />} />
+                    <Route path="/contact/:username" element={<ContactCardPage />} />
                     <Route path="/*" element={<AppContent />} />
                 </Routes>
             </Router>
