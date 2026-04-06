@@ -14,7 +14,7 @@ const USERS_DATA = {
         company: 'Texh Co.',
         tagline: 'DIGITAL GROWTH ECOSYSTEMS',
         email: 'xiuny@texhco.com',
-        phone: '+1 332 200 1854',
+        phone: '+1 347 888 7424',
         website: 'https://texhco.com',
         instagram: 'https://www.instagram.com/texh.co',
         linkedin: '#',
