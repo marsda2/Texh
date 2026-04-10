@@ -206,13 +206,21 @@ const EstimatorQuizPage = () => {
             // Submit to Supabase
             setIsSubmitting(true);
             try {
+                let finalNotes = formData.details ? formData.details.trim() : '';
+                const referralCode = localStorage.getItem('referral_code');
+                if (referralCode) {
+                    finalNotes = finalNotes 
+                        ? `${finalNotes}\n\n[Referido por: ${referralCode}]`
+                        : `[Referido por: ${referralCode}]`;
+                }
+
                 const { error } = await supabase
                     .from('quiz_leads')
                     .insert({
                         name: formData.name,
                         email: formData.email || null,
                         phone: formData.phone || null,
-                        notes: formData.details || null,
+                        notes: finalNotes || null,
                         selected_service: answers.service || null,
                         selected_urgency: answers.urgency || null,
                         selected_budget: answers.budget || null,

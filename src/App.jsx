@@ -48,6 +48,14 @@ function AppContent() {
             setScrolled(window.scrollY > 50);
         };
         window.addEventListener('scroll', handleScroll);
+        
+        // Referral tracking logic
+        const params = new URLSearchParams(window.location.search);
+        const ref = params.get('ref') || params.get('utm_source');
+        if (ref) {
+            localStorage.setItem('referral_code', ref);
+        }
+
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 

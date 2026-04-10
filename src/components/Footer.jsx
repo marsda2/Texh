@@ -50,13 +50,20 @@ const Footer = () => {
         setIsSubmitting(true);
         try {
             const isEmail = contact.includes('@');
+            let finalMessage = message.trim();
+            const referralCode = localStorage.getItem('referral_code');
+            if (referralCode) {
+                finalMessage = finalMessage 
+                    ? `${finalMessage}\n\n[Referido por: ${referralCode}]`
+                    : `[Referido por: ${referralCode}]`;
+            }
+
             const { error } = await supabase.from('footer_leads').insert({
                 email: isEmail ? contact.trim() : null,
                 phone: !isEmail ? contact.trim() : null,
                 selected_service: service || null,
-                message: message.trim() || null,
+                message: finalMessage || null,
             });
-            if (error) throw error;
         } catch (err) {
             console.error('Error saving footer lead:', err);
         } finally {

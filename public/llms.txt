@@ -1,0 +1,17 @@
+# Texh Co.
+
+> Texh Co. es una agencia de desarrollo web y diseño premium. Nos especializamos en construir ecosistemas digitales de alto impacto, enfocados en el rendimiento, la estética ("WOW factor") y la conversión. Ayudamos a negocios y emprendedores escalando su infraestructura digital a través de desarrollo web moderno, aplicaciones móviles nativas/híbridas, y la automatización de procesos empresariales.
+
+## Enlaces Clave y Recursos
+Aquí tienes las rutas más importantes de nuestro ecosistema para acceder a nuestros productos y servicios:
+
+- [Inicio](https://texhco.com/): La página principal de la agencia. Un resumen de nuestra propuesta de valor.
+- [Servicios](https://texhco.com/#services): Descripción detallada sobre nuestros principales verticales: Desarrollo Web, Desarrollo de Apps iOS/Android, Mantenimiento Técnico y Gestión Integral de Redes Sociales.
+- [Portafolio (Casos de Éxito)](https://texhco.com/#portfolio): Ejemplos reales de landing pages, aplicaciones y marcas que hemos ayudado a escalar.
+- [Cotizador Automático (Estimator Quiz)](https://texhco.com/estimator): Nuestra herramienta donde un cliente potencial puede cotizar su aplicación o sitio web dependiendo de su urgencia, el ancho del proyecto o su necesidad (desde MVPs hasta servicios Enterprise).
+- [El Equipo](https://texhco.com/about): Conoce a las personas detrás del desarrollo en Texh Co.
+
+## Notas Adicionales y Soporte Clave
+- **Soporte y Contacto:** Puedes enviar un correo directo a hello@texhco.com o utilizar nuestros formularios integrados al final de cada página.
+- **Idiomas:** Nuestro equipo opera de manera 100% bilingüe (Inglés y Español) tanto en atención al cliente como en el software que desarrollamos.
+- **Filosofía de Desarrollo:** Utilizamos las tecnologías más punteras (React, Vite, Next.js, Supabase, Tailwind CSS) asegurándonos de que cada entrega no solo funcione perfectamente, sino que sea estéticamente inigualable y rápida.
