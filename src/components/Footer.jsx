@@ -1,7 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Mail, Phone, Instagram, Linkedin, ArrowRight, ChevronDown, Send, Check, Loader2, X } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Send, Check, Loader2, X, Mail, Phone, Instagram, Linkedin, ChevronDown } from 'lucide-react';
 import { useLanguage } from '../lib/i18n';
 import { supabase } from '../lib/supabase';
+import { trackLeadEvent } from '../lib/analytics';
 import BookingModal from './BookingModal';
 
 const SERVICES_ES = [
@@ -64,6 +66,10 @@ const Footer = () => {
                 selected_service: service || null,
                 message: finalMessage || null,
             });
+            if (error) throw error;
+
+            // Track successful lead generation
+            trackLeadEvent('footer_contact');
         } catch (err) {
             console.error('Error saving footer lead:', err);
         } finally {
@@ -245,8 +251,8 @@ const Footer = () => {
                         <span>© {new Date().getFullYear()}. {t('footer.rights')}</span>
                     </p>
                     <div className="flex gap-8">
-                        <a href="#" className="hover:text-obsidian transition-colors">{t('footer.privacy')}</a>
-                        <a href="#" className="hover:text-obsidian transition-colors">{t('footer.terms')}</a>
+                        <Link to="/privacy" className="hover:text-obsidian transition-colors">{t('footer.privacy')}</Link>
+                        <Link to="/terms" className="hover:text-obsidian transition-colors">{t('footer.terms')}</Link>
                     </div>
                 </div>
             </div>

@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 import { useLanguage } from '../lib/i18n';
 import { supabase } from '../lib/supabase';
+import { trackLeadEvent } from '../lib/analytics';
 
 const ESTIMATOR_DATA = {
     es: [
@@ -227,6 +228,9 @@ const EstimatorQuizPage = () => {
                     });
 
                 if (error) throw error;
+
+                // Track successful lead generation
+                trackLeadEvent('estimator_quiz');
 
                 alert(language === 'es' ? '¡Propuesta en camino! Te contactaremos pronto.' : 'Proposal on its way! We will contact you soon.');
                 navigate('/');

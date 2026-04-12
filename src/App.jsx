@@ -4,9 +4,12 @@ import Home from './pages/Home';
 import AboutPage from './pages/AboutPage';
 import EstimatorQuizPage from './pages/EstimatorQuizPage';
 import ContactCardPage from './pages/ContactCardPage';
+import PrivacyPage from './pages/PrivacyPage';
+import TermsPage from './pages/TermsPage';
 import Footer from './components/Footer';
 import { LanguageProvider, useLanguage } from './lib/i18n';
 
+// Scroll to top helper
 // Scroll to top helper
 const ScrollToTop = () => {
     const { pathname } = useLocation();
@@ -137,6 +140,8 @@ function AppContent() {
                     <Route path="/" element={<Home />} />
                     <Route path="/about" element={<AboutPage />} />
                     <Route path="/estimator" element={<EstimatorQuizPage />} />
+                    <Route path="/privacy" element={<PrivacyPage />} />
+                    <Route path="/terms" element={<TermsPage />} />
                 </Routes>
             </main>
 

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Mail, Phone, Globe, Copy, Check, Download, X, Linkedin, Instagram, Send, ArrowLeft, MessageCircle, Loader2 } from 'lucide-react';
 import { supabase } from '../lib/supabase';
+import { trackLeadEvent } from '../lib/analytics';
 import './ContactCardPage.css';
 
 const USERS_DATA = {
@@ -126,6 +127,9 @@ const ContactCardPage = () => {
                     source: 'contact_card',
                 });
             if (error) throw error;
+            
+            // Track successful lead generation
+            trackLeadEvent('contact_card');
         } catch (err) {
             console.error('Error saving contact card lead:', err);
             // Still show success — don't block UX
