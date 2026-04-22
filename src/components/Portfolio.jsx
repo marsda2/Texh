@@ -38,6 +38,22 @@ const Portfolio = () => {
             videoUrl: "https://player.cloudinary.com/embed/?cloud_name=dtajpvp8x&public_id=Grabacio%CC%81n_de_pantalla_2026-03-24_a_las_6.58.25_p._m._pqkbcv&profile=cld-looping&player[controls]=false",
             link: "https://www.varoncare.com/",
             description: translatedProjects[3].description,
+        },
+        {
+            title: "Ari Lashes & Brow",
+            category: "Beauty & Wellness",
+            imageUrl: "https://images.unsplash.com/photo-1512496015851-a1dc8a477d69?q=80&w=2670&auto=format&fit=crop",
+            videoUrl: "https://player.cloudinary.com/embed/?cloud_name=dtajpvp8x&public_id=Grabaci%C3%B3n_2026-04-22_022740_mub0cb&profile=cld-looping&player[controls]=false",
+            link: "https://arilashes.com/",
+            description: translatedProjects[4].description,
+        },
+        {
+            title: "Kanda",
+            category: "Specialty Coffee",
+            imageUrl: "https://images.unsplash.com/photo-1497935586351-b67a49e012bf?q=80&w=2670&auto=format&fit=crop",
+            videoUrl: "https://player.cloudinary.com/embed/?cloud_name=dtajpvp8x&public_id=Grabaci%C3%B3n_2026-04-22_022846_dtjfb5&profile=cld-looping&player[controls]=false",
+            link: "https://www.kandacafe.com/",
+            description: translatedProjects[5].description,
         }
     ];
 

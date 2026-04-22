@@ -105,7 +105,9 @@ const translations = {
       { description: "Web y portafolio visual dinámico para una maquilladora profesional." },
       { description: "Plataforma de venta de canciones personalizadas creadas con inteligencia artificial." },
       { description: "Sistema paso a paso interactivo diseñado para retener clientes." },
-      { description: "Tienda online y plataforma integral de salud diseñada para hombres." }
+      { description: "Tienda online y plataforma integral de salud diseñada para hombres." },
+      { description: "Aplicación web moderna y elegante para centro estético, ofreciendo una experiencia premium." },
+      { description: "Experiencia web inmersiva para una cafetería de especialidad, enfocada en la calma y conexión." }
     ]
   },
   en: {
@@ -212,7 +214,9 @@ const translations = {
       { description: "Dynamic visual portfolio and website for a professional makeup artist." },
       { description: "E-commerce platform for personalized songs created with artificial intelligence." },
       { description: "Interactive step-by-step system designed for customer retention." },
-      { description: "Online store and comprehensive health platform designed for men." }
+      { description: "Online store and comprehensive health platform designed for men." },
+      { description: "Modern and elegant web application for an aesthetic center, offering a premium experience." },
+      { description: "Immersive web experience for a specialty coffee shop, focused on calm and connection." }
     ]
   }
 };
