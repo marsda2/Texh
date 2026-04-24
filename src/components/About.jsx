@@ -27,22 +27,46 @@ const About = () => {
                             {t('about.desc1')}<strong className="text-obsidian font-semibold">{t('about.descBold1')}</strong>{t('about.desc2')}<strong>{t('about.descBold2')}</strong>{t('about.descEnd')}
                         </p>
 
-                        <div className="p-8 radius-extreme border border-gray-light bg-white hover:border-obsidian transition-colors duration-500 group">
-                            <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 relative z-10">
-                                <div className="w-24 h-24 rounded-full bg-obsidian flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform duration-500">
-                                    <span className="font-heading font-black text-3xl text-chartreuse">
-                                        XH
-                                    </span>
+                        <div className="flex flex-col gap-6">
+                            {/* Xiuny Card */}
+                            <div className="p-8 radius-extreme border border-gray-light bg-white hover:border-obsidian transition-colors duration-500 group">
+                                <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 relative z-10">
+                                    <div className="w-24 h-24 rounded-full bg-obsidian flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform duration-500">
+                                        <span className="font-heading font-black text-3xl text-chartreuse">
+                                            XH
+                                        </span>
+                                    </div>
+                                    <div className="text-center sm:text-left">
+                                        <h4 className="text-2xl font-heading font-bold text-obsidian mb-1 tracking-tight">Xiuny Huerta</h4>
+                                        <p className="text-chartreuse font-body font-semibold uppercase tracking-widest text-sm mb-3">{t('about.pmTitle')}</p>
+                                        <p className="text-gray-dark font-body font-light text-sm leading-relaxed max-w-sm mb-4">
+                                            {t('about.pmDesc')}
+                                        </p>
+                                        <a href="mailto:xiuny@texhco.com" className="inline-flex items-center gap-2 text-obsidian hover:text-chartreuse transition-colors font-body text-sm font-semibold underline decoration-transparent hover:decoration-chartreuse underline-offset-4">
+                                            <Mail size={16} /> xiuny@texhco.com
+                                        </a>
+                                    </div>
                                 </div>
-                                <div className="text-center sm:text-left">
-                                    <h4 className="text-2xl font-heading font-bold text-obsidian mb-1 tracking-tight">Xiuny Huerta</h4>
-                                    <p className="text-chartreuse font-body font-semibold uppercase tracking-widest text-sm mb-3">{t('about.pmTitle')}</p>
-                                    <p className="text-gray-dark font-body font-light text-sm leading-relaxed max-w-sm mb-4">
-                                        {t('about.pmDesc')}
-                                    </p>
-                                    <a href="mailto:xiuny@texhco.com" className="inline-flex items-center gap-2 text-obsidian hover:text-chartreuse transition-colors font-body text-sm font-semibold underline decoration-transparent hover:decoration-chartreuse underline-offset-4">
-                                        <Mail size={16} /> xiuny@texhco.com
-                                    </a>
+                            </div>
+
+                            {/* Marcos Card */}
+                            <div className="p-8 radius-extreme border border-gray-light bg-white hover:border-obsidian transition-colors duration-500 group">
+                                <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 relative z-10">
+                                    <div className="w-24 h-24 rounded-full bg-obsidian flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform duration-500">
+                                        <span className="font-heading font-black text-3xl text-chartreuse">
+                                            MT
+                                        </span>
+                                    </div>
+                                    <div className="text-center sm:text-left">
+                                        <h4 className="text-2xl font-heading font-bold text-obsidian mb-1 tracking-tight">Marcos Troger</h4>
+                                        <p className="text-chartreuse font-body font-semibold uppercase tracking-widest text-sm mb-3">{t('about.seTitle')}</p>
+                                        <p className="text-gray-dark font-body font-light text-sm leading-relaxed max-w-sm mb-4">
+                                            {t('about.seDesc')}
+                                        </p>
+                                        <a href="mailto:marcos@texhco.com" className="inline-flex items-center gap-2 text-obsidian hover:text-chartreuse transition-colors font-body text-sm font-semibold underline decoration-transparent hover:decoration-chartreuse underline-offset-4">
+                                            <Mail size={16} /> marcos@texhco.com
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
