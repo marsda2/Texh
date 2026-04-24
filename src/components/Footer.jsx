@@ -235,12 +235,12 @@ const Footer = () => {
                     <div className="col-span-1 lg:col-span-3">
                         <h4 className="text-sm font-heading font-bold tracking-widest text-obsidian uppercase mb-8">{t('footer.socials')}</h4>
                         <div className="flex gap-4">
-                            <button onClick={() => alert(t('footer.comingSoon'))} className="w-14 h-14 rounded-full border border-gray-light flex items-center justify-center hover:bg-obsidian hover:text-chartreuse transition-colors text-obsidian">
+                            <a href="https://www.instagram.com/p/DXfh65QAj-P/" target="_blank" rel="noopener noreferrer" className="w-14 h-14 rounded-full border border-gray-light flex items-center justify-center hover:bg-obsidian hover:text-chartreuse transition-colors text-obsidian">
                                 <Instagram size={24} />
-                            </button>
-                            <button onClick={() => alert(t('footer.comingSoon'))} className="w-14 h-14 rounded-full border border-gray-light flex items-center justify-center hover:bg-obsidian hover:text-chartreuse transition-colors text-obsidian">
+                            </a>
+                            <a href="https://www.linkedin.com/company/texhco" target="_blank" rel="noopener noreferrer" className="w-14 h-14 rounded-full border border-gray-light flex items-center justify-center hover:bg-obsidian hover:text-chartreuse transition-colors text-obsidian">
                                 <Linkedin size={24} />
-                            </button>
+                            </a>
                         </div>
                     </div>
                 </div>
