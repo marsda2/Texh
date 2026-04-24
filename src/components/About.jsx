@@ -72,21 +72,25 @@ const About = () => {
                     </div>
 
                     {/* Right Column: Values / Stats */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 animate-fade-up" style={{ animationDelay: '0.2s' }}>
-                        <div className="p-10 radius-extreme border border-gray-light bg-white hover:-translate-y-2 transition-transform duration-500">
-                            <div className="w-14 h-14 rounded-full border border-gray-light flex items-center justify-center mb-6 text-obsidian">
-                                <Code2 size={24} />
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 animate-fade-up items-stretch" style={{ animationDelay: '0.2s' }}>
+                        <div className="animate-subtle-float">
+                            <div className="p-10 h-full radius-extreme border border-gray-light bg-white hover:border-obsidian hover:-translate-y-2 transition-all duration-500">
+                                <div className="w-14 h-14 rounded-full border border-gray-light flex items-center justify-center mb-6 text-obsidian group-hover:bg-obsidian group-hover:text-chartreuse transition-colors">
+                                    <Code2 size={24} />
+                                </div>
+                                <h3 className="text-xl font-body font-bold text-obsidian mb-3">{t('about.capability')}</h3>
+                                <p className="text-gray-dark font-body font-light text-sm leading-relaxed">{t('about.capabilityDesc')}</p>
                             </div>
-                            <h3 className="text-xl font-body font-bold text-obsidian mb-3">{t('about.capability')}</h3>
-                            <p className="text-gray-dark font-body font-light text-sm leading-relaxed">{t('about.capabilityDesc')}</p>
                         </div>
 
-                        <div className="p-10 radius-extreme border border-gray-light bg-white hover:-translate-y-2 transition-transform duration-500 sm:translate-y-8">
-                            <div className="w-14 h-14 rounded-full border border-gray-light flex items-center justify-center mb-6 text-obsidian">
-                                <Rocket size={24} />
+                        <div className="animate-subtle-float">
+                            <div className="p-10 h-full radius-extreme border border-gray-light bg-white hover:border-obsidian hover:-translate-y-2 transition-all duration-500">
+                                <div className="w-14 h-14 rounded-full border border-gray-light flex items-center justify-center mb-6 text-obsidian group-hover:bg-obsidian group-hover:text-chartreuse transition-colors">
+                                    <Rocket size={24} />
+                                </div>
+                                <h3 className="text-xl font-body font-bold text-obsidian mb-3">{t('about.b2b')}</h3>
+                                <p className="text-gray-dark font-body font-light text-sm leading-relaxed">{t('about.b2bDesc')}</p>
                             </div>
-                            <h3 className="text-xl font-body font-bold text-obsidian mb-3">{t('about.b2b')}</h3>
-                            <p className="text-gray-dark font-body font-light text-sm leading-relaxed">{t('about.b2bDesc')}</p>
                         </div>
                     </div>
 

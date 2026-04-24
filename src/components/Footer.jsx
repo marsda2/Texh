@@ -70,19 +70,21 @@ const Footer = () => {
 
             // Track successful lead generation
             trackLeadEvent('footer_contact');
+            
+            setSuccess(true);
+            setTimeout(() => {
+                setSuccess(false);
+                setOpen(false);
+                setContact('');
+                setService('');
+                setMessage('');
+            }, 3500);
         } catch (err) {
             console.error('Error saving footer lead:', err);
+            alert(language === 'es' ? 'Hubo un error al enviar tu mensaje. Por favor, intenta de nuevo.' : 'There was an error sending your message. Please try again.');
         } finally {
             setIsSubmitting(false);
         }
-        setSuccess(true);
-        setTimeout(() => {
-            setSuccess(false);
-            setOpen(false);
-            setContact('');
-            setService('');
-            setMessage('');
-        }, 3500);
     };
 
     return (

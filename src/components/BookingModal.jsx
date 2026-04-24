@@ -121,12 +121,13 @@ const BookingModal = ({ open, onClose, language = 'es' }) => {
                 timezone: NY_TZ,
             });
             if (error) throw error;
+            setSuccess(true);
         } catch (err) {
             console.error('Booking error:', err);
+            alert(es ? 'Hubo un error al agendar la llamada. Por favor, intenta de nuevo.' : 'There was an error booking the call. Please try again.');
         } finally {
             setIsSubmitting(false);
         }
-        setSuccess(true);
     };
 
     const es = language === 'es';

@@ -83,6 +83,50 @@ serve(async (req) => {
           <p>Saludos,<br/><strong>El equipo de Texh Co.</strong></p>
         </div>
       `
+    } else if (table === "footer_leads") {
+      adminSubject = "🔥 Nuevo Lead (Auditoría Local / Footer)"
+      adminHtml = `
+        <div style="font-family: sans-serif;">
+          <h2>Nueva solicitud de Auditoría / Información</h2>
+          <p><strong>Email:</strong> ${record.email || 'N/A'}</p>
+          <p><strong>Teléfono:</strong> ${record.phone || 'N/A'}</p>
+          <p><strong>Servicio:</strong> ${record.selected_service || 'N/A'}</p>
+          <p><strong>Mensaje:</strong> ${record.message || 'N/A'}</p>
+        </div>
+      `
+      clientSubject = "Solicitud recibida. Iniciando proceso ⚙️"
+      clientHtml = `
+        <div style="font-family: sans-serif; color: #212121; max-width: 600px; margin: 0 auto; background-color: #F0F0F0; padding: 40px; border-radius: 12px;">
+          <h2 style="color: #212121; margin-top: 0; font-size: 24px; font-weight: 900; letter-spacing: -0.5px;">Mensaje recibido con éxito.</h2>
+          <p style="font-size: 16px; line-height: 1.6;">Gracias por contactar a <strong>Texh Co.</strong></p>
+          <p style="font-size: 16px; line-height: 1.6;">Ya tenemos tus datos en nuestro sistema. Nuestro equipo de ingenieros y estrategas está revisando tu caso para entender mejor las oportunidades de tu ecosistema digital.</p>
+          <p style="font-size: 16px; line-height: 1.6;">Te daremos una respuesta estructurada y los próximos pasos en un plazo de <strong>24 a 48 horas</strong>.</p>
+          <hr style="border: none; border-top: 1px solid #d1d1d1; margin: 30px 0;" />
+          <p style="font-size: 14px; color: #666; margin-bottom: 0;"><strong>Texh Co.</strong> — Tecnología compleja. Resultados simples.</p>
+        </div>
+      `
+    } else if (table === "call_bookings") {
+      adminSubject = "🔥 Nueva Llamada Agendada"
+      adminHtml = `
+        <div style="font-family: sans-serif;">
+          <h2>Nueva Sesión Estratégica Agendada</h2>
+          <p><strong>Email:</strong> ${record.email || 'N/A'}</p>
+          <p><strong>Fecha:</strong> ${record.date || 'N/A'}</p>
+          <p><strong>Hora:</strong> ${record.time_slot || 'N/A'} (ET)</p>
+        </div>
+      `
+      clientSubject = "Sesión Estratégica Confirmada 📅"
+      clientHtml = `
+        <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; background-color: #212121; color: #ffffff; padding: 40px; border-radius: 12px;">
+          <h2 style="color: #C9FF1F; margin-top: 0; font-size: 24px; font-weight: 900; letter-spacing: -0.5px;">Tu sesión está confirmada.</h2>
+          <p style="font-size: 16px; line-height: 1.6; color: #e0e0e0;">Gracias por agendar con <strong>Texh Co.</strong></p>
+          <p style="font-size: 16px; line-height: 1.6; color: #e0e0e0;">Tu llamada estratégica ha quedado registrada en nuestro sistema para el día <strong>${record.date}</strong> a las <strong>${record.time_slot} (Hora de NY)</strong>.</p>
+          <p style="font-size: 16px; line-height: 1.6; color: #e0e0e0;">Por favor, prepárate para compartir el estado actual de tu infraestructura digital. Nos pondremos en contacto contigo a la hora acordada.</p>
+          <p style="font-size: 16px; line-height: 1.6; color: #e0e0e0;">Si por algún motivo necesitas cancelar o reprogramar, háznoslo saber con antelación.</p>
+          <hr style="border: none; border-top: 1px solid #333333; margin: 30px 0;" />
+          <p style="font-size: 14px; color: #888888; margin-bottom: 0;"><span style="color: #ffffff; font-weight: bold;">Texh Co.</span> — Arquitectos Digitales.</p>
+        </div>
+      `
     } else {
       adminSubject = `🔥 Nuevo registro en la tabla: ${table}`
       adminHtml = `<p>Nuevo registro: ${JSON.stringify(record)}</p>`
