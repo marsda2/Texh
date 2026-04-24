@@ -303,11 +303,11 @@ export function CinematicHero({
                       </div>
                     </div>
 
-                    <div className="space-y-3 relative h-16 mt-2">
+                    <div className="phone-widget space-y-3 relative h-16 mt-2">
                       {notifications.map((notif, i) => (
                         <div 
                           key={i} 
-                          className={`absolute inset-0 phone-widget widget-depth rounded-2xl p-3 flex items-center transition-all duration-700 ease-in-out ${activeNotif === i ? 'opacity-100 translate-y-0 z-10' : 'opacity-0 translate-y-2 z-0'}`}
+                          className={`absolute inset-0 widget-depth rounded-2xl p-3 flex items-center transition-all duration-700 ease-in-out ${activeNotif === i ? 'opacity-100 translate-y-0 z-10' : 'opacity-0 translate-y-2 z-0'}`}
                         >
                           <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-chartreuse/20 to-chartreuse/5 flex items-center justify-center mr-3 border border-chartreuse/20 shadow-inner">
                             <svg className="w-4 h-4 text-chartreuse drop-shadow-md" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
