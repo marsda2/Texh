@@ -18,9 +18,8 @@ const About = () => {
                             </span>
                         </div>
 
-                        <h2 className="mb-6 leading-tight">
-                            {t('about.titleStart')} <span className="text-accent underline decoration-chartreuse decoration-8 underline-offset-8">{t('about.titleAccent')}</span><br />
-                            {t('about.titleEnd')}
+                        <h2 className="mb-6 leading-tight text-obsidian">
+                            {t('about.titleStart')} <span className="text-obsidian underline decoration-chartreuse decoration-8 underline-offset-8">{t('about.titleAccent')}</span>{t('about.titleEnd')}
                         </h2>
 
                         <p className="text-gray-dark text-xl font-light font-body leading-relaxed mb-12">
@@ -38,7 +37,7 @@ const About = () => {
                                     </div>
                                     <div className="text-center sm:text-left">
                                         <h4 className="text-2xl font-heading font-bold text-obsidian mb-1 tracking-tight">Xiuny Huerta</h4>
-                                        <p className="text-chartreuse font-body font-semibold uppercase tracking-widest text-sm mb-3">{t('about.pmTitle')}</p>
+                                        <p className="bg-chartreuse text-obsidian inline-block px-3 py-1 rounded-full font-body font-bold uppercase tracking-widest text-xs mb-3">{t('about.pmTitle')}</p>
                                         <p className="text-gray-dark font-body font-light text-sm leading-relaxed max-w-sm mb-4">
                                             {t('about.pmDesc')}
                                         </p>
@@ -59,7 +58,7 @@ const About = () => {
                                     </div>
                                     <div className="text-center sm:text-left">
                                         <h4 className="text-2xl font-heading font-bold text-obsidian mb-1 tracking-tight">Marcos Troger</h4>
-                                        <p className="text-chartreuse font-body font-semibold uppercase tracking-widest text-sm mb-3">{t('about.seTitle')}</p>
+                                        <p className="bg-chartreuse text-obsidian inline-block px-3 py-1 rounded-full font-body font-bold uppercase tracking-widest text-xs mb-3">{t('about.seTitle')}</p>
                                         <p className="text-gray-dark font-body font-light text-sm leading-relaxed max-w-sm mb-4">
                                             {t('about.seDesc')}
                                         </p>
