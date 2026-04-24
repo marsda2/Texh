@@ -6,6 +6,7 @@ import Services from '../components/Services';
 import Portfolio from '../components/Portfolio';
 import { useLanguage } from '../lib/i18n';
 import { useScrollReveal } from '../lib/useScrollReveal';
+import { CountdownTimer } from '../components/ui/CountdownTimer';
 
 const ReviewCard = ({ item, index }) => {
     const { language } = useLanguage();
@@ -61,6 +62,16 @@ const Home = () => {
                 badgeTitle={t('hero.badgeTitle')}
                 badgeSubtitle={t('hero.badgeSubtitle')}
             />
+            
+            {/* Mobile CTA */}
+            <div className="md:hidden flex justify-center w-full px-4 pb-12 z-40 relative">
+                <a href="#contact" className="w-full max-w-sm text-obsidian bg-chartreuse px-6 py-4 rounded-[2rem] hover:bg-white transition-colors flex flex-col items-center justify-center shadow-[0_15px_30px_rgba(201,255,31,0.2)] animate-pulse hover:animate-none border border-chartreuse/50">
+                    <span className="font-bold text-2xl mb-1 tracking-tight">{t('nav.contact')}</span>
+                    <div className="text-sm font-mono font-bold opacity-80 flex items-center justify-center">
+                        <CountdownTimer />
+                    </div>
+                </a>
+            </div>
             
             {/* AI Voice Input Section */}
             <section className="py-24 bg-white border-y border-gray-light flex flex-col items-center justify-center relative shadow-lg z-30">
