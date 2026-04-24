@@ -129,6 +129,8 @@ export interface CinematicHeroProps extends React.HTMLAttributes<HTMLDivElement>
   cardDescription?: React.ReactNode;
   metricValue?: number;
   metricLabel?: string;
+  badgeTitle?: string;
+  badgeSubtitle?: string;
   ctaHeading?: string;
   ctaDescription?: string;
 }
@@ -141,6 +143,8 @@ export function CinematicHero({
   cardDescription = <><span className="text-white font-semibold">Texh Co</span> te acompaña paso a paso para tener una web profesional y conseguir más clientes en internet.</>,
   metricValue = 100,
   metricLabel = "Clientes",
+  badgeTitle = "Negocios Online",
+  badgeSubtitle = "100% Operativos",
   className, 
   ...props 
 }: CinematicHeroProps) {
@@ -304,8 +308,8 @@ export function CinematicHero({
                   <span className="text-base lg:text-xl drop-shadow-lg" aria-hidden="true">🚀</span>
                 </div>
                 <div>
-                  <p className="text-white text-xs lg:text-sm font-bold tracking-tight">Negocios Online</p>
-                  <p className="text-gray-300 text-[10px] lg:text-xs font-medium">100% Operativos</p>
+                  <p className="text-white text-xs lg:text-sm font-bold tracking-tight">{badgeTitle}</p>
+                  <p className="text-gray-300 text-[10px] lg:text-xs font-medium">{badgeSubtitle}</p>
                 </div>
               </div>
             </div>

@@ -58,6 +58,8 @@ const Home = () => {
                 cardHeading={t('hero.cardHeading')}
                 cardDescription={t('hero.cardDesc')}
                 metricLabel={t('hero.clients')}
+                badgeTitle={t('hero.badgeTitle')}
+                badgeSubtitle={t('hero.badgeSubtitle')}
             />
             
             {/* AI Voice Input Section */}
