@@ -7,7 +7,7 @@ const translations = {
       team: "El Equipo",
       services: "Servicios",
       portfolio: "Portafolio",
-      contact: "Ver Qué Construimos",
+      contact: "Auditoría Gratis",
     },
     hero: {
       tagline1: "Construido para atraer clientes.",
@@ -120,7 +120,7 @@ const translations = {
       team: "The Team",
       services: "Services",
       portfolio: "Portfolio",
-      contact: "See What We Build",
+      contact: "Request Free Audit",
     },
     hero: {
       tagline1: "Built to bring clients in.",

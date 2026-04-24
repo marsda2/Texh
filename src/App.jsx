@@ -40,6 +40,47 @@ const HamburgerButton = ({ isOpen, setIsOpen }) => (
     </button>
 );
 
+const CountdownTimer = () => {
+    const [timeLeft, setTimeLeft] = useState({
+        days: 9,
+        hours: 23,
+        minutes: 59,
+        seconds: 59
+    });
+
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setTimeLeft(prev => {
+                let { days, hours, minutes, seconds } = prev;
+                if (seconds > 0) {
+                    seconds--;
+                } else {
+                    seconds = 59;
+                    if (minutes > 0) {
+                        minutes--;
+                    } else {
+                        minutes = 59;
+                        if (hours > 0) {
+                            hours--;
+                        } else {
+                            hours = 23;
+                            if (days > 0) days--;
+                        }
+                    }
+                }
+                return { days, hours, minutes, seconds };
+            });
+        }, 1000);
+        return () => clearInterval(timer);
+    }, []);
+
+    return (
+        <span className="font-mono tracking-tighter">
+            ⏱ {String(timeLeft.days).padStart(2, '0')}d {String(timeLeft.hours).padStart(2, '0')}h {String(timeLeft.minutes).padStart(2, '0')}m {String(timeLeft.seconds).padStart(2, '0')}s
+        </span>
+    );
+};
+
 function AppContent() {
     const [scrolled, setScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -90,7 +131,12 @@ function AppContent() {
                                 <Link to="/#portfolio" className="nav-link">{t('nav.portfolio')}</Link>
                             </>
                         )}
-                        <a href="#contact" className="nav-link contact-link">{t('nav.contact')}</a>
+                        <a href="#contact" className="nav-link contact-link flex flex-col items-center justify-center !py-1.5 !px-5 gap-0.5 border border-chartreuse/30 shadow-[0_0_15px_rgba(201,255,31,0.2)] animate-pulse hover:animate-none">
+                            <span className="font-bold text-sm tracking-tight">{t('nav.contact')}</span>
+                            <div className="text-[10px] opacity-90 leading-none">
+                                <CountdownTimer />
+                            </div>
+                        </a>
 
                         {/* Desktop Language Toggle */}
                         <div className="flex items-center gap-2 ml-6 font-heading font-black text-sm tracking-widest">
@@ -122,7 +168,12 @@ function AppContent() {
                                 <Link to="/#portfolio" onClick={() => setIsMobileMenuOpen(false)} className="text-obsidian hover:text-chartreuse transition-colors">{t('nav.portfolio')}</Link>
                             </>
                         )}
-                        <a href="#contact" onClick={() => setIsMobileMenuOpen(false)} className="text-white bg-obsidian px-8 py-3 rounded-full hover:text-chartreuse transition-colors mt-4">{t('nav.contact')}</a>
+                        <a href="#contact" onClick={() => setIsMobileMenuOpen(false)} className="text-obsidian bg-chartreuse px-8 py-3 rounded-full hover:bg-white transition-colors mt-4 flex flex-col items-center justify-center shadow-lg shadow-chartreuse/20">
+                            <span className="font-bold text-xl">{t('nav.contact')}</span>
+                            <div className="text-sm font-mono font-bold opacity-80 mt-1">
+                                <CountdownTimer />
+                            </div>
+                        </a>
 
                         {/* Mobile Language Toggle */}
                         <div className="flex items-center gap-4 mt-4 text-xl">
