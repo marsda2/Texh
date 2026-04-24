@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { cn } from "@/lib/utils";
 
@@ -154,6 +154,20 @@ export function CinematicHero({
   const mockupRef = useRef<HTMLDivElement>(null);
   const requestRef = useRef<number>(0);
 
+  const notifications = [
+    { text1: "Nuevo Lead Generado", text2: "Hace 2m" },
+    { text1: "Reunión Agendada", text2: "Hace 15m" },
+    { text1: "Pago Confirmado", text2: "Hace 1h" }
+  ];
+  const [activeNotif, setActiveNotif] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveNotif((prev) => (prev + 1) % notifications.length);
+    }, 3500);
+    return () => clearInterval(interval);
+  }, []);
+
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       cancelAnimationFrame(requestRef.current);
@@ -271,7 +285,11 @@ export function CinematicHero({
                         <span className="text-[10px] text-neutral-400 uppercase tracking-widest font-bold mb-1">Texh Dashboard</span>
                         <span className="text-xl font-bold tracking-tight text-white drop-shadow-md">Panel</span>
                       </div>
-                      <div className="w-9 h-9 rounded-full bg-chartreuse text-obsidian flex items-center justify-center font-bold text-sm border border-white/10 shadow-lg shadow-black/50">Admin</div>
+                      <div className="w-9 h-9 rounded-full bg-transparent text-white flex flex-col items-center justify-center gap-[4px]">
+                        <div className="w-4 h-[2px] bg-white rounded-full"></div>
+                        <div className="w-4 h-[2px] bg-white rounded-full"></div>
+                        <div className="w-4 h-[2px] bg-white rounded-full"></div>
+                      </div>
                     </div>
 
                     <div className="phone-widget relative w-44 h-44 mx-auto flex items-center justify-center mb-8 drop-shadow-[0_15px_25px_rgba(0,0,0,0.8)]">
@@ -285,18 +303,25 @@ export function CinematicHero({
                       </div>
                     </div>
 
-                    <div className="space-y-3">
-                      <div className="phone-widget widget-depth rounded-2xl p-3 flex items-center">
-                        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-chartreuse/20 to-chartreuse/5 flex items-center justify-center mr-3 border border-chartreuse/20 shadow-inner">
-                          <svg className="w-4 h-4 text-chartreuse drop-shadow-md" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                          </svg>
+                    <div className="space-y-3 relative h-16 mt-2">
+                      {notifications.map((notif, i) => (
+                        <div 
+                          key={i} 
+                          className={`absolute inset-0 phone-widget widget-depth rounded-2xl p-3 flex items-center transition-all duration-700 ease-in-out ${activeNotif === i ? 'opacity-100 translate-y-0 z-10' : 'opacity-0 translate-y-2 z-0'}`}
+                        >
+                          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-chartreuse/20 to-chartreuse/5 flex items-center justify-center mr-3 border border-chartreuse/20 shadow-inner">
+                            <svg className="w-4 h-4 text-chartreuse drop-shadow-md" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                              {i === 0 && <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />}
+                              {i === 1 && <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />}
+                              {i === 2 && <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />}
+                            </svg>
+                          </div>
+                          <div className="flex-1">
+                            <div className="text-[11px] font-bold text-white mb-0.5 tracking-tight">{notif.text1}</div>
+                            <div className="text-[9px] text-neutral-400 font-medium">{notif.text2}</div>
+                          </div>
                         </div>
-                        <div className="flex-1">
-                          <div className="h-2 w-20 bg-neutral-300 rounded-full mb-2 shadow-inner" />
-                          <div className="h-1.5 w-12 bg-neutral-600 rounded-full shadow-inner" />
-                        </div>
-                      </div>
+                      ))}
                     </div>
                     <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-[120px] h-[4px] bg-white/20 rounded-full shadow-[0_1px_2px_rgba(0,0,0,0.5)]" />
                   </div>
