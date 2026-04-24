@@ -67,7 +67,7 @@ const Home = () => {
                 <div className="container max-w-3xl text-center">
                     <div ref={voiceHeaderRef} className="srv-reveal">
                         <h2 className="text-4xl md:text-5xl font-heading font-black text-obsidian mb-6 tracking-tight">
-                            {t('ai.titleStart')} <span className="text-accent underline decoration-chartreuse decoration-4 md:decoration-8 underline-offset-4 md:underline-offset-8">{t('ai.titleIdea')}</span>{t('ai.titleEnd')}
+                            {t('ai.titleStart')} <span className="bg-chartreuse text-obsidian px-3 pt-1 pb-2 inline-block underline decoration-obsidian decoration-[6px] underline-offset-4">{t('ai.titleIdea')}{t('ai.titleEnd')}</span>
                         </h2>
                         <p className="text-gray-dark text-lg md:text-xl font-body font-light mb-12">
                             {t('ai.desc')}
@@ -89,7 +89,7 @@ const Home = () => {
             <section className="py-24 bg-neutral border-b border-gray-light overflow-hidden flex flex-col items-center justify-center">
                 <div ref={reviewsHeaderRef} className="srv-reveal container text-center mb-20 md:mb-24">
                     <h2 className="text-3xl md:text-5xl font-heading font-black text-obsidian tracking-tight">
-                        {t('reviews.titleStart')} <span className="text-accent">{t('reviews.titleAccent')}</span>
+                        {t('reviews.titleStart')} <span className="bg-chartreuse text-obsidian px-3 pt-1 pb-2 inline-block underline decoration-obsidian decoration-[6px] underline-offset-4">{t('reviews.titleAccent')}</span>
                     </h2>
                 </div>
                 

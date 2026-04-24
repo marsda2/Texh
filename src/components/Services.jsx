@@ -54,8 +54,8 @@ const Services = () => {
                     className="srv-reveal flex flex-col md:flex-row justify-between items-end mb-20"
                 >
                     <div className="max-w-3xl">
-                        <h2 className="mb-6 leading-tight">
-                            {t('services.titleStart')} <span className="text-accent underline decoration-chartreuse decoration-8 underline-offset-8">{t('services.titleAccent')}</span>{t('services.titleEnd')}
+                        <h2 className="mb-6 leading-tight text-obsidian">
+                            {t('services.titleStart')} <span className="bg-chartreuse text-obsidian px-3 pt-1 pb-2 inline-block underline decoration-obsidian decoration-[6px] underline-offset-4">{t('services.titleAccent')}{t('services.titleEnd')}</span>
                         </h2>
                         <p className="text-gray-dark text-xl font-light font-body">
                             {t('services.desc')}

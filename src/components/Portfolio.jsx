@@ -63,8 +63,8 @@ const Portfolio = () => {
 
                 <div className="flex flex-col md:flex-row justify-between items-end mb-20 animate-fade-up">
                     <div className="max-w-2xl">
-                        <h2 className="mb-6 leading-tight">
-                            {t('portfolio.titleStart')} <span className="text-accent underline decoration-obsidian decoration-8 underline-offset-8">{t('portfolio.titleAccent')}</span>{t('portfolio.titleEnd')}
+                        <h2 className="mb-6 leading-tight text-obsidian">
+                            {t('portfolio.titleStart')} <span className="bg-chartreuse text-obsidian px-3 pt-1 pb-2 inline-block underline decoration-obsidian decoration-[6px] underline-offset-4">{t('portfolio.titleAccent')}{t('portfolio.titleEnd')}</span>
                         </h2>
                         <p className="text-gray-dark text-xl font-light font-body">
                             {t('portfolio.desc')}

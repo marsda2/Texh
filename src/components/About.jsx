@@ -19,7 +19,7 @@ const About = () => {
                         </div>
 
                         <h2 className="mb-6 leading-tight text-obsidian">
-                            {t('about.titleStart')} <span className="text-obsidian underline decoration-chartreuse decoration-8 underline-offset-8">{t('about.titleAccent')}</span>{t('about.titleEnd')}
+                            {t('about.titleStart')} <span className="bg-chartreuse text-obsidian px-3 pt-1 pb-2 inline-block underline decoration-obsidian decoration-[6px] underline-offset-4">{t('about.titleAccent')}{t('about.titleEnd')}</span>
                         </h2>
 
                         <p className="text-gray-dark text-xl font-light font-body leading-relaxed mb-12">
