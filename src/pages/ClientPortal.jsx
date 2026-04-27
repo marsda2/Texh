@@ -296,8 +296,9 @@ const ClientPortal = () => {
                 <div className="space-y-10">
                   <div className="space-y-4">
                     <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-obsidian/30 ml-2">Action Items</h3>
-                    <ActionDesk tasks={tasks} />
+                    <ActionDesk tasks={tasks} onRefresh={fetchPortalData} />
                   </div>
+
 
                   <motion.div 
                     initial={{ opacity: 0, scale: 0.95 }}
