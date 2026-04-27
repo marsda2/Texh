@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
-import { useLanguage } from '../lib/i18n';
+import { motion, AnimatePresence } from 'framer-motion';
 import { 
   LogOut, 
   ArrowRight, 
-  LayoutDashboard
+  LayoutDashboard,
+  Settings,
+  ChevronLeft
 } from 'lucide-react';
-import { motion } from 'framer-motion';
 
 // Portal Components
 import PulseCards from '../components/portal/PulseCards';
 import StatusBar from '../components/portal/StatusBar';
 import ActionDesk from '../components/portal/ActionDesk';
 import Vault from '../components/portal/Vault';
+import AdminPanel from '../components/portal/AdminPanel';
 
 const ClientPortal = () => {
   const [session, setSession] = useState(null);
@@ -25,7 +27,11 @@ const ClientPortal = () => {
   const [metrics, setMetrics] = useState([]);
   const [documents, setDocuments] = useState([]);
   const [tasks, setTasks] = useState([]);
+  const [showAdmin, setShowAdmin] = useState(false);
   const { t } = useLanguage();
+
+  const isAdmin = session?.user?.email?.endsWith('@texhco.com') || session?.user?.email === 'prueba@portal.com';
+
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -183,91 +189,141 @@ const ClientPortal = () => {
       <div className="min-h-screen bg-neutral flex items-center justify-center">
         <div className="flex flex-col items-center gap-4">
           <div className="w-12 h-12 border-4 border-obsidian/10 border-t-chartreuse rounded-full animate-spin"></div>
-          <p className="text-obsidian/40 font-bold tracking-widest uppercase text-xs">Loading Command Center...</p>
+          <p className="text-obsidian/40 font-bold tracking-widest uppercase text-xs">Accessing Command Center...</p>
         </div>
       </div>
     );
   }
 
-  if (!clientData) {
-    return (
-      <div className="min-h-screen bg-neutral flex items-center justify-center p-6">
-        <div className="max-w-md text-center">
-          <h2 className="text-2xl font-bold text-obsidian mb-4">No Access Found</h2>
-          <p className="text-obsidian/60 mb-8">It seems your account isn't associated with a client profile yet. Please contact support.</p>
-          <button onClick={handleLogout} className="btn btn-primary radius-extreme px-8 py-3">Logout</button>
-        </div>
-      </div>
-    );
+  if (showAdmin && isAdmin) {
+    return <AdminPanel onBack={() => setShowAdmin(false)} />;
   }
 
   return (
-    <div className="min-h-screen bg-neutral pt-32 pb-20 px-6 lg:px-12">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-          >
-            <div className="flex items-center gap-3 mb-2">
-              <div className="bg-obsidian p-2 rounded-lg">
-                <LayoutDashboard className="text-chartreuse w-5 h-5" />
-              </div>
-              <span className="text-obsidian/50 font-bold text-sm tracking-widest uppercase">Client Portal</span>
-            </div>
-            <h1 className="text-4xl md:text-5xl font-black text-obsidian">Welcome, {clientData.full_name}</h1>
-            <p className="text-obsidian/60 mt-2">Here's how {clientData.company_name} is performing today.</p>
-          </motion.div>
-          <button 
-            onClick={handleLogout}
-            className="flex items-center gap-2 text-obsidian/50 hover:text-obsidian font-bold text-sm transition-colors"
-          >
-            <LogOut className="w-4 h-4" />
-            Logout
-          </button>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Main Content Column */}
-          <div className="lg:col-span-2 space-y-8">
-            <StatusBar 
-              currentPhase={clientData.current_phase} 
-              totalPhases={clientData.total_phases} 
-              nextMilestone={clientData.next_milestone_title ? { 
-                title: clientData.next_milestone_title, 
-                date: clientData.next_milestone_date 
-              } : null} 
-            />
-            
-            <PulseCards metrics={metrics} />
-
-            <Vault documents={documents} />
-          </div>
-
-          {/* Sidebar Column */}
-          <div className="space-y-8">
-            <ActionDesk tasks={tasks} />
-
-            {/* Support/Contact */}
+    <div className="min-h-screen bg-neutral pt-24 pb-20 px-6 lg:px-12 relative overflow-hidden">
+      <div className="grid-bg-overlay opacity-5"></div>
+      
+      <div className="max-w-7xl mx-auto relative z-10">
+        <AnimatePresence mode="wait">
+          {!clientData ? (
             <motion.div 
+              key="no-access"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-              className="bg-chartreuse rounded-3xl p-8 text-obsidian shadow-lg shadow-chartreuse/10"
+              exit={{ opacity: 0, y: -20 }}
+              className="flex flex-col items-center justify-center py-32 text-center"
             >
-              <h3 className="text-xl font-black mb-2">Need help?</h3>
-              <p className="text-obsidian/70 text-sm mb-6">Your dedicated strategist is available for any questions.</p>
-              <button className="w-full btn btn-primary radius-extreme py-3 text-sm flex items-center justify-center gap-2">
-                Message Support
-                <ArrowRight className="w-4 h-4" />
+              <div className="w-20 h-20 bg-obsidian/5 rounded-full flex items-center justify-center mb-6">
+                <LayoutDashboard className="w-10 h-10 text-obsidian/20" />
+              </div>
+              <h2 className="text-4xl font-black text-obsidian mb-4 tracking-tight uppercase">No Access Found</h2>
+              <p className="text-obsidian/60 mb-10 max-w-md mx-auto leading-relaxed">
+                It seems your account isn't associated with a client profile yet. Please contact the TexhCo team.
+              </p>
+              <button 
+                onClick={handleLogout} 
+                className="bg-obsidian text-white px-10 py-4 rounded-2xl font-black uppercase tracking-widest text-sm hover:bg-obsidian/80 transition-all shadow-xl shadow-obsidian/10"
+              >
+                Logout Account
               </button>
             </motion.div>
-          </div>
-        </div>
+          ) : (
+            <motion.div 
+              key="dashboard"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5 }}
+            >
+              {/* Header */}
+              <header className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
+                <div className="space-y-4">
+                  <div className="flex items-center gap-3">
+                    <div className="bg-obsidian p-2.5 rounded-xl shadow-lg shadow-obsidian/10">
+                      <LayoutDashboard className="text-chartreuse w-5 h-5" />
+                    </div>
+                    <span className="text-obsidian/40 font-black text-[10px] uppercase tracking-[0.2em]">Client Command Center</span>
+                  </div>
+                  <h1 className="text-5xl md:text-6xl font-black text-obsidian tracking-tighter uppercase leading-[0.85]">
+                    Welcome, {clientData.full_name.split(' ')[0]}
+                  </h1>
+                  <p className="text-obsidian/60 text-lg font-medium">
+                    Managing <span className="text-obsidian font-bold border-b-2 border-chartreuse pb-0.5">{clientData.company_name}</span> ecosystem.
+                  </p>
+                </div>
+                
+                <div className="flex flex-wrap items-center gap-4">
+                  {isAdmin && (
+                    <button 
+                      onClick={() => setShowAdmin(true)}
+                      className="flex items-center gap-2 bg-white text-obsidian border border-obsidian/10 px-6 py-4 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-neutral/50 transition-all shadow-sm"
+                    >
+                      <Settings className="w-4 h-4 text-obsidian/40" />
+                      Admin Panel
+                    </button>
+                  )}
+                  <button 
+                    onClick={handleLogout}
+                    className="flex items-center gap-2 bg-obsidian text-white px-6 py-4 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-obsidian/80 transition-all shadow-xl shadow-obsidian/20"
+                  >
+                    <LogOut className="w-4 h-4" />
+                    Logout
+                  </button>
+                </div>
+              </header>
+
+              {/* Grid Layout */}
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
+                {/* Left Column: Metrics & Documents */}
+                <div className="lg:col-span-2 space-y-10">
+                  <StatusBar 
+                    currentPhase={clientData.current_phase} 
+                    totalPhases={clientData.total_phases} 
+                    nextMilestone={clientData.next_milestone_title} 
+                  />
+                  
+                  <div className="space-y-4">
+                    <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-obsidian/30 ml-2">Live Performance Pulse</h3>
+                    <PulseCards metrics={metrics} />
+                  </div>
+
+                  <div className="space-y-4">
+                    <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-obsidian/30 ml-2">Asset Vault</h3>
+                    <Vault documents={documents} />
+                  </div>
+                </div>
+
+                {/* Right Column: Actions & Support */}
+                <div className="space-y-10">
+                  <div className="space-y-4">
+                    <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-obsidian/30 ml-2">Action Items</h3>
+                    <ActionDesk tasks={tasks} />
+                  </div>
+
+                  <motion.div 
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.4 }}
+                    className="bg-obsidian rounded-[2.5rem] p-10 text-white relative overflow-hidden group shadow-2xl"
+                  >
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-chartreuse/10 rounded-full blur-3xl group-hover:bg-chartreuse/20 transition-all"></div>
+                    <h3 className="text-2xl font-black mb-3 text-chartreuse tracking-tight">Need Support?</h3>
+                    <p className="text-white/60 text-sm font-medium leading-relaxed mb-8">
+                      Your project strategist is available 24/7 for urgent consultations.
+                    </p>
+                    <button className="w-full bg-white text-obsidian py-4 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-chartreuse transition-all flex items-center justify-center gap-2 group">
+                      Message TexhCo
+                      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    </button>
+                  </motion.div>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   );
+
 };
 
 
