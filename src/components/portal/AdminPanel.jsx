@@ -12,8 +12,12 @@ import {
   X,
   UserPlus,
   RefreshCcw,
-  ExternalLink
+  ExternalLink,
+  Settings,
+  ChevronLeft
 } from 'lucide-react';
+
+
 import { motion, AnimatePresence } from 'framer-motion';
 
 const AdminPanel = ({ onBack }) => {
