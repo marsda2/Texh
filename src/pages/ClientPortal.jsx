@@ -8,6 +8,8 @@ import {
   Settings,
   ChevronLeft
 } from 'lucide-react';
+import { useLanguage } from '../lib/i18n';
+
 
 // Portal Components
 import PulseCards from '../components/portal/PulseCards';
