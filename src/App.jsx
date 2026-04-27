@@ -6,6 +6,7 @@ import EstimatorQuizPage from './pages/EstimatorQuizPage';
 import ContactCardPage from './pages/ContactCardPage';
 import PrivacyPage from './pages/PrivacyPage';
 import TermsPage from './pages/TermsPage';
+import ClientPortal from './pages/ClientPortal';
 import Footer from './components/Footer';
 import { LanguageProvider, useLanguage } from './lib/i18n';
 import { CountdownTimer } from './components/ui/CountdownTimer';
@@ -153,6 +154,7 @@ function AppContent() {
                     <Route path="/estimator" element={<EstimatorQuizPage />} />
                     <Route path="/privacy" element={<PrivacyPage />} />
                     <Route path="/terms" element={<TermsPage />} />
+                    <Route path="/portal" element={<ClientPortal />} />
                 </Routes>
             </main>
 

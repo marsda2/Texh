@@ -96,7 +96,8 @@ Texh Co. crea **Local Growth Systems**: ecosistemas digitales que combinan web p
 2. **Visibility:** SEO local, Google Business, contenido por servicio/ciudad y estructura preparada para búsquedas con IA.
 3. **Conversion:** Reservas, llamadas, formularios, presupuestos, pagos, WhatsApp y captación de leads.
 4. **Automation:** Panel editable, recordatorios, reseñas, CRM ligero, emails y procesos internos.
-5. **Measurement:** Tracking de llamadas, formularios, clics, fuentes de tráfico y oportunidades generadas.
+5. **The TexhCo Client Portal:** Un "Command Center" premium para el cliente con acceso vía Magic Link, métricas en tiempo real, seguimiento de fases y repositorio de documentos.
+6. **Measurement:** Tracking de llamadas, formularios, clics, fuentes de tráfico y oportunidades generadas.
 
 ## 5. Identidad Visual y Diseño (UI/UX)
 
@@ -132,6 +133,7 @@ Texh Co. crea **Local Growth Systems**: ecosistemas digitales que combinan web p
 7. **About:** Xiuny / equipo / enfoque humano + ingeniería.
 8. **Audit CTA:** "Descubre qué oportunidades está perdiendo tu presencia digital."
 9. **Contact:** "Agendar Sesión Estratégica"
+10. **Client Portal (/portal):** Acceso privado para clientes activos. Dashboard de métricas, estado del proyecto y descargas.
 
 ## 7. Oferta Inicial: TexhCo Local Visibility Audit
 

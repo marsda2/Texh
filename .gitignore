@@ -24,3 +24,6 @@ dist-ssr
 *.sw?
 *.pdf
 glossylux.md
+.env
+/.claude
+/.agents
