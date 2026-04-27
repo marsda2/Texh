@@ -10,8 +10,10 @@ import ClientPortal from './pages/ClientPortal';
 import Footer from './components/Footer';
 import { LanguageProvider, useLanguage } from './lib/i18n';
 import { CountdownTimer } from './components/ui/CountdownTimer';
+import AuditModal from './components/AuditModal';
 
 // Scroll to top helper
+
 // Scroll to top helper
 const ScrollToTop = () => {
     const { pathname } = useLocation();
@@ -45,6 +47,7 @@ const HamburgerButton = ({ isOpen, setIsOpen }) => (
 function AppContent() {
     const [scrolled, setScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [isAuditModalOpen, setIsAuditModalOpen] = useState(false);
     const location = useLocation();
     const { language, setLanguage, t } = useLanguage();
 
@@ -69,6 +72,11 @@ function AppContent() {
     return (
         <div className="app-wrapper min-h-screen">
             <ScrollToTop />
+            
+            <AuditModal 
+                open={isAuditModalOpen} 
+                onClose={() => setIsAuditModalOpen(false)} 
+            />
 
             {/* Navigation */}
             <header className="navbar-container">
@@ -92,21 +100,22 @@ function AppContent() {
                                 <Link to="/#portfolio" className="nav-link">{t('nav.portfolio')}</Link>
                             </>
                         )}
-                        <a href="#contact" className="nav-link contact-link flex flex-col items-center justify-center !py-1.5 !px-5 gap-0.5 border border-chartreuse/30 shadow-[0_0_15px_rgba(201,255,31,0.2)] animate-pulse hover:animate-none">
+                        <button 
+                            onClick={() => setIsAuditModalOpen(true)}
+                            className="nav-link contact-link flex flex-col items-center justify-center !py-1.5 !px-5 gap-0.5 border border-chartreuse/30 shadow-[0_0_15px_rgba(201,255,31,0.2)] animate-pulse hover:animate-none"
+                        >
                             <span className="font-bold text-sm tracking-tight">{t('nav.contact')}</span>
                             <div className="text-[10px] opacity-90 leading-none">
                                 <CountdownTimer />
                             </div>
-                        </a>
+                        </button>
 
                         {/* Desktop Language Toggle */}
                         <div className="flex items-center gap-2 ml-6 font-heading font-black text-xs tracking-widest">
                             <button onClick={() => setLanguage('es')} className={`transition-all ${language === 'es' ? 'text-chartreuse opacity-100 scale-110 drop-shadow-md' : 'text-obsidian opacity-80 hover:opacity-100 hover:scale-105'}`}>ES</button>
                             <span className="text-obsidian opacity-20">|</span>
                             <button onClick={() => setLanguage('en')} className={`transition-all ${language === 'en' ? 'text-chartreuse opacity-100 scale-110 drop-shadow-md' : 'text-obsidian opacity-80 hover:opacity-100 hover:scale-105'}`}>EN</button>
-
                         </div>
-
                     </div>
 
                     <HamburgerButton isOpen={isMobileMenuOpen} setIsOpen={setIsMobileMenuOpen} />
@@ -131,12 +140,15 @@ function AppContent() {
                                 <Link to="/#portfolio" onClick={() => setIsMobileMenuOpen(false)} className="text-obsidian hover:text-chartreuse transition-colors">{t('nav.portfolio')}</Link>
                             </>
                         )}
-                        <a href="#contact" onClick={() => setIsMobileMenuOpen(false)} className="text-obsidian bg-chartreuse px-8 py-3 rounded-full hover:bg-white transition-colors mt-4 flex flex-col items-center justify-center shadow-lg shadow-chartreuse/20">
+                        <button 
+                            onClick={() => { setIsAuditModalOpen(true); setIsMobileMenuOpen(false); }}
+                            className="text-obsidian bg-chartreuse px-8 py-3 rounded-full hover:bg-white transition-colors mt-4 flex flex-col items-center justify-center shadow-lg shadow-chartreuse/20"
+                        >
                             <span className="font-bold text-xl">{t('nav.contact')}</span>
                             <div className="text-sm font-mono font-bold opacity-80 mt-1">
                                 <CountdownTimer />
                             </div>
-                        </a>
+                        </button>
 
                         {/* Mobile Language Toggle */}
                         <div className="flex items-center gap-4 mt-4 text-xl">
@@ -151,7 +163,7 @@ function AppContent() {
             {/* Main Content */}
             <main>
                 <Routes>
-                    <Route path="/" element={<Home />} />
+                    <Route path="/" element={<Home onOpenAudit={() => setIsAuditModalOpen(true)} />} />
                     <Route path="/about" element={<AboutPage />} />
                     <Route path="/estimator" element={<EstimatorQuizPage />} />
                     <Route path="/privacy" element={<PrivacyPage />} />
@@ -160,10 +172,11 @@ function AppContent() {
                 </Routes>
             </main>
 
-            <Footer />
+            <Footer onOpenAudit={() => setIsAuditModalOpen(true)} />
         </div>
     );
 }
+
 
 function App() {
     return (
