@@ -100,11 +100,13 @@ function AppContent() {
                         </a>
 
                         {/* Desktop Language Toggle */}
-                        <div className="flex items-center gap-2 ml-6 font-heading font-black text-sm tracking-widest">
-                            <button onClick={() => setLanguage('es')} className={`transition-all ${language === 'es' ? 'text-chartreuse opacity-100 scale-110 drop-shadow-md' : 'text-obsidian opacity-50 hover:opacity-100 hover:scale-105'}`}>ES</button>
+                        <div className="flex items-center gap-2 ml-6 font-heading font-black text-xs tracking-widest">
+                            <button onClick={() => setLanguage('es')} className={`transition-all ${language === 'es' ? 'text-chartreuse opacity-100 scale-110 drop-shadow-md' : 'text-obsidian opacity-80 hover:opacity-100 hover:scale-105'}`}>ES</button>
                             <span className="text-obsidian opacity-20">|</span>
-                            <button onClick={() => setLanguage('en')} className={`transition-all ${language === 'en' ? 'text-chartreuse opacity-100 scale-110 drop-shadow-md' : 'text-obsidian opacity-50 hover:opacity-100 hover:scale-105'}`}>EN</button>
+                            <button onClick={() => setLanguage('en')} className={`transition-all ${language === 'en' ? 'text-chartreuse opacity-100 scale-110 drop-shadow-md' : 'text-obsidian opacity-80 hover:opacity-100 hover:scale-105'}`}>EN</button>
+
                         </div>
+
                     </div>
 
                     <HamburgerButton isOpen={isMobileMenuOpen} setIsOpen={setIsMobileMenuOpen} />

@@ -17,6 +17,7 @@ import Vault from '../components/portal/Vault';
 const ClientPortal = () => {
   const [session, setSession] = useState(null);
   const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [dataLoading, setDataLoading] = useState(true);
   const [message, setMessage] = useState('');
@@ -80,17 +81,15 @@ const ClientPortal = () => {
     setLoading(true);
     setMessage('');
 
-    const { error } = await supabase.auth.signInWithOtp({
+    const { error } = await supabase.auth.signInWithPassword({
       email,
-      options: {
-        emailRedirectTo: window.location.origin + '/portal',
-      },
+      password,
     });
 
     if (error) {
       setMessage(`Error: ${error.message}`);
     } else {
-      setMessage('Check your email for the login link!');
+      setMessage('Login successful!');
     }
     setLoading(false);
   };
@@ -101,58 +100,83 @@ const ClientPortal = () => {
     setMetrics([]);
     setDocuments([]);
     setTasks([]);
+    setPassword('');
   };
 
   if (!session) {
     return (
-      <div className="min-h-screen bg-obsidian flex items-center justify-center p-6">
-        <div className="grid-bg-overlay opacity-20"></div>
+      <div className="min-h-screen bg-obsidian flex items-center justify-center p-6 relative overflow-hidden">
+        {/* Animated Background Elements */}
+        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-chartreuse/5 rounded-full blur-[120px]"></div>
+        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-chartreuse/5 rounded-full blur-[120px]"></div>
+        
+        <div className="grid-bg-overlay opacity-10"></div>
+        
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="w-full max-w-md bg-white/5 backdrop-blur-xl border border-white/10 p-8 rounded-3xl shadow-2xl"
+          className="w-full max-w-md bg-white/[0.08] backdrop-blur-3xl border border-white/10 p-10 rounded-[2.5rem] shadow-2xl relative z-10"
         >
-          <div className="flex flex-col items-center mb-8">
-            <div className="logo-main text-chartreuse text-3xl mb-1">TEXH</div>
-            <div className="logo-sub text-white/50 tracking-widest uppercase">Command Center</div>
+          <div className="flex flex-col items-center mb-10">
+            <div className="logo-main text-chartreuse text-4xl mb-1 tracking-tighter">TEXH</div>
+            <div className="logo-sub text-white/50 tracking-[0.2em] uppercase text-[10px] font-bold">Command Center</div>
+
           </div>
           
-          <h2 className="text-2xl font-bold text-white mb-2 text-center">Welcome Back</h2>
-          <p className="text-white/60 text-center mb-8 text-sm">Enter your email to receive a magic link. No password required.</p>
+          <h2 className="text-3xl font-black text-white mb-3 text-center tracking-tight">Access Portal</h2>
+          <p className="text-white/40 text-center mb-10 text-sm font-medium leading-relaxed">
+            Enter your credentials to manage your digital system.
+          </p>
           
-          <form onSubmit={handleLogin} className="space-y-4">
-            <div>
+          <form onSubmit={handleLogin} className="space-y-5">
+            <div className="space-y-1.5">
+              <label className="text-[10px] uppercase tracking-widest font-black text-white/50 ml-4">Email Address</label>
               <input
                 type="email"
                 placeholder="sofia@tu-negocio.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white placeholder:text-white/20 focus:outline-none focus:border-chartreuse/50 transition-colors"
+                className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white placeholder:text-white/40 focus:outline-none focus:border-chartreuse/50 focus:bg-white/[0.08] transition-all"
                 required
               />
             </div>
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full btn btn-accent radius-extreme py-4 font-bold disabled:opacity-50"
-            >
-              {loading ? 'Sending...' : 'Send Magic Link'}
-            </button>
+            <div className="space-y-1.5">
+              <label className="text-[10px] uppercase tracking-widest font-black text-white/50 ml-4">Password</label>
+              <input
+                type="password"
+                placeholder="••••••••"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-white placeholder:text-white/40 focus:outline-none focus:border-chartreuse/50 focus:bg-white/[0.08] transition-all"
+                required
+              />
+            </div>
+            
+            <div className="pt-4">
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full bg-chartreuse text-obsidian rounded-2xl py-5 font-black text-sm uppercase tracking-widest hover:brightness-110 hover:shadow-[0_20px_40px_-10px_rgba(201,255,31,0.3)] transform active:scale-[0.98] transition-all disabled:opacity-50"
+              >
+                {loading ? 'Authenticating...' : 'Sign In'}
+              </button>
+            </div>
           </form>
           
           {message && (
-            <motion.p 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className={`mt-6 text-center text-sm ${message.includes('Error') ? 'text-red-400' : 'text-chartreuse'}`}
+            <motion.div 
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className={`mt-8 p-4 rounded-2xl text-center text-xs font-bold ${message.includes('Error') ? 'bg-red-500/10 text-red-400 border border-red-500/20' : 'bg-chartreuse/10 text-chartreuse border border-chartreuse/20'}`}
             >
               {message}
-            </motion.p>
+            </motion.div>
           )}
         </motion.div>
       </div>
     );
   }
+
 
   if (dataLoading) {
     return (
