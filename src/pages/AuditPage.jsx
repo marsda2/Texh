@@ -120,15 +120,15 @@ const AuditPage = () => {
                         <div className="flex items-start gap-4">
                             <Clock className="text-chartreuse w-5 h-5 flex-shrink-0 mt-1" />
                             <div>
-                                <h4 className="font-bold text-sm">30 Min</h4>
-                                <p className="text-white/40 text-xs">{es ? 'Videollamada' : 'Video call'}</p>
+                                <h4 className="font-bold text-sm text-white">30 Min</h4>
+                                <p className="text-white/70 text-xs">{es ? 'Videollamada' : 'Video call'}</p>
                             </div>
                         </div>
                         <div className="flex items-start gap-4">
                             <CalendarIcon className="text-chartreuse w-5 h-5 flex-shrink-0 mt-1" />
                             <div>
-                                <h4 className="font-bold text-sm">Google Meet</h4>
-                                <p className="text-white/40 text-xs">{es ? 'Enlace automático' : 'Automatic link'}</p>
+                                <h4 className="font-bold text-sm text-white">Google Meet</h4>
+                                <p className="text-white/70 text-xs">{es ? 'Enlace automático' : 'Automatic link'}</p>
                             </div>
                         </div>
                     </div>
