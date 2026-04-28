@@ -1,3 +1,15 @@
 User-agent: *
 Allow: /
+
+# Private areas
+Disallow: /portal
+Disallow: /portal/
+
+# Tools (not indexable content)
+Disallow: /estimator
+Disallow: /estimator/
+
+# Contact cards (individual, not SEO targets)
+Disallow: /contact/
+
 Sitemap: https://texhco.com/sitemap.xml

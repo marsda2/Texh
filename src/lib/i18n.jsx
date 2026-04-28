@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useContext, useEffect } from 'react';
 
 const translations = {
   es: {
@@ -232,7 +232,30 @@ const translations = {
 const LanguageContext = createContext();
 
 export const LanguageProvider = ({ children }) => {
-  const [language, setLanguage] = useState('es');
+  const [language, setLanguage] = useState(() => {
+    // Check for saved language preference
+    const savedLang = localStorage.getItem('app_language');
+    if (savedLang === 'es' || savedLang === 'en') {
+      return savedLang;
+    }
+    
+    // Detect browser language
+    if (typeof navigator !== 'undefined' && navigator.language) {
+      const browserLang = navigator.language.toLowerCase();
+      // If browser is Spanish (es, es-ES, es-MX, etc.), use Spanish
+      if (browserLang.startsWith('es')) {
+        return 'es';
+      }
+    }
+    
+    // Default to English for USA and others
+    return 'en';
+  });
+
+  // Save language preference whenever it changes
+  useEffect(() => {
+    localStorage.setItem('app_language', language);
+  }, [language]);
 
   // Helper to get nested translation keys safely (e.g., 'nav.home')
   const t = (key) => {

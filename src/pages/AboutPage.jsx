@@ -1,11 +1,18 @@
 import React from 'react';
 import About from '../components/About';
 import { useLanguage } from '../lib/i18n';
+import { SEO } from '../components/SEO';
 
 const AboutPage = () => {
-    const { t } = useLanguage();
+    const { t, language } = useLanguage();
+    const es = language === 'es';
     return (
         <div className="pt-24 min-h-screen bg-neutral">
+            <SEO
+                title={es ? "Quiénes Somos — Tu Socio Tecnológico" : "About Us — Your Strategic Tech Partner"}
+                description={es ? "Conoce al equipo de Texh Co. Ingenieros y estrategas digitales construyendo sistemas de crecimiento para negocios locales." : "Meet the Texh Co. team. Engineers and digital strategists building growth systems for local businesses."}
+                url="https://texhco.com/about"
+            />
             <div className="grid-bg-overlay"></div>
             <About />
             

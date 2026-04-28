@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
 import Home from './pages/Home';
 import AboutPage from './pages/AboutPage';
 import EstimatorQuizPage from './pages/EstimatorQuizPage';
@@ -7,6 +8,10 @@ import ContactCardPage from './pages/ContactCardPage';
 import PrivacyPage from './pages/PrivacyPage';
 import TermsPage from './pages/TermsPage';
 import ClientPortal from './pages/ClientPortal';
+import AuditPage from './pages/AuditPage';
+import PremiumWebDesignPage from './pages/services/PremiumWebDesignPage';
+import LocalSEOPage from './pages/services/LocalSEOPage';
+import BusinessAutomationPage from './pages/services/BusinessAutomationPage';
 import Footer from './components/Footer';
 import { LanguageProvider, useLanguage } from './lib/i18n';
 import { CountdownTimer } from './components/ui/CountdownTimer';
@@ -169,6 +174,10 @@ function AppContent() {
                     <Route path="/privacy" element={<PrivacyPage />} />
                     <Route path="/terms" element={<TermsPage />} />
                     <Route path="/portal" element={<ClientPortal />} />
+                    <Route path="/audit" element={<AuditPage />} />
+                    <Route path="/services/premium-web-design" element={<PremiumWebDesignPage />} />
+                    <Route path="/services/local-seo" element={<LocalSEOPage />} />
+                    <Route path="/services/business-automation" element={<BusinessAutomationPage />} />
                 </Routes>
             </main>
 
@@ -180,14 +189,16 @@ function AppContent() {
 
 function App() {
     return (
-        <LanguageProvider>
-            <Router>
-                <Routes>
-                    <Route path="/contact/:username" element={<ContactCardPage />} />
-                    <Route path="/*" element={<AppContent />} />
-                </Routes>
-            </Router>
-        </LanguageProvider>
+        <HelmetProvider>
+            <LanguageProvider>
+                <Router>
+                    <Routes>
+                        <Route path="/contact/:username" element={<ContactCardPage />} />
+                        <Route path="/*" element={<AppContent />} />
+                    </Routes>
+                </Router>
+            </LanguageProvider>
+        </HelmetProvider>
     );
 }
 

@@ -7,6 +7,7 @@ import Portfolio from '../components/Portfolio';
 import { useLanguage } from '../lib/i18n';
 import { useScrollReveal } from '../lib/useScrollReveal';
 import { CountdownTimer } from '../components/ui/CountdownTimer';
+import { SEO } from '../components/SEO';
 
 const ReviewCard = ({ item, index }) => {
     const { language } = useLanguage();
@@ -53,6 +54,7 @@ const Home = ({ onOpenAudit }) => {
 
     return (
         <div className="flex flex-col min-h-screen">
+            <SEO />
             <CinematicHero 
                 tagline1={t('hero.tagline1')}
                 tagline2={t('hero.tagline2')}

@@ -15,6 +15,7 @@ serve(async (req) => {
     let adminHtml = ""
     let clientSubject = "Hemos recibido tu solicitud"
     let clientHtml = ""
+    let attachments = []
 
     // ======== LÓGICA SEGÚN LA TABLA ========
     if (table === "voice_leads") {
@@ -132,6 +133,58 @@ serve(async (req) => {
       adminHtml = `<p>Nuevo registro: ${JSON.stringify(record)}</p>`
     }
 
+    if (table === "call_bookings" && record.iso_date && record.time_slot) {
+      try {
+        const dt = new Date(record.iso_date);
+        const year = dt.getUTCFullYear();
+        const month = String(dt.getUTCMonth() + 1).padStart(2, '0');
+        const day = String(dt.getUTCDate()).padStart(2, '0');
+        
+        const [hours, minutes] = record.time_slot.split(':');
+        let eH = parseInt(hours);
+        let eM = parseInt(minutes) + 30;
+        if (eM >= 60) {
+          eH += 1;
+          eM -= 60;
+        }
+        
+        const strEndHours = String(eH).padStart(2, '0');
+        const strEndMinutes = String(eM).padStart(2, '0');
+
+        const dtStart = `${year}${month}${day}T${hours}${minutes}00`;
+        const dtEnd = `${year}${month}${day}T${strEndHours}${strEndMinutes}00`;
+        
+        const icsString = `BEGIN:VCALENDAR\r
+VERSION:2.0\r
+PRODID:-//Texh Co.//Audit Booking//EN\r
+CALSCALE:GREGORIAN\r
+METHOD:REQUEST\r
+BEGIN:VEVENT\r
+SUMMARY:Sesión Estratégica - Texh Co.\r
+DTSTART;TZID=America/New_York:${dtStart}\r
+DTEND;TZID=America/New_York:${dtEnd}\r
+DESCRIPTION:Sesión Estratégica con Texh Co. para analizar tu ecosistema digital. Nos pondremos en contacto contigo a la hora acordada.\r
+LOCATION:Video Call / Google Meet\r
+ORGANIZER;CN="Texh Co.":mailto:hello@texhco.com\r
+ATTENDEE;RSVP=TRUE;CN="Cliente":mailto:${clientEmail || 'cliente@texhco.com'}\r
+STATUS:CONFIRMED\r
+END:VEVENT\r
+END:VCALENDAR`;
+
+        // Encode to base64 for safe transmission via Resend API
+        // Workaround for btoa with utf-8 in JS/Deno
+        const binary = new Uint8Array(new TextEncoder().encode(icsString)).reduce((acc, byte) => acc + String.fromCharCode(byte), "");
+        const base64Ics = btoa(binary);
+
+        attachments.push({
+          filename: "invitation.ics",
+          content: base64Ics
+        });
+      } catch (err) {
+        console.error("Error generating ICS attachment:", err);
+      }
+    }
+
     const emailPromises = []
 
     // 2. Enviar email al CLIENTE (Solo si dejó un email válido, y no solo el teléfono)
@@ -148,6 +201,7 @@ serve(async (req) => {
             to: clientEmail,
             subject: clientSubject,
             html: clientHtml,
+            attachments: attachments.length > 0 ? attachments : undefined
           }),
         })
       )
@@ -166,6 +220,7 @@ serve(async (req) => {
           to: ["marcos.troger@gmail.com", "xiuhq66@gmail.com"],
           subject: adminSubject,
           html: adminHtml,
+          attachments: attachments.length > 0 ? attachments : undefined
         }),
       })
     )

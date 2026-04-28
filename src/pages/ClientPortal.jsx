@@ -9,6 +9,7 @@ import {
   ChevronLeft
 } from 'lucide-react';
 import { useLanguage } from '../lib/i18n';
+import { SEO } from '../components/SEO';
 
 
 // Portal Components
@@ -203,6 +204,7 @@ const ClientPortal = () => {
 
   return (
     <div className="min-h-screen bg-neutral pt-24 pb-20 px-6 lg:px-12 relative overflow-hidden">
+      <SEO title="Client Portal" noindex={true} />
       <div className="grid-bg-overlay opacity-5"></div>
       
       <div className="max-w-7xl mx-auto relative z-10">

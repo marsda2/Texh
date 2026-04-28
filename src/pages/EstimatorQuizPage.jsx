@@ -9,6 +9,7 @@ import {
 import { useLanguage } from '../lib/i18n';
 import { supabase } from '../lib/supabase';
 import { trackLeadEvent } from '../lib/analytics';
+import { SEO } from '../components/SEO';
 
 const ESTIMATOR_DATA = {
     es: [
@@ -264,6 +265,7 @@ const EstimatorQuizPage = () => {
 
     return (
         <div className="min-h-screen bg-[#F8F9FA] text-obsidian flex flex-col font-body selection:bg-chartreuse selection:text-obsidian">
+            <SEO title="Estimator" noindex={true} />
             {/* Top Progress Bar Container */}
             <div className="w-full bg-white border-b border-gray-200 px-6 pb-6 pt-[104px] md:pb-8 md:pt-[112px]">
                 <div className="max-w-5xl mx-auto w-full">
