@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 import Home from './pages/Home';
 import AboutPage from './pages/AboutPage';
 import EstimatorQuizPage from './pages/EstimatorQuizPage';
@@ -196,6 +197,7 @@ function App() {
                         <Route path="/contact/:username" element={<ContactCardPage />} />
                         <Route path="/*" element={<AppContent />} />
                     </Routes>
+                    <SpeedInsights />
                 </Router>
             </LanguageProvider>
         </HelmetProvider>
