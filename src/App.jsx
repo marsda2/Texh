@@ -15,17 +15,20 @@ import LocalSEOPage from './pages/services/LocalSEOPage';
 import BusinessAutomationPage from './pages/services/BusinessAutomationPage';
 import Footer from './components/Footer';
 import { LanguageProvider, useLanguage } from './lib/i18n';
+import { trackPageView, trackViewContent } from './lib/metaPixel';
 import { CountdownTimer } from './components/ui/CountdownTimer';
 import AuditModal from './components/AuditModal';
 
 // Scroll to top helper
-
-// Scroll to top helper
 const ScrollToTop = () => {
     const { pathname } = useLocation();
+
     useEffect(() => {
         window.scrollTo(0, 0);
+        trackPageView();
+        trackViewContent({ content_name: pathname });
     }, [pathname]);
+
     return null;
 };
 
