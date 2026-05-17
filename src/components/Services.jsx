@@ -135,7 +135,7 @@ const ServiceCard = ({ service, index, idx, language }) => {
                 <div className="mt-auto">
                     <Link
                         to={`/estimator?service=${service.id || 'web'}`}
-                        className="inline-flex items-center gap-2 text-sm font-heading font-bold text-obsidian bg-transparent px-0 py-0 uppercase tracking-widest hover:text-chartreuse transition-colors srv-cta-link"
+                        className="inline-flex items-center justify-center gap-2 text-xs font-heading font-black text-obsidian bg-chartreuse px-6 py-3 rounded-full uppercase tracking-widest hover:bg-obsidian hover:text-white transition-all w-full"
                         style={{ textDecoration: 'none' }}
                     >
                         {language === 'es' ? 'Comenzar Cotización' : 'Start Estimate'}

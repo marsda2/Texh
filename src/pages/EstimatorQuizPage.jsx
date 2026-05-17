@@ -230,8 +230,21 @@ const EstimatorQuizPage = () => {
 
                 if (error) throw error;
 
-                // Track successful lead generation
-                trackLeadEvent('estimator_quiz', 150, formData.email, formData.phone);
+                // Map selected budget to approximate conversion value
+                const budgetMap = {
+                    'starter': 500,
+                    'growth': 1000,
+                    'premium': 2000,
+                    'scale': 5000,
+                    'enterprise': 5000,
+                    'basic': 100,
+                    'standard': 200,
+                    'pro': 350
+                };
+                const leadValue = budgetMap[answers.budget] || 150;
+
+                // Track successful lead generation with dynamic value
+                trackLeadEvent('estimator_quiz', leadValue, formData.email, formData.phone);
 
                 alert(language === 'es' ? '¡Propuesta en camino! Te contactaremos pronto.' : 'Proposal on its way! We will contact you soon.');
                 navigate('/');

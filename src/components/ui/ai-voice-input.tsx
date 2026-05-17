@@ -5,6 +5,7 @@ import { useState, useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
 import { supabase } from "../../lib/supabase";
+import { trackLeadEvent } from "../../lib/analytics";
 
 const MOCK_WORDS = [
   "Necesito", "un", "ecosistema", "digital", "que", "escale", 
@@ -270,6 +271,9 @@ export function AIVoiceInput({
         });
 
       if (dbError) throw new Error(dbError.message);
+
+      // Track the voice lead
+      trackLeadEvent('voice_lead', 200, email);
 
       // Success!
       setSubmitSuccess(true);
