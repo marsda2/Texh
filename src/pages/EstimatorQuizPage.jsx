@@ -231,7 +231,7 @@ const EstimatorQuizPage = () => {
                 if (error) throw error;
 
                 // Track successful lead generation
-                trackLeadEvent('estimator_quiz');
+                trackLeadEvent('estimator_quiz', 150, formData.email, formData.phone);
 
                 alert(language === 'es' ? '¡Propuesta en camino! Te contactaremos pronto.' : 'Proposal on its way! We will contact you soon.');
                 navigate('/');

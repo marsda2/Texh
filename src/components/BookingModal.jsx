@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { X, ChevronLeft, ChevronRight, Clock, Check, Loader2, Calendar } from 'lucide-react';
 import { supabase } from '../lib/supabase';
+import { trackScheduleEvent, trackLeadEvent } from '../lib/analytics';
 
 // ─── Constants ───────────────────────────────────────────────────────────────
 const NY_TZ = 'America/New_York';
@@ -121,6 +122,10 @@ const BookingModal = ({ open, onClose, language = 'es' }) => {
                 timezone: NY_TZ,
             });
             if (error) throw error;
+            
+            trackScheduleEvent('strategic_session', email.trim());
+            trackLeadEvent('strategic_session', 200, email.trim());
+            
             setSuccess(true);
         } catch (err) {
             console.error('Booking error:', err);

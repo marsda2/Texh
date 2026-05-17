@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { X, Check, Loader2, ShieldCheck, Mail, Phone, Send, Info } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { useLanguage } from '../lib/i18n';
+import { trackLeadEvent } from '../lib/analytics';
 
 const AuditModal = ({ open, onClose }) => {
     const { t, language } = useLanguage();
@@ -60,13 +61,8 @@ const AuditModal = ({ open, onClose }) => {
             const { error } = await supabase.from('footer_leads').insert(data);
             if (error) throw error;
 
-            // Trigger GA Event if window.gtag exists
-            if (window.gtag) {
-                window.gtag('event', 'generate_lead', {
-                    'event_category': 'audit',
-                    'event_label': service
-                });
-            }
+            // Track successful lead generation with CAPI support
+            trackLeadEvent(`audit_${service.toLowerCase().replace(/\s+/g, '_')}`, 150, isEmail ? emailOrPhone.trim() : null, !isEmail ? emailOrPhone.trim() : null);
 
             setSuccess(true);
         } catch (err) {
