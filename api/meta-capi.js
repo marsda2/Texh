@@ -26,6 +26,7 @@ export default async function handler(req, res) {
 
     const PIXEL_ID = process.env.VITE_META_PIXEL_ID || process.env.META_PIXEL_ID;
     const ACCESS_TOKEN = process.env.META_ACCESS_TOKEN;
+    const TEST_EVENT_CODE = process.env.META_TEST_EVENT_CODE; // e.g., TEST53332
 
     if (!PIXEL_ID || !ACCESS_TOKEN) {
         console.error('Missing Meta configuration');
@@ -33,13 +34,16 @@ export default async function handler(req, res) {
     }
 
     try {
-        const { eventName, eventId, eventSourceUrl, email, phone, customData } = req.body;
+        const { eventName, eventId, eventSourceUrl, email, phone, customData, fbc, fbp } = req.body;
 
         const userData = {
             client_user_agent: req.headers['user-agent'],
             // Vercel populates x-forwarded-for
             client_ip_address: req.headers['x-forwarded-for'] || '127.0.0.1',
         };
+
+        if (fbc) userData.fbc = fbc;
+        if (fbp) userData.fbp = fbp;
 
         // Hash Personally Identifiable Information (PII) before sending to Meta
         if (email) userData.em = [hashData(email)];
@@ -62,6 +66,10 @@ export default async function handler(req, res) {
                 }
             ]
         };
+
+        if (TEST_EVENT_CODE) {
+            payload.test_event_code = TEST_EVENT_CODE;
+        }
 
         const response = await fetch(`https://graph.facebook.com/v19.0/${PIXEL_ID}/events?access_token=${ACCESS_TOKEN}`, {
             method: 'POST',

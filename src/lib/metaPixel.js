@@ -8,12 +8,22 @@ const generateEventId = (prefix) =>
 const isFbqReady = () =>
     typeof window !== 'undefined' && typeof window.fbq === 'function';
 
+const getCookie = (name) => {
+    if (typeof document === 'undefined') return undefined;
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+    return undefined;
+};
+
 const sendToCAPI = async (eventName, data, eventID) => {
     try {
         const payload = {
             eventName,
             eventId: eventID,
             eventSourceUrl: typeof window !== 'undefined' ? window.location.href : '',
+            fbc: getCookie('_fbc'),
+            fbp: getCookie('_fbp'),
             customData: { ...data }
         };
 
