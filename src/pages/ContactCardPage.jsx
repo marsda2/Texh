@@ -128,8 +128,8 @@ const ContactCardPage = () => {
                 });
             if (error) throw error;
             
-            // Track successful lead generation
-            trackLeadEvent('contact_card');
+            // Track successful lead generation with PII
+            trackLeadEvent('contact_card', 100, isEmail ? contactValue : null, !isEmail ? contactValue : null);
         } catch (err) {
             console.error('Error saving contact card lead:', err);
             // Still show success — don't block UX

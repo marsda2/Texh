@@ -3,6 +3,7 @@ import { Calendar as CalendarIcon, Clock, ArrowRight, CheckCircle2, ShieldCheck,
 import { useLanguage } from '../lib/i18n';
 import { supabase } from '../lib/supabase';
 import { SEO } from '../components/SEO';
+import { trackScheduleEvent, trackLeadEvent } from '../lib/analytics';
 
 const AuditPage = () => {
     const { t, language } = useLanguage();
@@ -59,13 +60,12 @@ const AuditPage = () => {
                 
             if (error) throw error;
             
-            // Trigger GA Event if window.gtag exists
-            if (window.gtag) {
-                window.gtag('event', 'book_audit', {
-                    'event_category': 'audit',
-                    'event_label': service
-                });
-            }
+            const isEmail = emailOrPhone.includes('@');
+            const sourceLabel = `audit_${service.toLowerCase().replace(/\s+/g, '_')}`;
+            
+            // Track using CAPI-compliant helpers
+            trackScheduleEvent(sourceLabel, isEmail ? emailOrPhone.trim() : null, !isEmail ? emailOrPhone.trim() : null);
+            trackLeadEvent(sourceLabel, 150, isEmail ? emailOrPhone.trim() : null, !isEmail ? emailOrPhone.trim() : null);
 
             setTimeout(() => {
                 setIsSubmitting(false);
