@@ -234,219 +234,175 @@ const ClientPortal = () => {
     return <AdminPanel onBack={() => setShowAdmin(false)} />;
   }
 
+  const displayName = clientData?.full_name?.split(' ')[0] || session?.user?.user_metadata?.full_name?.split(' ')[0] || 'Client';
+  const companyName = clientData?.company_name || session?.user?.user_metadata?.company_name || (language === 'es' ? 'tu empresa' : 'your company');
+
   return (
     <div className="min-h-screen bg-neutral pt-24 pb-20 px-6 lg:px-12 relative overflow-hidden">
       <SEO title="Client Portal" noindex={true} />
       <div className="grid-bg-overlay opacity-5"></div>
       
       <div className="max-w-7xl mx-auto relative z-10">
-        <AnimatePresence mode="wait">
-          {!clientData ? (
-            <motion.div 
-              key="no-access"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              className="flex flex-col h-full w-full"
-            >
-              {/* Status Banner */}
-              <div className="bg-chartreuse/10 border border-chartreuse/20 rounded-[2.5rem] p-8 mb-12 flex flex-col md:flex-row items-center gap-8 shadow-xl shadow-chartreuse/5 relative z-20">
-                <div className="w-16 h-16 bg-chartreuse/20 rounded-full flex items-center justify-center shrink-0">
-                  <LayoutDashboard className="w-8 h-8 text-chartreuse" />
-                </div>
-                <div className="flex-1 text-center md:text-left">
-                  <h2 className="text-2xl font-black text-obsidian mb-2 tracking-tight uppercase">
-                    {language === 'es' ? 'Cuenta en Activación' : 'Account in Activation'}
-                  </h2>
-                  <p className="text-obsidian/70 font-medium leading-relaxed max-w-2xl">
+        <motion.div 
+          key="dashboard"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        >
+          {/* Status Banner */}
+          {!clientData && (
+            <div className="bg-chartreuse/10 border border-chartreuse/20 rounded-[2.5rem] p-8 mb-12 flex flex-col md:flex-row items-center gap-8 shadow-xl shadow-chartreuse/5 relative z-20">
+              <div className="w-16 h-16 bg-chartreuse/20 rounded-full flex items-center justify-center shrink-0">
+                <LayoutDashboard className="w-8 h-8 text-chartreuse" />
+              </div>
+              <div className="flex-1 text-center md:text-left">
+                <h2 className="text-2xl font-black text-obsidian mb-2 tracking-tight uppercase">
+                  {language === 'es' ? 'Cuenta en Activación' : 'Account in Activation'}
+                </h2>
+                <p className="text-obsidian/70 font-medium leading-relaxed max-w-2xl text-sm">
+                  {language === 'es' 
+                    ? 'Parece que tu cuenta es nueva. El equipo ya ha sido notificado. Pronto configuraremos tu espacio y añadiremos la información de tu empresa a este portal.' 
+                    : 'It seems your account is new. The team has already been notified. We will set up your space and add your business information to this portal soon.'}
+                </p>
+                {notifySuccess ? (
+                  <div className="mt-4 inline-block p-3 rounded-xl bg-green-500/10 text-green-700 border border-green-500/20 text-xs font-bold">
                     {language === 'es' 
-                      ? 'Parece que tu cuenta es nueva. El equipo ya ha sido notificado. Pronto configuraremos tu espacio y añadiremos la información de tu empresa a este portal.' 
-                      : 'It seems your account is new. The team has already been notified. We will set up your space and add your business information to this portal soon.'}
-                  </p>
-                  {notifySuccess ? (
-                    <div className="mt-4 inline-block p-3 rounded-xl bg-green-500/10 text-green-700 border border-green-500/20 text-xs font-bold">
-                      {language === 'es' 
-                        ? '¡Notificación manual enviada con éxito!' 
-                        : 'Manual notification sent successfully!'}
-                    </div>
-                  ) : null}
-                </div>
-                <div className="flex flex-col sm:flex-row gap-3 shrink-0">
-                  {!notifySuccess && (
-                    <button 
-                      onClick={handleNotifyAdmin} 
-                      disabled={notifying}
-                      className="bg-obsidian text-white px-6 py-3.5 rounded-xl font-black uppercase tracking-widest text-[10px] hover:bg-obsidian/80 transition-all shadow-xl disabled:opacity-50"
-                    >
-                      {notifying ? (language === 'es' ? 'Notificando...' : 'Notifying...') : (language === 'es' ? 'Avisar a TexhCo' : 'Notify TexhCo')}
-                    </button>
-                  )}
+                      ? '¡Notificación manual enviada con éxito!' 
+                      : 'Manual notification sent successfully!'}
+                  </div>
+                ) : null}
+              </div>
+              <div className="flex flex-col sm:flex-row gap-3 shrink-0">
+                {!notifySuccess && (
                   <button 
-                    onClick={handleLogout} 
-                    className="bg-white text-obsidian border border-obsidian/10 px-6 py-3.5 rounded-xl font-black uppercase tracking-widest text-[10px] hover:bg-neutral/50 transition-all"
+                    onClick={handleNotifyAdmin} 
+                    disabled={notifying}
+                    className="bg-obsidian text-white px-6 py-3.5 rounded-xl font-black uppercase tracking-widest text-[10px] hover:bg-obsidian/80 transition-all shadow-xl disabled:opacity-50"
                   >
-                    {language === 'es' ? 'Cerrar Sesión' : 'Logout'}
+                    {notifying ? (language === 'es' ? 'Notificando...' : 'Notifying...') : (language === 'es' ? 'Avisar a TexhCo' : 'Notify TexhCo')}
                   </button>
-                </div>
+                )}
               </div>
-
-              {/* Placeholder Dashboard Layout */}
-              <div className="opacity-30 pointer-events-none filter blur-[3px] select-none">
-                {/* Header Placeholder */}
-                <header className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
-                  <div className="space-y-4">
-                    <div className="flex items-center gap-3">
-                      <div className="bg-obsidian p-2.5 rounded-xl">
-                        <LayoutDashboard className="text-chartreuse w-5 h-5" />
-                      </div>
-                      <span className="text-obsidian/40 font-black text-[10px] uppercase tracking-[0.2em]">Client Command Center</span>
-                    </div>
-                    <h1 className="text-5xl md:text-6xl font-black text-obsidian tracking-tighter uppercase leading-[0.85]">
-                      Welcome, <span className="text-obsidian/20">Client</span>
-                    </h1>
-                    <p className="text-obsidian/60 text-lg font-medium">
-                      Managing <span className="text-obsidian/40 font-bold border-b-2 border-chartreuse/30 pb-0.5">Your Business</span> ecosystem.
-                    </p>
-                  </div>
-                </header>
-
-                {/* Grid Layout Placeholder */}
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
-                  {/* Left Column */}
-                  <div className="lg:col-span-2 space-y-10">
-                    {/* Status Bar */}
-                    <div className="bg-white border border-obsidian/5 rounded-[2.5rem] p-8 h-32 flex items-center justify-center">
-                      <span className="text-obsidian/30 font-black uppercase tracking-widest text-sm">Status Bar (Pending)</span>
-                    </div>
-                    
-                    {/* Pulse Cards */}
-                    <div className="space-y-4">
-                      <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-obsidian/30 ml-2">Live Performance Pulse</h3>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        {[1, 2, 3, 4].map(i => (
-                          <div key={i} className="bg-white border border-obsidian/5 rounded-[2rem] p-6 h-32 flex items-center justify-center">
-                            <span className="text-obsidian/20 font-bold text-xs uppercase tracking-widest">Metric {i}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Asset Vault */}
-                    <div className="space-y-4">
-                      <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-obsidian/30 ml-2">Asset Vault</h3>
-                      <div className="bg-white border border-obsidian/5 rounded-[2.5rem] p-8 h-48 flex items-center justify-center">
-                        <span className="text-obsidian/20 font-bold text-xs uppercase tracking-widest">Documents & Files</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Right Column */}
-                  <div className="space-y-10">
-                    {/* Action Desk */}
-                    <div className="space-y-4">
-                      <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-obsidian/30 ml-2">Action Items</h3>
-                      <div className="bg-white border border-obsidian/5 rounded-[2.5rem] p-8 h-80 flex flex-col items-center justify-center gap-4">
-                        <span className="text-obsidian/20 font-bold text-xs uppercase tracking-widest">Tasks Overview</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          ) : (
-            <motion.div 
-              key="dashboard"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.5 }}
-            >
-              {/* Header */}
-              <header className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
-                <div className="space-y-4">
-                  <div className="flex items-center gap-3">
-                    <div className="bg-obsidian p-2.5 rounded-xl shadow-lg shadow-obsidian/10">
-                      <LayoutDashboard className="text-chartreuse w-5 h-5" />
-                    </div>
-                    <span className="text-obsidian/40 font-black text-[10px] uppercase tracking-[0.2em]">Client Command Center</span>
-                  </div>
-                  <h1 className="text-5xl md:text-6xl font-black text-obsidian tracking-tighter uppercase leading-[0.85]">
-                    Welcome, {clientData.full_name.split(' ')[0]}
-                  </h1>
-                  <p className="text-obsidian/60 text-lg font-medium">
-                    Managing <span className="text-obsidian font-bold border-b-2 border-chartreuse pb-0.5">{clientData.company_name}</span> ecosystem.
-                  </p>
-                </div>
-                
-                <div className="flex flex-wrap items-center gap-4">
-                  {isAdmin && (
-                    <button 
-                      onClick={() => setShowAdmin(true)}
-                      className="flex items-center gap-2 bg-white text-obsidian border border-obsidian/10 px-6 py-4 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-neutral/50 transition-all shadow-sm"
-                    >
-                      <Settings className="w-4 h-4 text-obsidian/40" />
-                      Admin Panel
-                    </button>
-                  )}
-                  <button 
-                    onClick={handleLogout}
-                    className="flex items-center gap-2 bg-obsidian text-white px-6 py-4 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-obsidian/80 transition-all shadow-xl shadow-obsidian/20"
-                  >
-                    <LogOut className="w-4 h-4" />
-                    Logout
-                  </button>
-                </div>
-              </header>
-
-              {/* Grid Layout */}
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
-                {/* Left Column: Metrics & Documents */}
-                <div className="lg:col-span-2 space-y-10">
-                  <StatusBar 
-                    currentPhase={clientData.current_phase} 
-                    totalPhases={clientData.total_phases} 
-                    nextMilestone={clientData.next_milestone_title} 
-                  />
-                  
-                  <div className="space-y-4">
-                    <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-obsidian/30 ml-2">Live Performance Pulse</h3>
-                    <PulseCards metrics={metrics} />
-                  </div>
-
-                  <div className="space-y-4">
-                    <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-obsidian/30 ml-2">Asset Vault</h3>
-                    <Vault documents={documents} />
-                  </div>
-                </div>
-
-                {/* Right Column: Actions & Support */}
-                <div className="space-y-10">
-                  <div className="space-y-4">
-                    <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-obsidian/30 ml-2">Action Items</h3>
-                    <ActionDesk tasks={tasks} onRefresh={fetchPortalData} />
-                  </div>
-
-
-                  <motion.div 
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.4 }}
-                    className="bg-obsidian rounded-[2.5rem] p-10 text-white relative overflow-hidden group shadow-2xl"
-                  >
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-chartreuse/10 rounded-full blur-3xl group-hover:bg-chartreuse/20 transition-all"></div>
-                    <h3 className="text-2xl font-black mb-3 text-chartreuse tracking-tight">Need Support?</h3>
-                    <p className="text-white/60 text-sm font-medium leading-relaxed mb-8">
-                      Your project strategist is available 24/7 for urgent consultations.
-                    </p>
-                    <button className="w-full bg-white text-obsidian py-4 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-chartreuse transition-all flex items-center justify-center gap-2 group">
-                      Message TexhCo
-                      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                    </button>
-                  </motion.div>
-                </div>
-              </div>
-            </motion.div>
+            </div>
           )}
-        </AnimatePresence>
+
+          {/* Header */}
+          <header className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
+            <div className="space-y-4">
+              <div className="flex items-center gap-3">
+                <div className="bg-obsidian p-2.5 rounded-xl shadow-lg shadow-obsidian/10">
+                  <LayoutDashboard className="text-chartreuse w-5 h-5" />
+                </div>
+                <span className="text-obsidian/40 font-black text-[10px] uppercase tracking-[0.2em]">Client Command Center</span>
+              </div>
+              <h1 className="text-5xl md:text-6xl font-black text-obsidian tracking-tighter uppercase leading-[0.85]">
+                Welcome, {displayName}
+              </h1>
+              <p className="text-obsidian/60 text-lg font-medium">
+                Managing <span className="text-obsidian font-bold border-b-2 border-chartreuse pb-0.5">{companyName}</span> ecosystem.
+              </p>
+            </div>
+            
+            <div className="flex flex-wrap items-center gap-4">
+              {isAdmin && (
+                <button 
+                  onClick={() => setShowAdmin(true)}
+                  className="flex items-center gap-2 bg-white text-obsidian border border-obsidian/10 px-6 py-4 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-neutral/50 transition-all shadow-sm"
+                >
+                  <Settings className="w-4 h-4 text-obsidian/40" />
+                  Admin Panel
+                </button>
+              )}
+              <button 
+                onClick={handleLogout}
+                className="flex items-center gap-2 bg-obsidian text-white px-6 py-4 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-obsidian/80 transition-all shadow-xl shadow-obsidian/20"
+              >
+                <LogOut className="w-4 h-4" />
+                {language === 'es' ? 'Cerrar Sesión' : 'Logout'}
+              </button>
+            </div>
+          </header>
+
+          {/* Grid Layout */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
+            {/* Left Column: Metrics & Documents */}
+            <div className="lg:col-span-2 space-y-10">
+              <StatusBar 
+                currentPhase={clientData?.current_phase || 1} 
+                totalPhases={clientData?.total_phases || 4} 
+                nextMilestone={
+                  clientData?.next_milestone_title 
+                    ? (typeof clientData.next_milestone_title === 'string' 
+                        ? { title: clientData.next_milestone_title, date: language === 'es' ? 'Próximamente' : 'Coming soon' } 
+                        : clientData.next_milestone_title)
+                    : { title: language === 'es' ? 'Sesión de Alineación Inicial' : 'Initial Alignment Session', date: language === 'es' ? 'Próximamente' : 'Coming soon' }
+                } 
+              />
+              
+              <div className="space-y-4">
+                <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-obsidian/30 ml-2">Live Performance Pulse</h3>
+                {clientData ? (
+                  <PulseCards metrics={metrics} />
+                ) : (
+                  <div className="bg-white rounded-[2rem] p-8 border border-obsidian/5 shadow-sm text-center py-12 flex flex-col items-center justify-center min-h-[200px]">
+                    <div className="w-8 h-8 border-4 border-obsidian/10 border-t-chartreuse rounded-full animate-spin mb-4"></div>
+                    <p className="text-sm font-bold text-obsidian/60 max-w-md">
+                      {language === 'es' ? 'Cargando información, pronto actualizaremos tus datos.' : 'Loading information, we will update your data soon.'}
+                    </p>
+                  </div>
+                )}
+              </div>
+
+              <div className="space-y-4">
+                <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-obsidian/30 ml-2">Asset Vault</h3>
+                {clientData ? (
+                  <Vault documents={documents} />
+                ) : (
+                  <div className="bg-white rounded-[2.5rem] p-8 border border-obsidian/5 shadow-sm text-center py-12 flex flex-col items-center justify-center min-h-[200px]">
+                    <div className="w-8 h-8 border-4 border-obsidian/10 border-t-chartreuse rounded-full animate-spin mb-4"></div>
+                    <p className="text-sm font-bold text-obsidian/60 max-w-md">
+                      {language === 'es' ? 'Cargando información, pronto actualizaremos tus datos.' : 'Loading information, we will update your data soon.'}
+                    </p>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Right Column: Actions & Support */}
+            <div className="space-y-10">
+              <div className="space-y-4">
+                <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-obsidian/30 ml-2">Action Items</h3>
+                {clientData ? (
+                  <ActionDesk tasks={tasks} onRefresh={fetchPortalData} />
+                ) : (
+                  <div className="bg-obsidian rounded-[2.5rem] p-10 text-white shadow-2xl text-center py-16 flex flex-col items-center justify-center min-h-[250px]">
+                    <div className="w-8 h-8 border-4 border-white/10 border-t-chartreuse rounded-full animate-spin mb-4"></div>
+                    <p className="text-sm font-bold text-white/60 max-w-md">
+                      {language === 'es' ? 'Cargando información, pronto actualizaremos tus datos.' : 'Loading information, we will update your data soon.'}
+                    </p>
+                  </div>
+                )}
+              </div>
+
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.4 }}
+                className="bg-obsidian rounded-[2.5rem] p-10 text-white relative overflow-hidden group shadow-2xl"
+              >
+                <div className="absolute top-0 right-0 w-32 h-32 bg-chartreuse/10 rounded-full blur-3xl group-hover:bg-chartreuse/20 transition-all"></div>
+                <h3 className="text-2xl font-black mb-3 text-chartreuse tracking-tight">Need Support?</h3>
+                <p className="text-white/60 text-sm font-medium leading-relaxed mb-8">
+                  Your project strategist is available 24/7 for urgent consultations.
+                </p>
+                <button className="w-full bg-white text-obsidian py-4 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-chartreuse transition-all flex items-center justify-center gap-2 group">
+                  Message TexhCo
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </button>
+              </motion.div>
+            </div>
+          </div>
+        </motion.div>
       </div>
     </div>
   );
