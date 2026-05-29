@@ -10,6 +10,7 @@ import PrivacyPage from './pages/PrivacyPage';
 import TermsPage from './pages/TermsPage';
 import ClientPortal from './pages/ClientPortal';
 import AuditPage from './pages/AuditPage';
+import WelcomePage from './pages/WelcomePage';
 import PremiumWebDesignPage from './pages/services/PremiumWebDesignPage';
 import LocalSEOPage from './pages/services/LocalSEOPage';
 import BusinessAutomationPage from './pages/services/BusinessAutomationPage';
@@ -179,6 +180,7 @@ function AppContent() {
                     <Route path="/terms" element={<TermsPage />} />
                     <Route path="/portal" element={<ClientPortal />} />
                     <Route path="/audit" element={<AuditPage />} />
+                    <Route path="/welcome" element={<WelcomePage />} />
                     <Route path="/services/premium-web-design" element={<PremiumWebDesignPage />} />
                     <Route path="/services/local-seo" element={<LocalSEOPage />} />
                     <Route path="/services/business-automation" element={<BusinessAutomationPage />} />
