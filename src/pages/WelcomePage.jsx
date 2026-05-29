@@ -61,7 +61,8 @@ const content = {
       }
     ],
     errorGeneric: "Hubo un error al crear la cuenta. Por favor, inténtalo de nuevo.",
-    successRedirect: "¡Cuenta creada con éxito! Redirigiéndote al portal..."
+    successRedirect: "¡Cuenta creada con éxito! Redirigiéndote al portal...",
+    successEmailVerificationSent: "¡Cuenta creada! Hemos enviado un enlace de confirmación a tu correo electrónico. Por favor, verifícalo para poder acceder al portal."
   },
   en: {
     badge: "Client Onboarding",
@@ -106,7 +107,8 @@ const content = {
       }
     ],
     errorGeneric: "There was an error creating your account. Please try again.",
-    successRedirect: "Account created successfully! Redirecting you to the portal..."
+    successRedirect: "Account created successfully! Redirecting you to the portal...",
+    successEmailVerificationSent: "Account created! We've sent a verification link to your email. Please verify it to access the portal."
   }
 };
 
@@ -243,12 +245,28 @@ const WelcomePage = () => {
         console.warn('Client profile creation was skipped or failed:', dbErr);
       }
 
-      setSuccessMsg(tText.successRedirect);
+      // 3. Automatically trigger notification to Marcos that a client just signed up
+      try {
+        await supabase.from('footer_leads').insert({
+          email: email.trim().toLowerCase(),
+          selected_service: 'Portal Access Request',
+          message: `El cliente ${fullName.trim()} de la empresa ${companyName} (${email.trim()}) se ha registrado en la pantalla de bienvenida /welcome y solicita registrar su negocio en el portal de TexhCo.`
+        });
+      } catch (notifyErr) {
+        console.warn('Auto-notification to Marcos failed:', notifyErr);
+      }
 
-      // Redirect to client portal dashboard
-      setTimeout(() => {
-        window.location.href = '/portal';
-      }, 2000);
+      const needsVerification = signUpData?.user && !signUpData?.session;
+
+      if (needsVerification) {
+        setSuccessMsg(tText.successEmailVerificationSent);
+      } else {
+        setSuccessMsg(tText.successRedirect);
+        // Redirect to client portal dashboard
+        setTimeout(() => {
+          window.location.href = '/portal';
+        }, 2000);
+      }
 
     } catch (err) {
       console.error('Registration flow error:', err);

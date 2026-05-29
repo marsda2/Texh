@@ -31,7 +31,9 @@ const ClientPortal = () => {
   const [documents, setDocuments] = useState([]);
   const [tasks, setTasks] = useState([]);
   const [showAdmin, setShowAdmin] = useState(false);
-  const { t } = useLanguage();
+  const [notifying, setNotifying] = useState(false);
+  const [notifySuccess, setNotifySuccess] = useState(false);
+  const { t, language } = useLanguage();
 
   const isAdmin = session?.user?.email?.endsWith('@texhco.com') || session?.user?.email === 'prueba@portal.com';
 
@@ -85,6 +87,29 @@ const ClientPortal = () => {
     }
   };
 
+  const handleNotifyAdmin = async () => {
+    setNotifying(true);
+    try {
+      const userEmail = session?.user?.email || 'unknown';
+      const fullName = session?.user?.user_metadata?.full_name || 'Nuevo Cliente';
+      const companyName = session?.user?.user_metadata?.company_name || 'Nueva Empresa';
+      
+      const { error } = await supabase.from('footer_leads').insert({
+        email: userEmail,
+        selected_service: 'Portal Access Request',
+        message: `El cliente ${fullName} de la empresa ${companyName} (${userEmail}) solicita activar o registrar su negocio en el portal de TexhCo.`
+      });
+      
+      if (error) throw error;
+      setNotifySuccess(true);
+    } catch (err) {
+      console.error('Error notifying admin:', err);
+      alert(language === 'es' ? 'Hubo un error al enviar la notificación.' : 'There was an error sending the notification.');
+    } finally {
+      setNotifying(false);
+    }
+  };
+
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -96,7 +121,14 @@ const ClientPortal = () => {
     });
 
     if (error) {
-      setMessage(`Error: ${error.message}`);
+      const isEmailNotConfirmed = error.message.toLowerCase().includes('email not confirmed');
+      if (isEmailNotConfirmed) {
+        setMessage(language === 'es' 
+          ? 'Error: Debes confirmar tu dirección de correo electrónico antes de iniciar sesión. Por favor, revisa tu bandeja de entrada.' 
+          : 'Error: You must confirm your email address before logging in. Please check your inbox.');
+      } else {
+        setMessage(`Error: ${error.message}`);
+      }
     } else {
       setMessage('Login successful!');
     }
@@ -215,21 +247,111 @@ const ClientPortal = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
-              className="flex flex-col items-center justify-center py-32 text-center"
+              className="flex flex-col h-full w-full"
             >
-              <div className="w-20 h-20 bg-obsidian/5 rounded-full flex items-center justify-center mb-6">
-                <LayoutDashboard className="w-10 h-10 text-obsidian/20" />
+              {/* Status Banner */}
+              <div className="bg-chartreuse/10 border border-chartreuse/20 rounded-[2.5rem] p-8 mb-12 flex flex-col md:flex-row items-center gap-8 shadow-xl shadow-chartreuse/5 relative z-20">
+                <div className="w-16 h-16 bg-chartreuse/20 rounded-full flex items-center justify-center shrink-0">
+                  <LayoutDashboard className="w-8 h-8 text-chartreuse" />
+                </div>
+                <div className="flex-1 text-center md:text-left">
+                  <h2 className="text-2xl font-black text-obsidian mb-2 tracking-tight uppercase">
+                    {language === 'es' ? 'Cuenta en Activación' : 'Account in Activation'}
+                  </h2>
+                  <p className="text-obsidian/70 font-medium leading-relaxed max-w-2xl">
+                    {language === 'es' 
+                      ? 'Parece que tu cuenta es nueva. El equipo ya ha sido notificado. Pronto configuraremos tu espacio y añadiremos la información de tu empresa a este portal.' 
+                      : 'It seems your account is new. The team has already been notified. We will set up your space and add your business information to this portal soon.'}
+                  </p>
+                  {notifySuccess ? (
+                    <div className="mt-4 inline-block p-3 rounded-xl bg-green-500/10 text-green-700 border border-green-500/20 text-xs font-bold">
+                      {language === 'es' 
+                        ? '¡Notificación manual enviada con éxito!' 
+                        : 'Manual notification sent successfully!'}
+                    </div>
+                  ) : null}
+                </div>
+                <div className="flex flex-col sm:flex-row gap-3 shrink-0">
+                  {!notifySuccess && (
+                    <button 
+                      onClick={handleNotifyAdmin} 
+                      disabled={notifying}
+                      className="bg-obsidian text-white px-6 py-3.5 rounded-xl font-black uppercase tracking-widest text-[10px] hover:bg-obsidian/80 transition-all shadow-xl disabled:opacity-50"
+                    >
+                      {notifying ? (language === 'es' ? 'Notificando...' : 'Notifying...') : (language === 'es' ? 'Avisar a TexhCo' : 'Notify TexhCo')}
+                    </button>
+                  )}
+                  <button 
+                    onClick={handleLogout} 
+                    className="bg-white text-obsidian border border-obsidian/10 px-6 py-3.5 rounded-xl font-black uppercase tracking-widest text-[10px] hover:bg-neutral/50 transition-all"
+                  >
+                    {language === 'es' ? 'Cerrar Sesión' : 'Logout'}
+                  </button>
+                </div>
               </div>
-              <h2 className="text-4xl font-black text-obsidian mb-4 tracking-tight uppercase">No Access Found</h2>
-              <p className="text-obsidian/60 mb-10 max-w-md mx-auto leading-relaxed">
-                It seems your account isn't associated with a client profile yet. Please contact the TexhCo team.
-              </p>
-              <button 
-                onClick={handleLogout} 
-                className="bg-obsidian text-white px-10 py-4 rounded-2xl font-black uppercase tracking-widest text-sm hover:bg-obsidian/80 transition-all shadow-xl shadow-obsidian/10"
-              >
-                Logout Account
-              </button>
+
+              {/* Placeholder Dashboard Layout */}
+              <div className="opacity-30 pointer-events-none filter blur-[3px] select-none">
+                {/* Header Placeholder */}
+                <header className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-3">
+                      <div className="bg-obsidian p-2.5 rounded-xl">
+                        <LayoutDashboard className="text-chartreuse w-5 h-5" />
+                      </div>
+                      <span className="text-obsidian/40 font-black text-[10px] uppercase tracking-[0.2em]">Client Command Center</span>
+                    </div>
+                    <h1 className="text-5xl md:text-6xl font-black text-obsidian tracking-tighter uppercase leading-[0.85]">
+                      Welcome, <span className="text-obsidian/20">Client</span>
+                    </h1>
+                    <p className="text-obsidian/60 text-lg font-medium">
+                      Managing <span className="text-obsidian/40 font-bold border-b-2 border-chartreuse/30 pb-0.5">Your Business</span> ecosystem.
+                    </p>
+                  </div>
+                </header>
+
+                {/* Grid Layout Placeholder */}
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
+                  {/* Left Column */}
+                  <div className="lg:col-span-2 space-y-10">
+                    {/* Status Bar */}
+                    <div className="bg-white border border-obsidian/5 rounded-[2.5rem] p-8 h-32 flex items-center justify-center">
+                      <span className="text-obsidian/30 font-black uppercase tracking-widest text-sm">Status Bar (Pending)</span>
+                    </div>
+                    
+                    {/* Pulse Cards */}
+                    <div className="space-y-4">
+                      <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-obsidian/30 ml-2">Live Performance Pulse</h3>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        {[1, 2, 3, 4].map(i => (
+                          <div key={i} className="bg-white border border-obsidian/5 rounded-[2rem] p-6 h-32 flex items-center justify-center">
+                            <span className="text-obsidian/20 font-bold text-xs uppercase tracking-widest">Metric {i}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Asset Vault */}
+                    <div className="space-y-4">
+                      <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-obsidian/30 ml-2">Asset Vault</h3>
+                      <div className="bg-white border border-obsidian/5 rounded-[2.5rem] p-8 h-48 flex items-center justify-center">
+                        <span className="text-obsidian/20 font-bold text-xs uppercase tracking-widest">Documents & Files</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Right Column */}
+                  <div className="space-y-10">
+                    {/* Action Desk */}
+                    <div className="space-y-4">
+                      <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-obsidian/30 ml-2">Action Items</h3>
+                      <div className="bg-white border border-obsidian/5 rounded-[2.5rem] p-8 h-80 flex flex-col items-center justify-center gap-4">
+                        <span className="text-obsidian/20 font-bold text-xs uppercase tracking-widest">Tasks Overview</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </motion.div>
           ) : (
             <motion.div 
