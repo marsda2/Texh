@@ -211,7 +211,7 @@ const AdminPanel = ({ onBack }) => {
           <div className="lg:col-span-3">
             <div className="bg-white rounded-[2.5rem] shadow-2xl shadow-obsidian/5 border border-obsidian/5 overflow-hidden">
               {/* Tabs */}
-              <div className="flex border-b border-obsidian/5 bg-neutral/30">
+              <div className="grid grid-cols-2 md:grid-cols-4 border-b border-obsidian/5 bg-neutral/30">
                 {[
                   { id: 'metrics', icon: BarChart3, label: 'Metrics' },
                   { id: 'tasks', icon: CheckSquare, label: 'Tasks' },
@@ -221,7 +221,7 @@ const AdminPanel = ({ onBack }) => {
                   <button
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id)}
-                    className={`flex-1 flex flex-col items-center justify-center gap-2 py-6 font-black text-[10px] uppercase tracking-widest transition-all ${activeTab === tab.id ? 'bg-white text-obsidian border-b-4 border-chartreuse' : 'text-obsidian/30 hover:text-obsidian hover:bg-white/50'}`}
+                    className={`flex flex-col items-center justify-center gap-2 py-6 font-black text-[10px] uppercase tracking-widest transition-all ${activeTab === tab.id ? 'bg-white text-obsidian border-b-4 border-chartreuse' : 'text-obsidian/30 hover:text-obsidian hover:bg-white/50'}`}
                   >
                     <tab.icon className={`w-5 h-5 ${activeTab === tab.id ? 'text-obsidian' : 'text-obsidian/20'}`} />
                     {tab.label}
@@ -259,11 +259,11 @@ const AdminPanel = ({ onBack }) => {
                     <motion.div key="metrics" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="space-y-10">
                       {/* Form */}
                       <div className="bg-neutral/30 p-8 rounded-[2rem] space-y-6">
-                        <div className="grid grid-cols-2 gap-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                           <input type="text" placeholder="Label (e.g. MRR)" className="w-full bg-white border-none rounded-2xl p-4 text-sm font-bold focus:ring-2 ring-chartreuse outline-none" value={newMetric.label} onChange={e => setNewMetric({...newMetric, label: e.target.value})} />
                           <input type="text" placeholder="Value (e.g. $10k)" className="w-full bg-white border-none rounded-2xl p-4 text-sm font-bold focus:ring-2 ring-chartreuse outline-none" value={newMetric.value} onChange={e => setNewMetric({...newMetric, value: e.target.value})} />
                         </div>
-                        <div className="grid grid-cols-2 gap-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                           <input type="text" placeholder="Trend (e.g. +5%)" className="w-full bg-white border-none rounded-2xl p-4 text-sm font-bold focus:ring-2 ring-chartreuse outline-none" value={newMetric.trend} onChange={e => setNewMetric({...newMetric, trend: e.target.value})} />
                           <select className="w-full bg-white border-none rounded-2xl p-4 text-sm font-bold focus:ring-2 ring-chartreuse outline-none" value={newMetric.icon_name} onChange={e => setNewMetric({...newMetric, icon_name: e.target.value})}>
                             <option value="TrendingUp">Trending Up</option>
@@ -301,7 +301,7 @@ const AdminPanel = ({ onBack }) => {
                       <div className="bg-neutral/30 p-8 rounded-[2rem] space-y-6">
                         <input type="text" placeholder="Task Title" className="w-full bg-white border-none rounded-2xl p-4 text-sm font-bold focus:ring-2 ring-chartreuse outline-none" value={newTask.title} onChange={e => setNewTask({...newTask, title: e.target.value})} />
                         <textarea placeholder="Description" rows="2" className="w-full bg-white border-none rounded-2xl p-4 text-sm font-bold focus:ring-2 ring-chartreuse outline-none resize-none" value={newTask.description} onChange={e => setNewTask({...newTask, description: e.target.value})} />
-                        <div className="grid grid-cols-2 gap-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                           <select className="w-full bg-white border-none rounded-2xl p-4 text-sm font-bold focus:ring-2 ring-chartreuse outline-none" value={newTask.type} onChange={e => setNewTask({...newTask, type: e.target.value})}>
                             <option value="info">Info</option>
                             <option value="upload">Upload</option>
@@ -341,7 +341,7 @@ const AdminPanel = ({ onBack }) => {
                     <motion.div key="docs" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="space-y-10">
                       {/* Form */}
                       <div className="bg-neutral/30 p-8 rounded-[2rem] space-y-6">
-                        <div className="grid grid-cols-2 gap-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                           <input type="text" placeholder="Doc Name" className="w-full bg-white border-none rounded-2xl p-4 text-sm font-bold focus:ring-2 ring-chartreuse outline-none" value={newDoc.name} onChange={e => setNewDoc({...newDoc, name: e.target.value})} />
                           <input type="text" placeholder="Size (e.g. 2.4MB)" className="w-full bg-white border-none rounded-2xl p-4 text-sm font-bold focus:ring-2 ring-chartreuse outline-none" value={newDoc.size} onChange={e => setNewDoc({...newDoc, size: e.target.value})} />
                         </div>
@@ -380,7 +380,7 @@ const AdminPanel = ({ onBack }) => {
                   ) : (
                     <motion.div key="status" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="space-y-10 text-center py-10">
                       <div className="max-w-md mx-auto space-y-8">
-                        <div className="grid grid-cols-2 gap-6 text-left">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
                           <div className="space-y-2">
                             <label className="text-[10px] font-black uppercase text-obsidian/40 ml-4">Phase</label>
                             <input type="number" value={projectStatus.current_phase} onChange={e => setProjectStatus({...projectStatus, current_phase: parseInt(e.target.value)})} className="w-full bg-neutral/50 border-none rounded-2xl p-6 text-xl font-black focus:ring-2 ring-chartreuse outline-none" />

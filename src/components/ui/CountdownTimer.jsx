@@ -9,28 +9,34 @@ export const CountdownTimer = () => {
     });
 
     useEffect(() => {
+        // Find or create target date in localStorage
+        let targetTime = localStorage.getItem('auditCountdownTarget');
+        if (!targetTime) {
+            // Set for 10 days from now
+            targetTime = new Date().getTime() + 10 * 24 * 60 * 60 * 1000;
+            localStorage.setItem('auditCountdownTarget', targetTime.toString());
+        } else {
+            targetTime = parseInt(targetTime, 10);
+        }
+
         const timer = setInterval(() => {
-            setTimeLeft(prev => {
-                let { days, hours, minutes, seconds } = prev;
-                if (seconds > 0) {
-                    seconds--;
-                } else {
-                    seconds = 59;
-                    if (minutes > 0) {
-                        minutes--;
-                    } else {
-                        minutes = 59;
-                        if (hours > 0) {
-                            hours--;
-                        } else {
-                            hours = 23;
-                            if (days > 0) days--;
-                        }
-                    }
-                }
-                return { days, hours, minutes, seconds };
-            });
+            const now = new Date().getTime();
+            const difference = targetTime - now;
+
+            if (difference > 0) {
+                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+                
+                setTimeLeft({ days, hours, minutes, seconds });
+            } else {
+                // If it expired, just keep it at 0
+                setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+                clearInterval(timer);
+            }
         }, 1000);
+
         return () => clearInterval(timer);
     }, []);
 

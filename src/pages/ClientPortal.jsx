@@ -65,9 +65,10 @@ const ClientPortal = () => {
       const { data: client, error: clientError } = await supabase
         .from('clients')
         .select('*')
+        .eq('email', session?.user?.email)
         .single();
 
-      if (clientError) throw clientError;
+      if (clientError && clientError.code !== 'PGRST116') throw clientError; // Ignore "Row not found" if they don't have a profile yet
       setClientData(client);
 
       // 2. Fetch related data
