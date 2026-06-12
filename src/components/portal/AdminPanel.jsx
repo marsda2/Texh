@@ -14,7 +14,9 @@ import {
   RefreshCcw,
   ExternalLink,
   Settings,
-  ChevronLeft
+  ChevronLeft,
+  UploadCloud,
+  Paperclip
 } from 'lucide-react';
 
 
@@ -35,6 +37,8 @@ const AdminPanel = ({ onBack }) => {
   const [newMetric, setNewMetric] = useState({ label: '', value: '', trend: '', icon_name: 'TrendingUp' });
   const [newTask, setNewTask] = useState({ title: '', description: '', status: 'PENDING', type: 'info' });
   const [newDoc, setNewDoc] = useState({ name: '', size: '', file_url: '' });
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [uploadingDoc, setUploadingDoc] = useState(false);
   const [newClient, setNewClient] = useState({ full_name: '', company_name: '', email: '' });
   const [projectStatus, setProjectStatus] = useState({ current_phase: 1, total_phases: 4, next_milestone_title: '' });
 
@@ -111,12 +115,59 @@ const AdminPanel = ({ onBack }) => {
     if (!error) fetchClientData();
   };
 
+  const handleFileSelect = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setSelectedFile(file);
+      // Auto-calculate size
+      const sizeInMB = (file.size / (1024 * 1024)).toFixed(2);
+      let sizeStr = sizeInMB + 'MB';
+      if (file.size < 1024 * 1024) {
+        sizeStr = Math.round(file.size / 1024) + 'KB';
+      }
+      setNewDoc(prev => ({ ...prev, name: prev.name || file.name.split('.')[0], size: sizeStr }));
+    }
+  };
+
   const handleAddDoc = async () => {
     if (!selectedClientId) return;
-    const { error } = await supabase.from('documents').insert([{ ...newDoc, client_id: selectedClientId }]);
-    if (!error) {
+    setUploadingDoc(true);
+    let finalUrl = newDoc.file_url;
+
+    try {
+      if (selectedFile) {
+        const fileExt = selectedFile.name.split('.').pop();
+        const fileName = `${selectedClientId}-${Date.now()}.${fileExt}`;
+        
+        const { error: uploadError } = await supabase.storage
+          .from('vault')
+          .upload(fileName, selectedFile);
+          
+        if (uploadError) throw uploadError;
+
+        const { data: urlData } = supabase.storage
+          .from('vault')
+          .getPublicUrl(fileName);
+          
+        finalUrl = urlData.publicUrl;
+      }
+
+      if (!finalUrl) throw new Error("Please provide a File URL or select a file to upload.");
+
+      const { error } = await supabase.from('documents').insert([{ ...newDoc, file_url: finalUrl, client_id: selectedClientId }]);
+      if (error) throw error;
+
       setNewDoc({ name: '', size: '', file_url: '' });
+      setSelectedFile(null);
+      // Reset file input if exists
+      const fileInput = document.getElementById('doc-upload');
+      if (fileInput) fileInput.value = '';
+      
       fetchClientData();
+    } catch (err) {
+      alert("Upload error: " + err.message);
+    } finally {
+      setUploadingDoc(false);
     }
   };
 
@@ -341,13 +392,38 @@ const AdminPanel = ({ onBack }) => {
                     <motion.div key="docs" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="space-y-10">
                       {/* Form */}
                       <div className="bg-neutral/30 p-8 rounded-[2rem] space-y-6">
+                        {/* File Upload Area */}
+                        <div className="relative border-2 border-dashed border-obsidian/20 rounded-[1.5rem] p-6 text-center hover:bg-white/50 transition-colors">
+                          <input 
+                            type="file" 
+                            id="doc-upload"
+                            onChange={handleFileSelect} 
+                            className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" 
+                          />
+                          <div className="flex flex-col items-center gap-2 pointer-events-none">
+                            <UploadCloud className="w-8 h-8 text-obsidian/30" />
+                            {selectedFile ? (
+                              <div className="text-obsidian font-bold text-sm bg-white px-4 py-2 rounded-xl shadow-sm border border-obsidian/5 flex items-center gap-2">
+                                <Paperclip className="w-4 h-4 text-chartreuse" />
+                                {selectedFile.name}
+                              </div>
+                            ) : (
+                              <p className="text-sm font-bold text-obsidian/50">Click or drag file to upload to Vault</p>
+                            )}
+                          </div>
+                        </div>
+
+                        <div className="text-center text-[10px] uppercase font-black tracking-widest text-obsidian/30">— OR ADD EXTERNAL LINK —</div>
+
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                           <input type="text" placeholder="Doc Name" className="w-full bg-white border-none rounded-2xl p-4 text-sm font-bold focus:ring-2 ring-chartreuse outline-none" value={newDoc.name} onChange={e => setNewDoc({...newDoc, name: e.target.value})} />
                           <input type="text" placeholder="Size (e.g. 2.4MB)" className="w-full bg-white border-none rounded-2xl p-4 text-sm font-bold focus:ring-2 ring-chartreuse outline-none" value={newDoc.size} onChange={e => setNewDoc({...newDoc, size: e.target.value})} />
                         </div>
-                        <input type="text" placeholder="File URL (External Link)" className="w-full bg-white border-none rounded-2xl p-4 text-sm font-bold focus:ring-2 ring-chartreuse outline-none" value={newDoc.file_url} onChange={e => setNewDoc({...newDoc, file_url: e.target.value})} />
-                        <button onClick={handleAddDoc} className="w-full bg-obsidian text-white py-4 rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-obsidian/80 transition-all">
-                          Add Document
+                        <input type="text" placeholder="File URL (External Link)" className="w-full bg-white border-none rounded-2xl p-4 text-sm font-bold focus:ring-2 ring-chartreuse outline-none" value={newDoc.file_url} onChange={e => setNewDoc({...newDoc, file_url: e.target.value})} disabled={!!selectedFile} />
+                        
+                        <button onClick={handleAddDoc} disabled={uploadingDoc} className="w-full bg-obsidian text-white py-4 rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-obsidian/80 transition-all flex justify-center items-center gap-2 disabled:opacity-50">
+                          {uploadingDoc ? <RefreshCcw className="w-4 h-4 animate-spin" /> : <UploadCloud className="w-4 h-4" />}
+                          {uploadingDoc ? 'Uploading...' : 'Add Document'}
                         </button>
                       </div>
 
