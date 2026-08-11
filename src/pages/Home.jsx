@@ -25,9 +25,22 @@ const ReviewCard = ({ item, index }) => {
             className="srv-card-reveal bg-white rounded-[32px] p-8 md:p-10 shadow-2xl shadow-obsidian/5 border border-obsidian/10 flex flex-col items-center text-center hover:-translate-y-4 hover:shadow-chartreuse/20 transition-all duration-500 ease-out h-full"
             style={{ transitionDelay: `${index * 120}ms` }}
         >
-            <div className="w-16 h-16 rounded-full bg-neutral flex items-center justify-center mb-6 text-2xl border border-obsidian/10 shadow-inner flex-shrink-0">
-                <span className="carousel-icon-container text-chartreuse">★</span>
-            </div>
+            {item.avatar ? (
+                <div className="relative mb-6 flex-shrink-0">
+                    <img 
+                        src={item.avatar} 
+                        alt={item.title} 
+                        className="w-20 h-20 rounded-full object-cover border-2 border-chartreuse shadow-lg shadow-chartreuse/20"
+                    />
+                    <div className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-obsidian border-2 border-white flex items-center justify-center text-[10px] text-chartreuse font-bold shadow-sm">
+                        ★
+                    </div>
+                </div>
+            ) : (
+                <div className="w-16 h-16 rounded-full bg-neutral flex items-center justify-center mb-6 text-2xl border border-obsidian/10 shadow-inner flex-shrink-0">
+                    <span className="carousel-icon-container text-chartreuse">★</span>
+                </div>
+            )}
             <h3 className="text-2xl font-bold font-heading text-obsidian mb-4 tracking-tight">
                 {item.title}
             </h3>
@@ -113,7 +126,14 @@ const Home = ({ onOpenAudit }) => {
                 {/* Mobile View: Single Card Carousel */}
                 <div className="block md:hidden">
                     <Carousel 
-                        items={t('carouselItems').map(item => ({ ...item, icon: <span className="carousel-icon-container text-chartreuse">★</span> }))}
+                        items={t('carouselItems').map(item => ({ 
+                            ...item, 
+                            icon: item.avatar ? (
+                                <img src={item.avatar} alt={item.title} className="w-full h-full rounded-full object-cover" />
+                            ) : (
+                                <span className="carousel-icon-container text-chartreuse">★</span>
+                            )
+                        }))}
                         baseWidth={320}
                         autoplay={true}
                         autoplayDelay={3000}

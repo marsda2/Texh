@@ -58,7 +58,20 @@ function CarouselItem({ item, index, itemWidth, round, trackItemOffset, x, trans
       transition={transition}
     >
       <div className={`carousel-item-header ${round ? 'round' : ''}`}>
-        <span className="carousel-icon-container text-chartreuse">{item.icon}</span>
+        {item.avatar ? (
+          <div className="relative w-14 h-14 rounded-full flex-shrink-0">
+            <img 
+              src={item.avatar} 
+              alt={item.title} 
+              className="w-14 h-14 rounded-full object-cover border-2 border-chartreuse shadow-md"
+            />
+            <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-obsidian border border-white flex items-center justify-center text-[8px] text-chartreuse font-bold">
+              ★
+            </div>
+          </div>
+        ) : (
+          <span className="carousel-icon-container text-chartreuse">{item.icon}</span>
+        )}
       </div>
       <div className="carousel-item-content flex flex-col flex-grow">
         <div className="carousel-item-title">{item.title}</div>

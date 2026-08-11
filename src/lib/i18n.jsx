@@ -11,9 +11,9 @@ const translations = {
     },
     hero: {
       tagline1: "Construido para atraer clientes.",
-      tagline2: "Web. IA. Marketing.",
+      tagline2: "Web Apps. Conversión. Ads.",
       cardHeading: "Sistemas Digitales.",
-      cardDesc: <><span className="text-white font-semibold">Texh Co</span> construye sistemas web, de IA y marketing. Del tipo que generan clientes mientras diriges tu negocio.</>,
+      cardDesc: <><span className="text-white font-semibold">Texh Co</span> construye sistemas web, aplicaciones e infraestructura de conversión con campañas pagadas (Meta, TikTok & Google Ads). Del tipo que generan clientes mientras diriges tu negocio.</>,
       clients: "Sistemas Live",
       badgeTitle: "Sistemas Activos",
       badgeSubtitle: "Clientes Generados Diario",
@@ -36,23 +36,41 @@ const translations = {
       titleAccent: "Sistema",
       titleEnd: ".",
       desc: "Construimos Sistemas de Crecimiento Local para que tu negocio atraiga más clientes y opere con menos fricción.",
-      category1: "Presencia y Visibilidad",
-      category2: "Conversión y Automatización",
+      category1: "Plataformas y Conversión",
+      category2: "Tráfico Pagado y Tracción",
       webDesign: "Web Premium & UX",
       webDesignDesc: "Plataformas rápidas y mobile-first que proyectan la calidad real de tu negocio offline.",
       apps: "SEO Local & Google",
       appsDesc: "Estructuramos tu negocio para que Google, Maps y las IA entiendan tus servicios y te recomienden.",
       maintenance: "Sistemas de Reservas y Leads",
       maintenanceDesc: "Convierte visitas en llamadas, presupuestos o reservas de forma automatizada y sin esfuerzo.",
-      social: "Paneles de Administración",
-      socialDesc: "Autonomía total. Cambia precios, servicios o menús en segundos, sin tocar una sola línea de código.",
+      social: "Campañas Pagadas & Meta Ads",
+      socialDesc: "Pixel de Meta, TikTok & Google Ads. Campañas enfocadas en captar clientes potenciales y maximizar conversiones.",
     },
     portfolio: {
       titleStart: "Casos de",
       titleAccent: "Éxito",
       titleEnd: ".",
-      desc: "Explora algunos de los negocios que han confiado en nosotros para lanzar o mejorar su presencia digital y conseguir más ventas.",
+      desc: "Nuestros proyectos organizados por sector. Ejemplos reales de cómo transformamos la presencia digital en cada industria.",
+      all: "Todos los Sectores",
       visit: "Visitar Sitio",
+      sectors: {
+        ecommerce: {
+          badge: "SECTOR // E-COMMERCE & VENTA DIGITAL",
+          title: "E-Commerce & Venta Digital",
+          subtitle: "Estos son algunos ejemplos en el sector de tiendas online y plataformas de venta automatizada:",
+        },
+        services: {
+          badge: "SECTOR // SALUD, ESTÉTICA & SERVICIOS",
+          title: "Salud, Estética & Servicios Locales",
+          subtitle: "Estos son algunos ejemplos en el sector de estética, bienestar y servicios locales:",
+        },
+        creative: {
+          badge: "SECTOR // MARCAS & PRODUCTOS DIGITALES",
+          title: "Marcas & Productos Digitales",
+          subtitle: "Estos son algunos ejemplos en el sector de portafolios profesionales y productos interactivos:",
+        }
+      }
     },
     about: {
       whoWeAre: "Quiénes Somos",
@@ -94,14 +112,17 @@ const translations = {
     carouselItems: [
       {
         title: "Valeria Ríos",
+        avatar: "/images/avatars/clara.png",
         description: '"Sinceramente, superaron nuestras expectativas. Desde el lanzamiento de la nueva web hemos notado un aumento constante en las reservas directas. Son muy resolutivos, captaron lo que queríamos transmitir desde la primera reunión y cumplieron con las fechas."',
       },
       {
         title: "Darío Montenegro",
+        avatar: "/images/avatars/julian.png",
         description: '"Teníamos muchas dudas sobre dar el salto digital porque no somos para nada técnicos. Tuvieron mucha paciencia para explicarnos todo el proceso y nos armaron una tienda muy fácil de gestionar. La verdad es que ahora la página es nuestro principal canal de ventas."',
       },
       {
         title: "Inés Salgado",
+        avatar: "/images/avatars/hazel.png",
         description: '"Buscábamos un cambio de imagen que se viera premium y moderno, y el resultado ha sido impecable. Ya van varios clientes que nos escriben para felicitarnos por lo bien que se ve la nueva página. Fue un gran acierto confiar en ellos, la web por fin refleja la calidad de nuestro trabajo."',
       }
     ],
@@ -124,9 +145,9 @@ const translations = {
     },
     hero: {
       tagline1: "Built to bring clients in.",
-      tagline2: "Web. AI. Marketing.",
+      tagline2: "Web Apps. Conversions. Ads.",
       cardHeading: "Digital Systems.",
-      cardDesc: <><span className="text-white font-semibold">Texh Co</span> builds web, AI, and marketing systems. The kind that generate clients while you run your business.</>,
+      cardDesc: <><span className="text-white font-semibold">Texh Co</span> builds web apps, conversion systems, and paid ad campaigns (Meta, TikTok & Google Ads). The kind that generate clients while you run your business.</>,
       clients: "Systems Live",
       badgeTitle: "Systems Running",
       badgeSubtitle: "Clients Generated Daily",
@@ -149,23 +170,41 @@ const translations = {
       titleAccent: "System",
       titleEnd: ".",
       desc: "We build Local Growth Systems so your business attracts more clients and operates with less friction.",
-      category1: "Presence & Visibility",
-      category2: "Conversion & Automation",
+      category1: "Platforms & Conversion",
+      category2: "Paid Traffic & Traction",
       webDesign: "Premium Web & UX",
       webDesignDesc: "Fast, mobile-first platforms that project the true quality of your offline business.",
       apps: "Local SEO & Google",
       appsDesc: "We structure your business so Google, Maps, and AI understand your services and recommend you.",
       maintenance: "Booking & Lead Systems",
       maintenanceDesc: "Convert visitors into calls, quotes, or bookings automatically and effortlessly.",
-      social: "Admin Panels",
-      socialDesc: "Absolute autonomy. Update prices, services, or menus in seconds without touching code.",
+      social: "Paid Campaigns & Meta Ads",
+      socialDesc: "Meta Pixel, TikTok & Google Ads. Campaigns designed to capture qualified leads and maximize conversions.",
     },
     portfolio: {
       titleStart: "Success",
       titleAccent: "Cases",
       titleEnd: ".",
-      desc: "Explore some of the businesses that have trusted us to launch or elevate their digital presence and drive more sales.",
+      desc: "Our projects organized by sector. Real examples of how we transform digital presence across each industry.",
+      all: "All Sectors",
       visit: "Visit Site",
+      sectors: {
+        ecommerce: {
+          badge: "SECTOR // E-COMMERCE & DIGITAL SALES",
+          title: "E-Commerce & Digital Sales",
+          subtitle: "Here are some examples in the online store and automated sales platform sector:",
+        },
+        services: {
+          badge: "SECTOR // HEALTH, BEAUTY & SERVICES",
+          title: "Health, Beauty & Local Services",
+          subtitle: "Here are some examples in the aesthetic, wellness, and local service business sector:",
+        },
+        creative: {
+          badge: "SECTOR // BRANDS & DIGITAL PRODUCTS",
+          title: "Brands & Digital Products",
+          subtitle: "Here are some examples in the professional portfolio and interactive digital product sector:",
+        }
+      }
     },
     about: {
       whoWeAre: "Who We Are",
@@ -207,14 +246,17 @@ const translations = {
     carouselItems: [
       {
         title: "Clara Thorne",
+        avatar: "/images/avatars/clara.png",
         description: '"Honestly, they exceeded our expectations. Since launching the new site, we\'ve seen a steady increase in direct bookings. They are highly proactive, grasped exactly what we wanted to convey from the very first meeting, and delivered right on schedule."',
       },
       {
         title: "Julian Mercer",
+        avatar: "/images/avatars/julian.png",
         description: '"We were pretty hesitant about making the digital leap because we aren\'t tech-savvy at all. They were incredibly patient in explaining the whole process and built us a store that\'s surprisingly easy to manage. To be honest, the website is now our main sales channel."',
       },
       {
         title: "Hazel Brooks",
+        avatar: "/images/avatars/hazel.png",
         description: '"We were looking for a rebrand that felt premium and modern, and the result is flawless. We\'ve actually had several clients reach out just to compliment the new website. Trusting them was absolutely the right call; the site finally reflects the true quality of our work."',
       }
     ],

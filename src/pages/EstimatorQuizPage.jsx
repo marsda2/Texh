@@ -22,7 +22,7 @@ const ESTIMATOR_DATA = {
                 { id: 'web', title: 'Desarrollo Web Premium', desc: 'Interfaces de alto impacto, rápidas y orientadas a la conversión visual.', icon: <Code size={24} /> },
                 { id: 'app', title: 'Aplicación Móvil', desc: 'Soluciones nativas o híbridas para estar en el bolsillo de tus clientes.', icon: <Smartphone size={24} /> },
                 { id: 'maintenance', title: 'Mantenimiento y Soporte', desc: 'Estabilidad garantizada, actualizaciones y monitoreo constante.', icon: <Wrench size={24} /> },
-                { id: 'social', title: 'Diseño y Redes Sociales', desc: 'Contenido estratégico y gestión omnicanal de tu marca.', icon: <Share2 size={24} /> }
+                { id: 'social', title: 'Campañas Pagadas & Meta Ads', desc: 'Pixel de Meta, TikTok & Google Ads enfocados en captar leads y conversiones.', icon: <Share2 size={24} /> }
             ]
         },
         {
@@ -67,7 +67,7 @@ const ESTIMATOR_DATA = {
                 { id: 'web', title: 'Premium Web Development', desc: 'High-impact interfaces, fast, and oriented towards visual conversion.', icon: <Code size={24} /> },
                 { id: 'app', title: 'Mobile Application', desc: 'Native or hybrid solutions to be in your clients\' pockets.', icon: <Smartphone size={24} /> },
                 { id: 'maintenance', title: 'Maintenance & Support', desc: 'Guaranteed stability, updates, and constant monitoring.', icon: <Wrench size={24} /> },
-                { id: 'social', title: 'Design & Social Media', desc: 'Strategic content and omnichannel management of your brand.', icon: <Share2 size={24} /> }
+                { id: 'social', title: 'Paid Campaigns & Meta Ads', desc: 'Meta Pixel, TikTok & Google Ads focused on driving leads and conversions.', icon: <Share2 size={24} /> }
             ]
         },
         {
@@ -126,10 +126,10 @@ const SERVICE_BUDGETS = {
             { id: 'enterprise', title: 'Plan Enterprise (A medida)',     desc: 'Infraestructura dedicada, equipo asignado y contrato de nivel de servicio personalizado.', icon: <Building size={24} /> },
         ],
         social: [
-            { id: 'basic',      title: 'Social Starter (€199/mes)',      desc: '8 publicaciones/mes, diseño de contenido y gestión básica de una red social.', icon: <Rocket size={24} /> },
-            { id: 'growth',     title: 'Social Growth (€349/mes)',       desc: '16 publicaciones/mes, estrategia de contenido, 2 redes sociales y reporte mensual.', icon: <Wallet size={24} /> },
-            { id: 'premium',    title: 'Social Premium (€599/mes)',      desc: 'Gestión omnicanal, contenido creativo, campañas de pago y analíticas avanzadas.', icon: <Briefcase size={24} /> },
-            { id: 'enterprise', title: 'Social Enterprise (A medida)',   desc: 'Equipo creativo dedicado, campañas integrales y estrategia de marca 360°.', icon: <Building size={24} /> },
+            { id: 'basic',      title: 'Ads Starter (€199/mes)',      desc: 'Configuración de Pixel, setup de campañas en Meta/Google Ads y analítica inicial.', icon: <Rocket size={24} /> },
+            { id: 'growth',     title: 'Ads Growth (€349/mes)',       desc: 'Gestión de anuncios (Meta + TikTok/Google), A/B testing y tracking de conversiones.', icon: <Wallet size={24} /> },
+            { id: 'premium',    title: 'Ads Premium (€599/mes)',      desc: 'Estrategia omnicanal de tráfico pagado, embudos de conversión y retargeting avanzado.', icon: <Briefcase size={24} /> },
+            { id: 'enterprise', title: 'Ads Enterprise (A medida)',   desc: 'Ecosistema publicitario a gran escala, retargeting multi-plataforma y optimización continua de ROI.', icon: <Building size={24} /> },
         ],
     },
     en: {
@@ -152,10 +152,10 @@ const SERVICE_BUDGETS = {
             { id: 'enterprise', title: 'Enterprise Plan (Custom)',       desc: 'Dedicated infrastructure, assigned team and personalized service level agreement.', icon: <Building size={24} /> },
         ],
         social: [
-            { id: 'basic',      title: 'Social Starter (€199/mo)',       desc: '8 posts/month, content design and basic management of one social channel.', icon: <Rocket size={24} /> },
-            { id: 'growth',     title: 'Social Growth (€349/mo)',        desc: '16 posts/month, content strategy, 2 social networks and monthly report.', icon: <Wallet size={24} /> },
-            { id: 'premium',    title: 'Social Premium (€599/mo)',       desc: 'Omnichannel management, creative content, paid campaigns and advanced analytics.', icon: <Briefcase size={24} /> },
-            { id: 'enterprise', title: 'Social Enterprise (Custom)',     desc: 'Dedicated creative team, integrated campaigns and 360° brand strategy.', icon: <Building size={24} /> },
+            { id: 'basic',      title: 'Ads Starter (€199/mo)',       desc: 'Pixel configuration, Meta/Google Ads setup, and initial analytics.', icon: <Rocket size={24} /> },
+            { id: 'growth',     title: 'Ads Growth (€349/mo)',        desc: 'Ad management (Meta + TikTok/Google), A/B testing, and conversion tracking.', icon: <Wallet size={24} /> },
+            { id: 'premium',    title: 'Ads Premium (€599/mo)',       desc: 'Omnichannel paid traffic strategy, conversion funnels, and advanced retargeting.', icon: <Briefcase size={24} /> },
+            { id: 'enterprise', title: 'Ads Enterprise (Custom)',     desc: 'Large-scale ad ecosystem, multi-platform retargeting, and continuous ROI optimization.', icon: <Building size={24} /> },
         ],
     },
 };
