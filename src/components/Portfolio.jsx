@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { SuccessCaseCard } from './ui/SuccessCaseCard';
 import { useLanguage } from '../lib/i18n';
 
@@ -86,8 +87,16 @@ const Portfolio = () => {
         ? sectors 
         : sectors.filter(s => s.id === selectedSector);
 
+    const scrollTrack = (sectorId, direction) => {
+        const track = document.getElementById(`sector-track-${sectorId}`);
+        if (track) {
+            const scrollAmount = direction === 'left' ? -380 : 380;
+            track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+        }
+    };
+
     return (
-        <section id="portfolio" className="relative section-padding bg-neutral">
+        <section id="portfolio" className="relative section-padding bg-neutral overflow-hidden">
             <div className="container">
 
                 {/* Main Section Header */}
@@ -130,39 +139,65 @@ const Portfolio = () => {
                 </div>
 
                 {/* Categorized Sector Blocks */}
-                <div className="flex flex-col gap-20">
+                <div className="flex flex-col gap-16">
                     {filteredSectors.map((sector) => (
-                        <div key={sector.id} className="space-y-8">
+                        <div key={sector.id} className="space-y-6">
                             {/* Sector Header Banner */}
-                            <div className="bg-white/80 backdrop-blur-md rounded-[2.5rem] p-8 md:p-10 border border-obsidian/10 shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                            <div className="bg-white/80 backdrop-blur-md rounded-[2.5rem] p-6 md:p-8 border border-obsidian/10 shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                                 <div>
-                                    <span className="inline-block bg-obsidian text-chartreuse text-[10px] font-black tracking-[0.2em] uppercase px-4 py-1.5 rounded-full mb-3 shadow-inner">
+                                    <span className="inline-block bg-obsidian text-chartreuse text-[10px] font-black tracking-[0.2em] uppercase px-4 py-1.5 rounded-full mb-2 shadow-inner">
                                         {sector.badge}
                                     </span>
-                                    <h3 className="text-3xl font-black font-heading text-obsidian tracking-tight">
+                                    <h3 className="text-2xl md:text-3xl font-black font-heading text-obsidian tracking-tight">
                                         {sector.title}
                                     </h3>
-                                    <p className="text-gray-dark text-base font-light mt-1">
+                                    <p className="text-gray-dark text-sm md:text-base font-light mt-1">
                                         {sector.subtitle}
                                     </p>
                                 </div>
-                                <span className="text-xs font-mono font-bold text-obsidian/40 uppercase tracking-widest shrink-0">
-                                    {sector.projects.length} {sector.projects.length === 1 ? 'ejemplo' : 'ejemplos'}
-                                </span>
+
+                                {/* Controls & Counter */}
+                                <div className="flex items-center gap-3 self-end md:self-auto shrink-0">
+                                    <span className="text-xs font-mono font-bold text-obsidian/40 uppercase tracking-widest mr-2 hidden sm:inline-block">
+                                        {sector.projects.length} {sector.projects.length === 1 ? 'ejemplo' : 'ejemplos'}
+                                    </span>
+                                    <button 
+                                        onClick={() => scrollTrack(sector.id, 'left')}
+                                        className="w-10 h-10 rounded-full bg-white border border-obsidian/10 flex items-center justify-center text-obsidian hover:bg-obsidian hover:text-chartreuse transition-all shadow-sm active:scale-95"
+                                        aria-label="Anterior"
+                                    >
+                                        <ChevronLeft size={18} />
+                                    </button>
+                                    <button 
+                                        onClick={() => scrollTrack(sector.id, 'right')}
+                                        className="w-10 h-10 rounded-full bg-white border border-obsidian/10 flex items-center justify-center text-obsidian hover:bg-obsidian hover:text-chartreuse transition-all shadow-sm active:scale-95"
+                                        aria-label="Siguiente"
+                                    >
+                                        <ChevronRight size={18} />
+                                    </button>
+                                </div>
                             </div>
 
-                            {/* 2 Projects Grid per Sector */}
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            {/* Horizontal Scroll Track for this sector */}
+                            <div 
+                                id={`sector-track-${sector.id}`}
+                                className="flex gap-6 overflow-x-auto snap-x snap-mandatory pb-4 pt-2 scroll-smooth"
+                                style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+                            >
                                 {sector.projects.map((project, index) => (
-                                    <SuccessCaseCard
+                                    <div 
                                         key={index}
-                                        title={project.title}
-                                        category={project.category}
-                                        description={project.description}
-                                        link={project.link}
-                                        imageUrl={project.imageUrl}
-                                        videoUrl={project.videoUrl}
-                                    />
+                                        className="w-[290px] sm:w-[360px] md:w-[440px] lg:w-[480px] shrink-0 snap-start"
+                                    >
+                                        <SuccessCaseCard
+                                            title={project.title}
+                                            category={project.category}
+                                            description={project.description}
+                                            link={project.link}
+                                            imageUrl={project.imageUrl}
+                                            videoUrl={project.videoUrl}
+                                        />
+                                    </div>
                                 ))}
                             </div>
                         </div>
