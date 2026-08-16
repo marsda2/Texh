@@ -82,10 +82,15 @@ const Home = ({ onOpenAudit }) => {
             <div className="md:hidden flex justify-center w-full px-4 pb-12 z-40 relative">
                 <button 
                     onClick={onOpenAudit}
-                    className="w-full max-w-sm text-obsidian bg-chartreuse px-6 py-4 rounded-[2rem] hover:bg-white transition-colors flex flex-col items-center justify-center shadow-[0_15px_30px_rgba(201,255,31,0.2)] animate-pulse hover:animate-none border border-chartreuse/50"
+                    className="w-full max-w-sm text-obsidian bg-chartreuse px-6 py-5 rounded-[2rem] hover:bg-white transition-all flex flex-col items-center justify-center shadow-[0_15px_35px_rgba(201,255,31,0.35)] border-2 border-chartreuse cursor-pointer group"
                 >
-                    <span className="font-bold text-2xl mb-1 tracking-tight">{t('nav.contact')}</span>
-                    <div className="text-sm font-mono font-bold opacity-80 flex items-center justify-center">
+                    <span className="bg-obsidian text-chartreuse font-black text-[10px] uppercase tracking-widest px-3 py-0.5 rounded-full mb-1">
+                        ⚡ 100% GRATIS // SOLO 3 PLAZAS
+                    </span>
+                    <span className="font-black text-xl tracking-tight uppercase flex items-center gap-1.5">
+                        {t('nav.contact')}
+                    </span>
+                    <div className="text-xs font-mono font-bold text-obsidian/90 flex items-center justify-center mt-1">
                         <CountdownTimer />
                     </div>
                 </button>

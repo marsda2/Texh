@@ -19,6 +19,7 @@ import { LanguageProvider, useLanguage } from './lib/i18n';
 import { trackPageView, trackViewContent } from './lib/metaPixel';
 import { CountdownTimer } from './components/ui/CountdownTimer';
 import AuditModal from './components/AuditModal';
+import { MascotWidget } from './components/MascotWidget';
 
 // Scroll to top helper
 const ScrollToTop = () => {
@@ -88,6 +89,10 @@ function AppContent() {
                 onClose={() => setIsAuditModalOpen(false)} 
             />
 
+            <MascotWidget 
+                onOpenAudit={() => setIsAuditModalOpen(true)} 
+            />
+
             {/* Navigation */}
             <header className="navbar-container">
                 <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
@@ -112,10 +117,13 @@ function AppContent() {
                         )}
                         <button 
                             onClick={() => setIsAuditModalOpen(true)}
-                            className="nav-link contact-link flex flex-col items-center justify-center !py-1.5 !px-5 gap-0.5 border border-chartreuse/30 shadow-[0_0_15px_rgba(201,255,31,0.2)] animate-pulse hover:animate-none"
+                            className="nav-link contact-link relative flex flex-col items-center justify-center !py-1.5 !px-5 gap-0.5 border border-chartreuse/50 bg-obsidian text-chartreuse shadow-[0_0_20px_rgba(201,255,31,0.25)] hover:shadow-[0_0_30px_rgba(201,255,31,0.45)] hover:scale-105 transition-all duration-300 rounded-full group cursor-pointer"
                         >
-                            <span className="font-bold text-sm tracking-tight">{t('nav.contact')}</span>
-                            <div className="text-[10px] opacity-90 leading-none">
+                            <div className="flex items-center gap-1.5 font-black text-xs sm:text-sm tracking-tight uppercase">
+                                <span className="w-2 h-2 rounded-full bg-chartreuse animate-ping inline-block" />
+                                <span>{t('nav.contact')}</span>
+                            </div>
+                            <div className="text-[10px] text-white font-mono font-semibold opacity-90 leading-none">
                                 <CountdownTimer />
                             </div>
                         </button>

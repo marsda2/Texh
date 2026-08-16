@@ -9,40 +9,48 @@ export const CountdownTimer = () => {
     });
 
     useEffect(() => {
-        // Find or create target date in localStorage
+        const TEN_DAYS_MS = 10 * 24 * 60 * 60 * 1000;
         let targetTime = localStorage.getItem('auditCountdownTarget');
-        if (!targetTime) {
+        const now = new Date().getTime();
+
+        if (!targetTime || parseInt(targetTime, 10) <= now) {
             // Set for 10 days from now
-            targetTime = new Date().getTime() + 10 * 24 * 60 * 60 * 1000;
+            targetTime = now + TEN_DAYS_MS;
             localStorage.setItem('auditCountdownTarget', targetTime.toString());
         } else {
             targetTime = parseInt(targetTime, 10);
         }
 
-        const timer = setInterval(() => {
-            const now = new Date().getTime();
-            const difference = targetTime - now;
+        const updateTimer = () => {
+            const currentNow = new Date().getTime();
+            let difference = targetTime - currentNow;
 
-            if (difference > 0) {
-                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((difference % (1000 * 60)) / 1000);
-                
-                setTimeLeft({ days, hours, minutes, seconds });
-            } else {
-                // If it expired, just keep it at 0
-                setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
-                clearInterval(timer);
+            if (difference <= 0) {
+                // Reset dynamically if expired
+                targetTime = currentNow + TEN_DAYS_MS;
+                localStorage.setItem('auditCountdownTarget', targetTime.toString());
+                difference = targetTime - currentNow;
             }
-        }, 1000);
+
+            const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+            
+            setTimeLeft({ days, hours, minutes, seconds });
+        };
+
+        updateTimer();
+        const timer = setInterval(updateTimer, 1000);
 
         return () => clearInterval(timer);
     }, []);
 
     return (
-        <span className="font-mono tracking-tighter">
-            ⏱ {String(timeLeft.days).padStart(2, '0')}d {String(timeLeft.hours).padStart(2, '0')}h {String(timeLeft.minutes).padStart(2, '0')}m {String(timeLeft.seconds).padStart(2, '0')}s
+        <span className="font-mono tracking-tighter inline-flex items-center gap-1 font-bold">
+            <span className="animate-pulse text-chartreuse">⏱</span>
+            <span>{String(timeLeft.days).padStart(2, '0')}d {String(timeLeft.hours).padStart(2, '0')}h {String(timeLeft.minutes).padStart(2, '0')}m {String(timeLeft.seconds).padStart(2, '0')}s</span>
         </span>
     );
 };
+
