@@ -19,7 +19,16 @@ export const SEO = ({
     schema,
     noindex = false,
 }) => {
-    const { language } = useLanguage();
+    let language = 'es';
+    try {
+        const langContext = useLanguage();
+        if (langContext?.language) {
+            language = langContext.language;
+        }
+    } catch {
+        // Fallback default language
+        language = 'es';
+    }
     const es = language === 'es';
 
     // ── Defaults ──────────────────────────────────────────────

@@ -206,25 +206,19 @@ function AppContent() {
 function App() {
     const subdomain = getSubdomain();
 
-    // If accessed via client subdomain (e.g. sofia.texhco.com or sofia.localhost:5173)
-    if (subdomain) {
-        return (
-            <HelmetProvider>
-                <ClientSiteView subdomain={subdomain} />
-                <SpeedInsights />
-            </HelmetProvider>
-        );
-    }
-
     return (
         <HelmetProvider>
             <LanguageProvider>
-                <Router>
-                    <Routes>
-                        <Route path="/contact/:username" element={<ContactCardPage />} />
-                        <Route path="/*" element={<AppContent />} />
-                    </Routes>
-                </Router>
+                {subdomain ? (
+                    <ClientSiteView subdomain={subdomain} />
+                ) : (
+                    <Router>
+                        <Routes>
+                            <Route path="/contact/:username" element={<ContactCardPage />} />
+                            <Route path="/*" element={<AppContent />} />
+                        </Routes>
+                    </Router>
+                )}
                 <SpeedInsights />
             </LanguageProvider>
         </HelmetProvider>
