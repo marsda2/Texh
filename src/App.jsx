@@ -20,6 +20,8 @@ import { trackPageView, trackViewContent } from './lib/metaPixel';
 import { CountdownTimer } from './components/ui/CountdownTimer';
 import AuditModal from './components/AuditModal';
 import { MascotWidget } from './components/MascotWidget';
+import { getSubdomain } from './lib/subdomain';
+import ClientSiteView from './pages/ClientSiteView';
 
 // Scroll to top helper
 const ScrollToTop = () => {
@@ -202,6 +204,18 @@ function AppContent() {
 
 
 function App() {
+    const subdomain = getSubdomain();
+
+    // If accessed via client subdomain (e.g. sofia.texhco.com or sofia.localhost:5173)
+    if (subdomain) {
+        return (
+            <HelmetProvider>
+                <ClientSiteView subdomain={subdomain} />
+                <SpeedInsights />
+            </HelmetProvider>
+        );
+    }
+
     return (
         <HelmetProvider>
             <LanguageProvider>

@@ -39,7 +39,7 @@ const AdminPanel = ({ onBack }) => {
   const [newDoc, setNewDoc] = useState({ name: '', size: '', file_url: '' });
   const [selectedFile, setSelectedFile] = useState(null);
   const [uploadingDoc, setUploadingDoc] = useState(false);
-  const [newClient, setNewClient] = useState({ full_name: '', company_name: '', email: '' });
+  const [newClient, setNewClient] = useState({ full_name: '', company_name: '', email: '', subdomain: '', site_status: 'lead_preview' });
   const [projectStatus, setProjectStatus] = useState({ current_phase: 1, total_phases: 4, next_milestone_title: '' });
 
   useEffect(() => {
@@ -183,9 +183,13 @@ const AdminPanel = ({ onBack }) => {
   };
 
   const handleCreateClient = async () => {
-    const { error } = await supabase.from('clients').insert([newClient]);
+    const payload = {
+      ...newClient,
+      subdomain: newClient.subdomain ? newClient.subdomain.toLowerCase().trim() : null
+    };
+    const { error } = await supabase.from('clients').insert([payload]);
     if (!error) {
-      setNewClient({ full_name: '', company_name: '', email: '' });
+      setNewClient({ full_name: '', company_name: '', email: '', subdomain: '', site_status: 'lead_preview' });
       fetchClients();
       setActiveTab('metrics');
       alert('Client profile created!');
@@ -246,7 +250,7 @@ const AdminPanel = ({ onBack }) => {
                   <div className="relative z-10">
                     <div className="font-black text-sm tracking-tight">{client.full_name}</div>
                     <div className={`text-[10px] uppercase font-black tracking-widest mt-0.5 ${selectedClientId === client.id ? 'text-chartreuse' : 'text-obsidian/30'}`}>
-                      {client.company_name}
+                      {client.company_name} {client.subdomain ? `• ${client.subdomain}.texhco.com` : ''}
                     </div>
                   </div>
                   <ChevronRight className={`w-4 h-4 transition-transform relative z-10 ${selectedClientId === client.id ? 'translate-x-1 text-chartreuse' : 'opacity-20'}`} />
@@ -297,9 +301,13 @@ const AdminPanel = ({ onBack }) => {
                           <label className="text-[10px] font-black uppercase text-obsidian/40 ml-4">Company Name</label>
                           <input type="text" value={newClient.company_name} onChange={e => setNewClient({...newClient, company_name: e.target.value})} className="w-full bg-neutral/50 border-none rounded-2xl p-4 text-sm font-bold focus:ring-2 ring-chartreuse outline-none" placeholder="e.g. Acme Corp" />
                         </div>
-                        <div className="space-y-2 md:col-span-2">
+                        <div className="space-y-2">
                           <label className="text-[10px] font-black uppercase text-obsidian/40 ml-4">Client Email (MUST MATCH AUTH EMAIL)</label>
                           <input type="email" value={newClient.email} onChange={e => setNewClient({...newClient, email: e.target.value})} className="w-full bg-neutral/50 border-none rounded-2xl p-4 text-sm font-bold focus:ring-2 ring-chartreuse outline-none" placeholder="e.g. client@company.com" />
+                        </div>
+                        <div className="space-y-2">
+                          <label className="text-[10px] font-black uppercase text-obsidian/40 ml-4">Subdomain (e.g. 'barberia-sofia')</label>
+                          <input type="text" value={newClient.subdomain} onChange={e => setNewClient({...newClient, subdomain: e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, '')})} className="w-full bg-neutral/50 border-none rounded-2xl p-4 text-sm font-bold focus:ring-2 ring-chartreuse outline-none" placeholder="e.g. barberia-sofia" />
                         </div>
                       </div>
                       <button onClick={handleCreateClient} className="w-full bg-obsidian text-white py-5 rounded-2xl font-black uppercase tracking-widest text-sm hover:bg-obsidian/90 transition-all shadow-xl">
