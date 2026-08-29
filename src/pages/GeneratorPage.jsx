@@ -191,19 +191,28 @@ export const GeneratorPage = () => {
                 }
             };
 
-            // 1. Insert into Supabase clients table
-            const { error: insertError } = await supabase
+            // 1. Insert into Supabase clients table (with fallback if phone column does not exist)
+            let insertPayload = {
+                full_name: fullName.trim(),
+                company_name: businessName.trim(),
+                business_name: businessName.trim(),
+                email: email.trim().toLowerCase(),
+                phone: phone.trim(),
+                subdomain: finalSubdomain,
+                site_status: 'lead_preview',
+                site_content: siteContent
+            };
+
+            let { error: insertError } = await supabase
                 .from('clients')
-                .insert([{
-                    full_name: fullName.trim(),
-                    company_name: businessName.trim(),
-                    business_name: businessName.trim(),
-                    email: email.trim().toLowerCase(),
-                    phone: phone.trim(),
-                    subdomain: finalSubdomain,
-                    site_status: 'lead_preview',
-                    site_content: siteContent
-                }]);
+                .insert([insertPayload]);
+
+            // Fallback: If 'phone' column is missing in schema, insert without phone at root
+            if (insertError && insertError.code === 'PGRST204') {
+                delete insertPayload.phone;
+                const retry = await supabase.from('clients').insert([insertPayload]);
+                insertError = retry.error;
+            }
 
             if (insertError) throw insertError;
 
