@@ -22,6 +22,7 @@ import AuditModal from './components/AuditModal';
 import { MascotWidget } from './components/MascotWidget';
 import { getSubdomain } from './lib/subdomain';
 import ClientSiteView from './pages/ClientSiteView';
+import GeneratorPage from './pages/GeneratorPage';
 
 // Scroll to top helper
 const ScrollToTop = () => {
@@ -214,6 +215,8 @@ function App() {
                 ) : (
                     <Router>
                         <Routes>
+                            <Route path="/generator" element={<GeneratorPage />} />
+                            <Route path="/build" element={<GeneratorPage />} />
                             <Route path="/contact/:username" element={<ContactCardPage />} />
                             <Route path="/*" element={<AppContent />} />
                         </Routes>
