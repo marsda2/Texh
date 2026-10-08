@@ -1,5 +1,7 @@
 import type { NextConfig } from "next";
 
+const PLATFORM = "https://app.texhco.com";
+
 const nextConfig: NextConfig = {
   // The Vercel project already defines VITE_META_PIXEL_ID (from the old Vite
   // site). Next only exposes NEXT_PUBLIC_* to the browser, so map it here and
@@ -32,6 +34,15 @@ const nextConfig: NextConfig = {
       { source: "/about", destination: "/#about", permanent: true },
       { source: "/audit", destination: "/#contact", permanent: true },
       { source: "/estimator", destination: "/#contact", permanent: true },
+      // The client platform (portal, generator, contact cards) now lives on
+      // app.texhco.com. Temporary (307) until that host is confirmed working.
+      // Printed QR codes and NFC cards point at /contact/<name>.
+      { source: "/portal/:path*", destination: `${PLATFORM}/portal/:path*`, permanent: false },
+      { source: "/welcome", destination: `${PLATFORM}/welcome`, permanent: false },
+      { source: "/generator", destination: `${PLATFORM}/generator`, permanent: false },
+      { source: "/build", destination: `${PLATFORM}/build`, permanent: false },
+      { source: "/templates/:path*", destination: `${PLATFORM}/templates/:path*`, permanent: false },
+      { source: "/contact/:username", destination: `${PLATFORM}/contact/:username`, permanent: false },
     ];
   },
 };

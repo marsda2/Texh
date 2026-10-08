@@ -61,7 +61,7 @@ All copy lives in `content/site.ts`.
 
 ## Deploy
 
-`vercel.json` pins the framework to Next.js, so it builds even if the Vercel project was created as Vite. Preview deployments need the same env vars as Production (set them for the "Preview" environment too). The old site's other pieces (client portal `/portal`, site generator and `*.texhco.com` client sites, contact cards, quiz) are **not** part of this app.
+`vercel.json` pins the framework to Next.js, so it builds even if the Vercel project was created as Vite. Preview deployments need the same env vars as Production (set them for the "Preview" environment too). The old site's other pieces (client portal, site generator, `*.texhco.com` client sites, contact cards) are **not** part of this app: they live on the `platform` branch, deployed as their own Vercel project on `app.texhco.com` + `*.texhco.com`. `next.config.ts` redirects `/portal`, `/welcome`, `/generator`, `/build`, `/templates` and `/contact/:name` there (307 for now; make them permanent once `app.texhco.com` has been live for a while). Do not merge this branch to `main` before that host works.
 
 ## Before launch
 
