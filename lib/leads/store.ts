@@ -129,9 +129,12 @@ export async function storeLead(lead: LeadRecord): Promise<{ stored: boolean }> 
   // The name goes in the file name too, so it shows in the admin email's link
   // even when voice_leads has no name column.
   const path = `idea_${Date.now()}_${slug(lead.name)}.${extensionFor(lead.audio.type)}`;
+  // MediaRecorder reports "audio/webm;codecs=opus". The old site uploaded plain
+  // "audio/webm", so drop the parameters in case the bucket restricts MIME types.
+  const contentType = lead.audio.type.split(";")[0] || "audio/webm";
   const { error: uploadError } = await supabase.storage
     .from(AUDIO_BUCKET)
-    .upload(path, lead.audio, { contentType: lead.audio.type, upsert: false });
+    .upload(path, lead.audio, { contentType, upsert: false });
   if (uploadError) throw uploadError;
 
   const { data } = supabase.storage.from(AUDIO_BUCKET).getPublicUrl(path);
