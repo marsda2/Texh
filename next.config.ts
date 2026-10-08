@@ -1,6 +1,16 @@
 import type { NextConfig } from "next";
 
 const PLATFORM = "https://app.texhco.com";
+const platformLive = process.env.PLATFORM_LIVE === "1";
+// Same path on the platform host (query strings are kept).
+const platformRoutes = [
+  "/portal/:path*",
+  "/welcome",
+  "/generator",
+  "/build",
+  "/templates/:path*",
+  "/contact/:username",
+];
 
 const nextConfig: NextConfig = {
   // The Vercel project already defines VITE_META_PIXEL_ID (from the old Vite
@@ -34,15 +44,18 @@ const nextConfig: NextConfig = {
       { source: "/about", destination: "/#about", permanent: true },
       { source: "/audit", destination: "/#contact", permanent: true },
       { source: "/estimator", destination: "/#contact", permanent: true },
-      // The client platform (portal, generator, contact cards) now lives on
-      // app.texhco.com. Temporary (307) until that host is confirmed working.
-      // Printed QR codes and NFC cards point at /contact/<name>.
-      { source: "/portal/:path*", destination: `${PLATFORM}/portal/:path*`, permanent: false },
-      { source: "/welcome", destination: `${PLATFORM}/welcome`, permanent: false },
-      { source: "/generator", destination: `${PLATFORM}/generator`, permanent: false },
-      { source: "/build", destination: `${PLATFORM}/build`, permanent: false },
-      { source: "/templates/:path*", destination: `${PLATFORM}/templates/:path*`, permanent: false },
-      { source: "/contact/:username", destination: `${PLATFORM}/contact/:username`, permanent: false },
+      // The client platform (portal, generator, contact cards) is moving to
+      // app.texhco.com. Until PLATFORM_LIVE=1 is set in Vercel (after that host
+      // is deployed) these routes fall back to the contact section, so nothing
+      // loops while *.texhco.com still points at this project. Printed QR/NFC
+      // cards point at /contact/<name>.
+      ...platformRoutes.map((source) => ({
+        source,
+        destination: platformLive ? `${PLATFORM}${source}` : "/#contact",
+        permanent: false,
+        // Never redirect on app.texhco.com itself.
+        ...(platformLive ? { has: [{ type: "host" as const, value: "(www\\.)?texhco\\.com" }] } : {}),
+      })),
     ];
   },
 };
