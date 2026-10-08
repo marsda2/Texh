@@ -659,6 +659,17 @@ export function VoiceNote({ source = "home" }: { source?: string }) {
                   {sendError}
                 </p>
               )}
+              <p className="text-[12px] leading-snug text-cream/50">
+                By sending this you agree to our{" "}
+                <a href="/terms" target="_blank" rel="noopener" className="underline hover:text-cream">
+                  Terms
+                </a>{" "}
+                and{" "}
+                <a href="/privacy" target="_blank" rel="noopener" className="underline hover:text-cream">
+                  Privacy Policy
+                </a>
+                , and to be contacted about your request by phone, text or email.
+              </p>
               <button
                 type="submit"
                 disabled={phase === "sending"}

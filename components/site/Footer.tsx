@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { TexhcoLogo } from "@/components/brand/TexhcoLogo";
+import { LEGAL } from "@/content/legal";
 import { nav, services, site } from "@/content/site";
 
 export function Footer() {
@@ -67,7 +68,10 @@ export function Footer() {
 
       <div className="flex flex-col gap-3 pt-6 text-[12px] text-ink/50 md:flex-row md:items-center md:justify-between">
         <p>
-          © {new Date().getFullYear()} {site.name}. All rights reserved.
+          © {new Date().getFullYear()} {LEGAL.entity}. All rights reserved.
+          <span className="mt-1 block">
+            {LEGAL.brand} is a brand of {LEGAL.entity}, {LEGAL.entityType}.
+          </span>
         </p>
         <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
           <Link href="/privacy" className="hover:text-ink">
