@@ -11,5 +11,3 @@ Disallow: /estimator/
 
 # Contact cards (individual, not SEO targets)
 Disallow: /contact/
-
-Sitemap: https://texhco.com/sitemap.xml

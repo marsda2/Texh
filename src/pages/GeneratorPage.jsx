@@ -25,6 +25,7 @@ import {
 import { supabase } from '../lib/supabase';
 import { trackLeadEvent } from '../lib/analytics';
 import { SEO } from '../components/SEO';
+import { RESERVED_SUBDOMAINS } from '../lib/subdomain';
 
 const INDUSTRIES = [
     { id: 'beauty', label: 'Belleza, Salones & Spas', icon: Scissors, example: 'ej. Lumina Spa' },
@@ -160,7 +161,8 @@ export const GeneratorPage = () => {
                 .eq('subdomain', baseSubdomain)
                 .maybeSingle();
 
-            if (existingClient) {
+            // `app`, `www`, `api`... are platform hosts, never client sites.
+            if (existingClient || RESERVED_SUBDOMAINS.has(baseSubdomain)) {
                 finalSubdomain = `${baseSubdomain}-${Math.floor(100 + Math.random() * 900)}`;
             }
 

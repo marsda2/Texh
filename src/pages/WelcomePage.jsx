@@ -173,6 +173,9 @@ const WelcomePage = () => {
         email: email.trim(),
         password,
         options: {
+          // The confirmation link lands back on this host (app.texhco.com).
+          // Add https://app.texhco.com/** to Supabase Auth > Redirect URLs.
+          emailRedirectTo: `${window.location.origin}/portal`,
           data: {
             full_name: fullName.trim(),
             company_name: companyName

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link, Navigate, useLocation } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import Home from './pages/Home';
@@ -20,7 +20,7 @@ import { trackPageView, trackViewContent } from './lib/metaPixel';
 import { CountdownTimer } from './components/ui/CountdownTimer';
 import AuditModal from './components/AuditModal';
 import { MascotWidget } from './components/MascotWidget';
-import { getSubdomain } from './lib/subdomain';
+import { getSubdomain, isPlatformHost } from './lib/subdomain';
 import ClientSiteView from './pages/ClientSiteView';
 import GeneratorPage from './pages/GeneratorPage';
 
@@ -184,7 +184,8 @@ function AppContent() {
             {/* Main Content */}
             <main>
                 <Routes>
-                    <Route path="/" element={<Home onOpenAudit={() => setIsAuditModalOpen(true)} />} />
+                    {/* On app.texhco.com the marketing home now lives on texhco.com: land on the portal. */}
+                    <Route path="/" element={isPlatformHost() ? <Navigate to="/portal" replace /> : <Home onOpenAudit={() => setIsAuditModalOpen(true)} />} />
                     <Route path="/about" element={<AboutPage />} />
                     <Route path="/estimator" element={<EstimatorQuizPage />} />
                     <Route path="/privacy" element={<PrivacyPage />} />
