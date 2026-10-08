@@ -4,12 +4,12 @@ import { useEffect, useRef } from "react";
 import Script from "next/script";
 import { usePathname } from "next/navigation";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import { GA_ID, META_PIXEL_ID } from "@/lib/analytics/config";
+import { ANALYTICS_ON, GA_ID, META_PIXEL_ID } from "@/lib/analytics/config";
 import { trackPageView } from "@/lib/analytics/track";
 
 /**
- * GA4 + Meta Pixel + Vercel Speed Insights. Only runs in production builds so
- * local development and previews don't pollute the real numbers.
+ * GA4 + Meta Pixel + Vercel Speed Insights. Only runs on the real production
+ * deployment, so local development and previews don't pollute the numbers.
  */
 export function Analytics() {
   const pathname = usePathname();
@@ -17,7 +17,7 @@ export function Analytics() {
 
   // The base snippets fire the first PageView. Every later route change
   // (Next navigations don't reload the page) is reported here.
-  const live = process.env.NODE_ENV === "production";
+  const live = ANALYTICS_ON;
   useEffect(() => {
     if (first.current) {
       first.current = false;

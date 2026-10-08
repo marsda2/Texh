@@ -54,7 +54,7 @@ All copy lives in `content/site.ts`.
 | Meta Conversions API (server) | `app/api/meta-capi/route.ts` | `META_ACCESS_TOKEN`, `VITE_META_PIXEL_ID`, optional `META_TEST_EVENT_CODE` |
 | Vercel Speed Insights | `components/site/Analytics.tsx` | none |
 
-- Tracking only runs in production builds. Use the helpers in `lib/analytics/track.ts` (`trackLeadEvent`, `trackContactEvent`), never `fbq`/`gtag` directly: they send the browser event and the server event with one shared `event_id` so Meta de-duplicates them.
+- Tracking only runs on the real Vercel production deployment (`NEXT_PUBLIC_ANALYTICS` is derived from `VERCEL_ENV` in `next.config.ts`; set `NEXT_PUBLIC_ANALYTICS=1` on a preview to test events with `META_TEST_EVENT_CODE`). Use the helpers in `lib/analytics/track.ts` (`trackLeadEvent`, `trackContactEvent`), never `fbq`/`gtag` directly: they send the browser event and the server event with one shared `event_id` so Meta de-duplicates them.
 - The CAPI route only accepts calls from texhco.com, `*.vercel.app` and localhost, whitelists the event names and rate-limits per IP (the old endpoint was open to any origin).
 - SEO: `app/sitemap.ts`, `app/robots.ts`, `app/opengraph-image.tsx`, JSON-LD in `app/layout.tsx`, `public/llms.txt`. Old URLs redirect in `next.config.ts` (`/services/premium-web-design` and friends, `/about`, `/audit`, `/estimator`).
 - Legal: `/privacy` and `/terms` (text from the old site; the terms still list mobile apps and social media).

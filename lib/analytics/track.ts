@@ -5,6 +5,8 @@
 // event_id so Meta de-duplicates the two. Use these helpers, never fbq/gtag
 // directly, or the de-duplication breaks.
 
+import { ANALYTICS_ON } from "./config";
+
 type Gtag = (...args: unknown[]) => void;
 type Fbq = (...args: unknown[]) => void;
 
@@ -32,11 +34,11 @@ const cookie = (name: string) => {
 };
 
 export function sendGAEvent(name: string, params?: Record<string, unknown>) {
-  if (typeof window !== "undefined") window.gtag?.("event", name, params);
+  if (ANALYTICS_ON && typeof window !== "undefined") window.gtag?.("event", name, params);
 }
 
 function sendMeta(name: MetaEvent, prefix: string, data: EventData = {}) {
-  if (typeof window === "undefined") return;
+  if (!ANALYTICS_ON || typeof window === "undefined") return;
   const id = eventId(prefix);
   const { $email, $phone, ...custom } = data;
 

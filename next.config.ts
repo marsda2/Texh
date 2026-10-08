@@ -7,6 +7,11 @@ const nextConfig: NextConfig = {
   env: {
     NEXT_PUBLIC_META_PIXEL_ID:
       process.env.NEXT_PUBLIC_META_PIXEL_ID ?? process.env.VITE_META_PIXEL_ID ?? "",
+    // Tracking is on only for the real production deployment on Vercel (preview
+    // builds are production builds too, so NODE_ENV alone isn't enough). Set
+    // NEXT_PUBLIC_ANALYTICS=1 on a preview to test events with META_TEST_EVENT_CODE.
+    NEXT_PUBLIC_ANALYTICS:
+      process.env.NEXT_PUBLIC_ANALYTICS ?? (process.env.VERCEL_ENV === "production" ? "1" : ""),
   },
   images: {
     // Used by the services illustration (Unsplash License).

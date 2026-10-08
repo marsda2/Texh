@@ -8,3 +8,6 @@ export const META_PIXEL_ID =
   process.env.NEXT_PUBLIC_META_PIXEL_ID || "26038822599128166";
 
 export const SITE_URL = "https://texhco.com";
+
+/** Real production traffic only; see NEXT_PUBLIC_ANALYTICS in next.config.ts. */
+export const ANALYTICS_ON = process.env.NEXT_PUBLIC_ANALYTICS === "1";
