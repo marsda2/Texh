@@ -56,6 +56,7 @@ const organization = {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
   name: "Texh Co",
+  legalName: "Texhco. LLC",
   url: SITE_URL,
   logo: `${SITE_URL}/apple-touch-icon.png`,
   description,

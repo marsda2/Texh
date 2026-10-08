@@ -11,3 +11,15 @@ export const SITE_URL = "https://texhco.com";
 
 /** Real production traffic only; see NEXT_PUBLIC_ANALYTICS in next.config.ts. */
 export const ANALYTICS_ON = process.env.NEXT_PUBLIC_ANALYTICS === "1";
+
+/**
+ * Global Privacy Control: when the browser sends it, treat it as an opt-out of
+ * sharing with advertising platforms (Meta Pixel and Conversions API). Google
+ * Analytics, which only measures our own site, keeps running.
+ */
+export function gpcEnabled(): boolean {
+  return (
+    typeof navigator !== "undefined" &&
+    (navigator as Navigator & { globalPrivacyControl?: boolean }).globalPrivacyControl === true
+  );
+}

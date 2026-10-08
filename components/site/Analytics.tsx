@@ -1,10 +1,15 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useSyncExternalStore } from "react";
 import Script from "next/script";
 import { usePathname } from "next/navigation";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import { ANALYTICS_ON, GA_ID, META_PIXEL_ID } from "@/lib/analytics/config";
+import {
+  ANALYTICS_ON,
+  GA_ID,
+  META_PIXEL_ID,
+  gpcEnabled,
+} from "@/lib/analytics/config";
 import { trackPageView } from "@/lib/analytics/track";
 
 /**
@@ -18,6 +23,12 @@ export function Analytics() {
   // The base snippets fire the first PageView. Every later route change
   // (Next navigations don't reload the page) is reported here.
   const live = ANALYTICS_ON;
+  // Read on the client only; false while rendering on the server.
+  const gpc = useSyncExternalStore(
+    () => () => {},
+    gpcEnabled,
+    () => false,
+  );
   useEffect(() => {
     if (first.current) {
       first.current = false;
@@ -38,19 +49,23 @@ export function Analytics() {
       <Script id="ga-init" strategy="afterInteractive">
         {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}window.gtag=gtag;gtag('js',new Date());gtag('config','${GA_ID}');`}
       </Script>
-      <Script id="meta-pixel" strategy="afterInteractive">
-        {`!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','${META_PIXEL_ID}');fbq('track','PageView');`}
-      </Script>
-      <noscript>
-        {/* eslint-disable-next-line @next/next/no-img-element -- Meta's noscript fallback */}
-        <img
-          height="1"
-          width="1"
-          style={{ display: "none" }}
-          alt=""
-          src={`https://www.facebook.com/tr?id=${META_PIXEL_ID}&ev=PageView&noscript=1`}
-        />
-      </noscript>
+      {!gpc && (
+        <>
+          <Script id="meta-pixel" strategy="afterInteractive">
+            {`!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','${META_PIXEL_ID}');fbq('track','PageView');`}
+          </Script>
+          <noscript>
+            {/* eslint-disable-next-line @next/next/no-img-element -- Meta's noscript fallback */}
+            <img
+              height="1"
+              width="1"
+              style={{ display: "none" }}
+              alt=""
+              src={`https://www.facebook.com/tr?id=${META_PIXEL_ID}&ev=PageView&noscript=1`}
+            />
+          </noscript>
+        </>
+      )}
       <SpeedInsights />
     </>
   );

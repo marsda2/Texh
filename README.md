@@ -57,7 +57,7 @@ All copy lives in `content/site.ts`.
 - Tracking only runs on the real Vercel production deployment (`NEXT_PUBLIC_ANALYTICS` is derived from `VERCEL_ENV` in `next.config.ts`; set `NEXT_PUBLIC_ANALYTICS=1` on a preview to test events with `META_TEST_EVENT_CODE`). Use the helpers in `lib/analytics/track.ts` (`trackLeadEvent`, `trackContactEvent`), never `fbq`/`gtag` directly: they send the browser event and the server event with one shared `event_id` so Meta de-duplicates them.
 - The CAPI route only accepts calls from texhco.com, `*.vercel.app` and localhost, whitelists the event names and rate-limits per IP (the old endpoint was open to any origin).
 - SEO: `app/sitemap.ts`, `app/robots.ts`, `app/opengraph-image.tsx`, JSON-LD in `app/layout.tsx`, `public/llms.txt`. Old URLs redirect in `next.config.ts` (`/services/premium-web-design` and friends, `/about`, `/audit`, `/estimator`).
-- Legal: `/privacy` and `/terms` (text from the old site; the terms still list mobile apps and social media).
+- Legal: `/privacy` and `/terms`, text in `content/legal.ts`, written for a US / New Jersey small business (Texhco. LLC). It is a draft for an attorney to review, not legal advice. The footer names the LLC. The tracking code honors Global Privacy Control (no Meta Pixel / CAPI when the browser sends it).
 
 ## Deploy
 
