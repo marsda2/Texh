@@ -1,0 +1,475 @@
+@import "tailwindcss";
+
+:root {
+  --cream: #faf7ef;
+  --cream-2: #f3efe4;
+  --paper: #fdfcf8;
+  --ink: #111111;
+  --ink-2: #1b1c19;
+  --muted: #6b6a63;
+  --line: #e4e0d4;
+  --lime: #c8ff00;
+  --lime-deep: #9fd000;
+}
+
+@theme inline {
+  --color-cream: var(--cream);
+  --color-cream-2: var(--cream-2);
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-lime: var(--lime);
+  --color-lime-deep: var(--lime-deep);
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-inter-tight), var(--font-inter), ui-sans-serif,
+    system-ui, sans-serif;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html {
+  background: var(--cream);
+  color: var(--ink);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--lime);
+  color: var(--ink);
+}
+
+/* Underline that grows on hover, used for secondary links. */
+.link-underline {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 100% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  padding-bottom: 3px;
+  transition: background-size 0.4s var(--ease-out-expo);
+}
+.link-underline:hover {
+  background-size: 35% 1px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Heavy display type is tracked tight; keep the word gaps readable. */
+@layer utilities {
+  .font-display {
+    word-spacing: 0.06em;
+  }
+}
+
+/*
+ * Idle voice-note waveform. Plain numbers (no var()) so the compositor can
+ * run it off the main thread; each bar's own height lives on its wrapper.
+ */
+@keyframes wave {
+  0%,
+  100% {
+    transform: scaleY(0.45);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+
+/* Decorative CSS loops pause while their section is off-screen. */
+[data-offscreen] *,
+[data-offscreen] *::before,
+[data-offscreen] *::after {
+  animation-play-state: paused !important;
+}
+
+/*
+ * Live activity card: one 9s story, looped.
+ *   0-1.5s  person + booking rise in      1.5-2.5s  "Confirmed" lights up
+ *   2.5-3.5s line draws, check, "sent"    3.5-4.5s  glint, "record updated"
+ *   4.5-7.5s hold                         7.5-9s    fade to placeholders
+ * Percentages are of 9s (1s = 11.11%). The resting styles in the component are
+ * the finished state, so reduced-motion users just see the settled card.
+ */
+@keyframes la-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+  70%,
+  100% {
+    transform: scale(2.6);
+    opacity: 0;
+  }
+}
+
+@keyframes la-person {
+  0% {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  11%,
+  83.33% {
+    opacity: 1;
+    transform: none;
+  }
+  100% {
+    opacity: 0;
+    transform: none;
+  }
+}
+
+@keyframes la-booking {
+  0%,
+  3% {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  16.67%,
+  83.33% {
+    opacity: 1;
+    transform: none;
+  }
+  100% {
+    opacity: 0;
+    transform: none;
+  }
+}
+
+@keyframes la-confirm {
+  0%,
+  16.67% {
+    background-color: rgba(17, 17, 17, 0.06);
+    color: rgba(17, 17, 17, 0.4);
+    box-shadow: 0 0 0 0 rgba(200, 255, 0, 0);
+    transform: scale(1);
+  }
+  22% {
+    transform: scale(1.07);
+    box-shadow: 0 0 2.4cqw rgba(200, 255, 0, 0.75);
+  }
+  27.78%,
+  99% {
+    background-color: rgba(200, 255, 0, 0.5);
+    color: #111;
+    box-shadow: 0 0 1.2cqw rgba(200, 255, 0, 0.3);
+    transform: scale(1);
+  }
+  100% {
+    background-color: rgba(17, 17, 17, 0.06);
+    color: rgba(17, 17, 17, 0.4);
+    box-shadow: 0 0 0 0 rgba(200, 255, 0, 0);
+    transform: scale(1);
+  }
+}
+
+@keyframes la-line {
+  0%,
+  27.78% {
+    opacity: 1;
+    transform: scaleY(0);
+  }
+  34.4%,
+  83.33% {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scaleY(1);
+  }
+}
+
+@keyframes la-node {
+  0%,
+  33% {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  37% {
+    opacity: 1;
+    transform: scale(1.12);
+  }
+  40%,
+  83.33% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1);
+  }
+}
+
+@keyframes la-conf {
+  0%,
+  35.5% {
+    opacity: 0;
+    transform: translateX(-6px);
+  }
+  41%,
+  83.33% {
+    opacity: 1;
+    transform: none;
+  }
+  100% {
+    opacity: 0;
+    transform: none;
+  }
+}
+
+@keyframes la-plane {
+  0%,
+  35.5% {
+    opacity: 0;
+    transform: none;
+  }
+  38.5% {
+    opacity: 1;
+    transform: translate(0.6cqw, -0.6cqw);
+  }
+  42%,
+  83.33% {
+    opacity: 1;
+    transform: none;
+  }
+  100% {
+    opacity: 0;
+    transform: none;
+  }
+}
+
+@keyframes la-arrow {
+  0%,
+  16.67% {
+    opacity: 0;
+    color: rgba(17, 17, 17, 0.35);
+  }
+  22%,
+  37% {
+    opacity: 1;
+    color: rgba(17, 17, 17, 0.35);
+  }
+  44%,
+  83.33% {
+    opacity: 1;
+    color: rgba(17, 17, 17, 0.8);
+  }
+  100% {
+    opacity: 0;
+    color: rgba(17, 17, 17, 0.35);
+  }
+}
+
+@keyframes la-glint {
+  0%,
+  38.9% {
+    opacity: 0;
+    transform: translateX(-0.4cqw);
+  }
+  40% {
+    opacity: 1;
+  }
+  46% {
+    opacity: 1;
+    transform: translateX(3cqw);
+  }
+  48%,
+  100% {
+    opacity: 0;
+    transform: translateX(3cqw);
+  }
+}
+
+@keyframes la-record {
+  0%,
+  41% {
+    opacity: 0;
+    transform: translateX(-6px);
+  }
+  50%,
+  83.33% {
+    opacity: 1;
+    transform: none;
+  }
+  100% {
+    opacity: 0;
+    transform: none;
+  }
+}
+
+/* Placeholders: visible while the next booking is "loading". */
+@keyframes la-skel-a {
+  0% {
+    opacity: 1;
+  }
+  9%,
+  83.33% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes la-skel-b {
+  0%,
+  33% {
+    opacity: 1;
+  }
+  40%,
+  83.33% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes la-skel-c {
+  0%,
+  41% {
+    opacity: 1;
+  }
+  48%,
+  83.33% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .la-pulse {
+    animation: la-pulse 2.4s ease-out infinite;
+  }
+
+  .la-person,
+  .la-booking,
+  .la-confirm,
+  .la-line,
+  .la-node,
+  .la-conf,
+  .la-plane,
+  .la-arrow,
+  .la-glint,
+  .la-record,
+  .la-skel-a,
+  .la-skel-b,
+  .la-skel-c {
+    /* Start once the card has finished its own entrance. */
+    animation: var(--la-kf) 9s cubic-bezier(0.22, 1, 0.36, 1) 1.1s infinite both;
+  }
+
+  .la-person { --la-kf: la-person; }
+  .la-booking { --la-kf: la-booking; }
+  .la-confirm { --la-kf: la-confirm; }
+  .la-line { --la-kf: la-line; }
+  .la-node { --la-kf: la-node; }
+  .la-conf { --la-kf: la-conf; }
+  .la-plane { --la-kf: la-plane; }
+  .la-arrow { --la-kf: la-arrow; }
+  .la-glint { --la-kf: la-glint; }
+  .la-record { --la-kf: la-record; }
+  .la-skel-a { --la-kf: la-skel-a; }
+  .la-skel-b { --la-kf: la-skel-b; }
+  .la-skel-c { --la-kf: la-skel-c; }
+}
+
+/*
+ * Hero entrance — plain CSS so it starts with the first paint instead of
+ * waiting for JS to download and hydrate (that wait was ~5s of LCP on slow
+ * phones). `--delay` staggers the pieces. Reduced motion is handled by the
+ * global rule above.
+ */
+@keyframes hero-rise {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+}
+@keyframes hero-line {
+  from {
+    transform: translateY(105%);
+  }
+}
+@keyframes hero-fade {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes hero-card {
+  from {
+    opacity: 0;
+    transform: translateY(60px) scale(0.95);
+  }
+}
+.hero-rise {
+  animation: hero-rise 0.9s var(--ease-out-expo) var(--delay, 0s) both;
+}
+.hero-line {
+  animation: hero-line 1s var(--ease-out-expo) var(--delay, 0s) both;
+}
+.hero-fade {
+  animation: hero-fade 1.4s var(--ease-out-expo) var(--delay, 0s) both;
+}
+.hero-card {
+  animation: hero-card 1.2s var(--ease-out-expo) var(--delay, 0s) both;
+}
+
+/* Looping text band (Ownership). The content is duplicated, so -50% is seamless. */
+@keyframes marquee-x {
+  to {
+    transform: translateX(-50%);
+  }
+}
+.marquee-x {
+  animation: marquee-x 32s linear infinite;
+}
+
+/* WashAcoholic cover: before/after divider sweeping across the photo. */
+@property --wash-x {
+  syntax: "<percentage>";
+  inherits: true;
+  initial-value: 50%;
+}
+@keyframes wash-slide {
+  from {
+    --wash-x: 16%;
+  }
+  to {
+    --wash-x: 84%;
+  }
+}
+.wash-cover {
+  --wash-x: 50%;
+}
+.wash-before {
+  clip-path: inset(0 calc(100% - var(--wash-x)) 0 0);
+}
+.wash-line {
+  left: var(--wash-x);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .wash-cover {
+    animation: wash-slide 7s ease-in-out infinite alternate;
+  }
+}
