@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256" role="img" aria-labelledby="title">
+  <title id="title">Texhco code keycap — reconstructed front layers</title>
+  <desc>Orthographic approximation. Closed filled paths: body, hollow rim, inset face and code glyphs. Layer IDs identify separately extrudable shapes. No embedded shading.</desc>
+  <path id="keycap-body" fill="#4A4942" d="M 64 28 H 192 A 36 36 0 0 1 228 64 V 192 A 36 36 0 0 1 192 228 H 64 A 36 36 0 0 1 28 192 V 64 A 36 36 0 0 1 64 28 Z"/>
+  <path id="keycap-rim" fill="#999A94" fill-rule="evenodd" d="M 64 28 H 192 A 36 36 0 0 1 228 64 V 192 A 36 36 0 0 1 192 228 H 64 A 36 36 0 0 1 28 192 V 64 A 36 36 0 0 1 64 28 Z M 68 46 H 188 A 22 22 0 0 1 210 68 V 188 A 22 22 0 0 1 188 210 H 68 A 22 22 0 0 1 46 188 V 68 A 22 22 0 0 1 68 46 Z"/>
+  <path id="keycap-face" fill="#36372F" d="M 68 48 H 188 A 20 20 0 0 1 208 68 V 188 A 20 20 0 0 1 188 208 H 68 A 20 20 0 0 1 48 188 V 68 A 20 20 0 0 1 68 48 Z"/>
+  <path id="code-left" fill="#C9FF1F" d="M 99.1589 100.7991 L 79.1589 124.7991 A 5 5 0 0 0 80.4275 132.2875 L 100.4275 144.2875 A 5 5 0 0 0 105.5725 135.7125 L 90.5784 126.7161 L 106.8411 107.2009 A 5 5 0 0 0 99.1589 100.7991 Z"/>
+  <path id="code-divider" fill="#C9FF1F" d="M 130 89 A 5 5 0 0 1 135 94 V 162 A 5 5 0 0 1 130 167 A 5 5 0 0 1 125 162 V 94 A 5 5 0 0 1 130 89 Z"/>
+  <path id="code-right" fill="#C9FF1F" transform="translate(256 0) scale(-1 1)" d="M 99.1589 100.7991 L 79.1589 124.7991 A 5 5 0 0 0 80.4275 132.2875 L 100.4275 144.2875 A 5 5 0 0 0 105.5725 135.7125 L 90.5784 126.7161 L 106.8411 107.2009 A 5 5 0 0 0 99.1589 100.7991 Z"/>
+</svg>

@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256" role="img" aria-labelledby="title">
+  <title id="title">Texhco chrome arch — reconstructed front silhouette</title>
+  <desc>Closed filled path. Reconstructed orthographic approximation, not a perspective trace. Centerline radius 80; circular tube radius 20; sweep 250 degrees.</desc>
+  <path id="arch-body" fill="#858580" d="M 46.08480 185.35764 A 100 100 0 1 1 209.91520 185.35764 A 20 20 0 0 1 177.14912 162.41459 A 60 60 0 1 0 78.85088 162.41459 A 20 20 0 0 1 46.08480 185.35764 Z"/>
+</svg>
